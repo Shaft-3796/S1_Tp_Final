@@ -42,6 +42,9 @@ typedef struct Player_s
     /// @brief Vitesse du joueur exprim�e dans le r�f�rentiel monde.
     int speed;
 
+    ///@brief vie du joueur
+    int life;
+
     /* --- Perks --- */
     /// @brief Perk Astro active.
     bool perk_astro;

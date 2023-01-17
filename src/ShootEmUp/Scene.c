@@ -13,6 +13,7 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->input = Input_New();
     self->player = Player_New(self);
     self->waveIdx = 0;
+    self->maxLife = 20;
 
     // Background
     SDL_Rect layer1Pos = { 0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT};

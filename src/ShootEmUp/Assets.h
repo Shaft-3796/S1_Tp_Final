@@ -30,6 +30,12 @@ typedef struct Assets_s
     /* --- Perk --- */
     /// @brief Texture de l'astor
     SDL_Texture *astro;
+
+    /* --- Ui --- */
+    /// @brief Barre de vie
+    SDL_Texture *lifeBar;
+
+
 } Assets;
 
 /// @brief Cr�e la structure contenant les assets du jeu.

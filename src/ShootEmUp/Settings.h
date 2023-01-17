@@ -70,3 +70,6 @@
 #define BACKGROUND_PERIOD 1920
 #define BACKGROUND_0_SPEED_MULTIPLIER 250 // in pixels per second
 #define BACKGROUND_1_SPEED_MULTIPLIER 500 // in pixels per second
+
+/* --- UI --- */
+#define LIFE_BAR_SIZE_MULTIPLIER 1.5f
