@@ -72,4 +72,4 @@
 #define BACKGROUND_1_SPEED_MULTIPLIER 500 // in pixels per second
 
 /* --- UI --- */
-#define LIFE_BAR_SIZE_MULTIPLIER 5.f
+#define LIFE_BAR_SIZE_MULTIPLIER 1.5f

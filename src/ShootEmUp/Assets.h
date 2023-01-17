@@ -32,11 +32,8 @@ typedef struct Assets_s
     SDL_Texture *astro;
 
     /* --- Ui --- */
-    /// @brief Frame de la barre de vie
-    SDL_Texture *lifeBarFrame;
-
-    /// @brief Texture de la barre de vie
-    SDL_Texture *lifeBarColor;
+    /// @brief Barre de vie
+    SDL_Texture *lifeBar;
 
 
 } Assets;

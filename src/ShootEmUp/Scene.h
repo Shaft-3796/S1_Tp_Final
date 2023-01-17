@@ -54,6 +54,9 @@ typedef struct Scene_s
     /// Utilis� pour impl�menter un niveau complet.
     int waveIdx;
 
+    ///@brief Vie max du joueur pendant le niveau
+    int maxLife;
+
     /* --- Perk --- */
     /// @brief Tableau contenant les Perk courrants.
     Perk *perk[PERKS_CAPACITY];
