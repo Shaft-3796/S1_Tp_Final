@@ -131,6 +131,7 @@ SDL_FRect life_bar_frame_dst = {0};
 life_bar_frame_dst.h = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
 life_bar_frame_dst.w = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
 Camera_WorldToView(camera, self->position, &life_bar_frame_dst.x, &life_bar_frame_dst.y);
+printf("Life bar dst: %f, %f, %f, %f", life_bar_frame_dst.x, life_bar_frame_dst.y, life_bar_frame_dst.w, life_bar_frame_dst.h);
 SDL_RenderCopyF(
 renderer, assets->lifeBarFrame, NULL, &life_bar_frame_dst);
 }
