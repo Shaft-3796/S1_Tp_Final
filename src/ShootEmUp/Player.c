@@ -129,28 +129,17 @@ SDL_RenderCopyExF(
 renderer, self->texture, NULL, &dst, 90.0f, NULL, 0);
 }
 
-
-
-/*
 // On render la barre de vie
-SDL_Rect source = { 0, 27, 64, 10 };
-SDL_Rect source_color = { 0, 27, 64/(20/self->life), 10 };
-SDL_FRect life_bar_frame_dst = {0};
-life_bar_frame_dst.h = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * 10.0;
-life_bar_frame_dst.w = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * 64.0;
-life_bar_frame_dst.x = LOGICAL_WIDTH/2-life_bar_frame_dst.w/2;
-life_bar_frame_dst.y = 0 + life_bar_frame_dst.h;
-SDL_FRect life_bar_color_dst = {0};
-life_bar_color_dst.h = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * 10.0;
-life_bar_color_dst.w = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * 64.0/(20/self->life);
-life_bar_color_dst.x = LOGICAL_WIDTH/2-life_bar_color_dst.w/2;
-life_bar_color_dst.y = 0 + life_bar_color_dst.h;
-//printf("Life bar dst: %f, %f, %f, %f", life_bar_frame_dst.x, life_bar_frame_dst.y, life_bar_frame_dst.w, life_bar_frame_dst.h);
+SDL_Rect source = { 0, 0, 20, 2};
+SDL_FRect dest = {0};
+dest.h = LIFE_BAR_H_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+dest.w = LIFE_BAR_W_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+Camera_WorldToView(camera, self->position, &dest.x, &dest.y);
+dest.x -= LIFE_BAR_W_OFFSET_MULTIPLIER * dest.w;
+dest.y -= LIFE_BAR_H_OFFSET_MULTIPLIER * dest.h;
+
 SDL_RenderCopyF(
-renderer, assets->lifeBarFrame, &source, &life_bar_frame_dst);
-SDL_RenderCopyF(
-renderer, assets->lifeBarColor, &source_color, &life_bar_frame_dst);
- */
+renderer, assets->lifeBar, &source, &dest);
 }
 
 
