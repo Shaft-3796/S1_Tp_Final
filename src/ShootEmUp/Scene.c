@@ -1,5 +1,7 @@
 #include "Scene.h"
 #include "Perks.h"
+#include "Enemy.h"
+#include "Enemy_debug.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -55,7 +57,10 @@ void Scene_UpdateLevel(Scene *self)
 
     if (self->waveIdx == 0)
     {
-        Enemy *enemy = Enemy_New(self, ENEMY_FIGHTER, Vec2_Set(15.0f, 4.5f), 10);
+        /* Add one enemy */
+        Enemy *enemy = Enemy_New(ENEMY_DEBUG);
+        EnemyDebug_New(enemy, self, Vec2_Set(15.0f, 4.5f), 10);
+
         /* TEMP */
         Perk *Perk = Perk_New(self, 1, Vec2_Set(6.0f, 4.5f));
         Scene_AppendPerk(self, Perk);
@@ -116,8 +121,8 @@ bool Scene_Update(Scene *self)
             for (int j = 0; j < self->enemyCount; j++)
             {
                 Enemy *enemy = self->enemies[j];
-                float dist = Vec2_Distance(bullet->position, enemy->position);
-                if (dist < bullet->radius + enemy->radius)
+                float dist = Vec2_Distance(bullet->position, Enemy_Cast(enemy)->position);
+                if (dist < bullet->radius + Enemy_Cast(enemy)->radius)
                 {
                     // Inflige des dommages � l'ennemi
                     Enemy_Damage(enemy, 1);
@@ -162,7 +167,7 @@ bool Scene_Update(Scene *self)
 
         Enemy_Update(enemy);
 
-        if (enemy->state == ENEMY_DEAD)
+        if (Enemy_Cast(enemy)->state == ENEMY_DEAD)
         {
             // Supprime l'ennemi
             Scene_RemoveEnemy(self, i);
