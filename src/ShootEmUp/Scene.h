@@ -9,6 +9,7 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Enemy_Base.h"
 #include "Perks.h"
 
 // Nombre maximal d'ennemis actifs dans un niveau.

@@ -34,7 +34,7 @@ typedef enum EnemyTypes_e
 {
     ENEMY_BASE,
     ENEMY_ARC,
-    ENEMY_DEBUG
+    ENEMY_DEBUG,
 } EnemyTypes;
 
 
@@ -76,4 +76,3 @@ void Enemy_Damage(Enemy *self, int damage);
 
 /// @brief caste un ennemi en son type
 GenericEnemy * Enemy_Cast(Enemy * enemy);
-
