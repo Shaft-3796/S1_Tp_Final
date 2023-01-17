@@ -57,7 +57,6 @@
 /* --- Custom settings --- */
 #define BASE_PLAYER_SPEED_MULTIPLIER 2.f
 #define PLAYER_SIZE_MULTIPLIER 100.f
-#define PLAYER_SMOKE_SPEED 0.1f // in seconds
 
 /* --- Perks --- */
 #define PERKS_SIZE_MULTIPLIER 75.f
@@ -73,3 +72,9 @@
 
 /* --- UI --- */
 #define LIFE_BAR_SIZE_MULTIPLIER 1.5f
+
+/* --- Formats for animations --- */
+#define PLAYER_MOVING_ANIMATION_PERIOD 64 // in pixels
+#define PLAYER_MOVING_ANIMATION_HEIGHT 64 // in pixels
+#define PLAYER_MOVING_ANIMATION_FRAMES 2 // number of frames
+#define PLAYER_MOVING_ANIMATION_DURATION 0.1f // in seconds

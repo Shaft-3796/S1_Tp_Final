@@ -53,8 +53,10 @@ typedef struct Player_s
     float perk_astro_timer;
 
     /* --- Animation --- */
-    /// @brief Temps �coul� depuis le d�but de l'animation de fumée.
-    float smoke_timer;
+    /// @brief Temps �coul� depuis le dernier changement de frame de l'animation.
+    float animation_timer;
+    int animation_frame;
+    bool animating;
 
 } Player;
 

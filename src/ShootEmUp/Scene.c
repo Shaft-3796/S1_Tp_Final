@@ -220,6 +220,27 @@ bool Scene_Update(Scene *self)
 
     Scene_UpdateLevel(self);
 
+    // -------------------------------------------------------------------------
+    // Met � jour l'Easter Egg
+    if(self->input->easter_egg)
+    {
+        SDL_Texture* tmp = self->assets->bodin;
+        self->assets->bodin = self->assets->base_player_bullets;
+        self->assets->base_player_bullets = tmp;
+        self->input->easter_egg = false;
+        if(self->input->resize_bullets){
+            self->input->resize_bullets = false;
+        }
+        else{
+            self->input->resize_bullets = true;
+        }
+
+        for(int i=0; i<5; i++)
+        {
+            self->input->letters[i] = false;
+        }
+    }
+
     return self->input->quitPressed;
 }
 

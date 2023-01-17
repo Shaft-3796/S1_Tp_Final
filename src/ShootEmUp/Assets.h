@@ -15,9 +15,6 @@ typedef struct Assets_s
     /// @brief Texture du vaisseau du joueur de base en mouvement.
     SDL_Texture *moving_base_player;
 
-    /// @brief Texture du vaisseau du joueur de base en mouvement frame 2.
-    SDL_Texture *moving_base_player_2;
-
     /// @brief Texture du tir de base du joueur.
     SDL_Texture *base_player_bullets;
 
@@ -34,6 +31,11 @@ typedef struct Assets_s
     /* --- Ui --- */
     /// @brief Barre de vie
     SDL_Texture *lifeBar;
+
+    /* --- Easter egg --- */
+    /// @brief Texture du meilleur professeur du monde (en toute objectivité)
+    SDL_Texture *bodin;
+
 
 
 } Assets;

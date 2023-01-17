@@ -6,6 +6,13 @@ Input *Input_New()
     Input *self = (Input *)calloc(1, sizeof(Input));
     AssertNew(self);
 
+    // Eg
+    for(int i = 0; i < 5; i++)
+    {
+        self->letters[i] = 0;
+    }
+    self->resize_bullets = 0;
+
     return self;
 }
 
@@ -99,10 +106,42 @@ void Input_Update(Input *self)
                     self->vAxis = 0.f;
                 break;
 
+                /* --- Easter Egg --- */
+            case SDL_SCANCODE_B:
+                self->letters[0] = 1;
+                break;
+
+            case SDL_SCANCODE_O:
+                self->letters[1] = 1;
+                break;
+
+            case SDL_SCANCODE_D:
+                self->letters[2] = 1;
+                break;
+
+            case SDL_SCANCODE_I:
+                self->letters[3] = 1;
+                break;
+
+            case SDL_SCANCODE_N:
+                self->letters[4] = 1;
+                break;
+
             default:
                 break;
             }
             break;
+        }
+    }
+    for(int i = 0; i < 5; i++)
+    {
+        if(self->letters[i] == 0)
+        {
+            break;
+        }
+        if(i == 4)
+        {
+            self->easter_egg = true;
         }
     }
 }

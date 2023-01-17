@@ -67,8 +67,12 @@ Camera *camera = Scene_GetCamera(scene);
 float scale = Camera_GetWorldToViewScale(camera);
 SDL_FRect dst = { 0 };
 // Changez 48 par une autre valeur pour grossir ou réduire l'objet
-dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+float multiplier = 1.f;
+if(self->scene->input->resize_bullets){
+    multiplier = 0.25f;
+}
+dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
+dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
 Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
 // Le point de référence est le centre de l'objet
 dst.x -= 0.50f * dst.w;

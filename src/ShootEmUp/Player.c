@@ -22,7 +22,9 @@ Player *Player_New(Scene *scene)
     self->perk_astro_timer = 0;
 
     /* --- Anim --- */
-    self->smoke_timer = 0;
+    self->animation_timer = 0;
+    self->animation_frame = 0;
+    self->animating = false;
 
     return self;
 }
@@ -46,36 +48,26 @@ Vec2 new_position = Vec2_Add(self->position,Vec2_Scale(velocity, Timer_GetDelta(
 // On vérifie que la nouvelle position est dans les limites de l'écran
 if (new_position.x > 0.5 && new_position.x < 8 && new_position.y > 0.5 && new_position.y < 8.5)
 {
-    // On vérifie si la position change, si oui on change la texture.
+    // ANIMATION
     if(self->position.x != new_position.x || self->position.y != new_position.y)
     {
-        if(self->texture == Scene_GetAssets(scene)->base_player)
+        self->animating = true;
+        self->texture = Scene_GetAssets(scene)->moving_base_player;
+        self->animation_timer += Timer_GetDelta(g_time);
+        if(self->animation_timer > PLAYER_MOVING_ANIMATION_DURATION)
         {
-            self->texture = Scene_GetAssets(scene)->moving_base_player;
-        }
-        else if(self->texture == Scene_GetAssets(scene)->moving_base_player)
-        {
-            self->smoke_timer += Timer_GetDelta(g_time);
-            if(self->smoke_timer > PLAYER_SMOKE_SPEED)
-            {
-                self->smoke_timer = 0;
-                self->texture = Scene_GetAssets(scene)->moving_base_player_2;
-            }
-        }
-        else if(self->texture == Scene_GetAssets(scene)->moving_base_player_2)
-        {
-            self->smoke_timer += Timer_GetDelta(g_time);
-            if(self->smoke_timer > PLAYER_SMOKE_SPEED)
-            {
-                self->smoke_timer = 0;
-                self->texture = Scene_GetAssets(scene)->moving_base_player;
-            }
+            self->animation_timer = 0;
+            self->animation_frame++;
+            if(self->animation_frame >= PLAYER_MOVING_ANIMATION_FRAMES)
+                self->animation_frame = 0;
         }
     }
     else
     {
+        self->animating = false;
         self->texture = Scene_GetAssets(scene)->base_player;
-        self->smoke_timer = 0;
+        self->animation_timer = 0;
+        self->animation_frame = 0;
     }
     self->position = new_position;
 }
@@ -122,9 +114,22 @@ Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
 // Le point de référence est le centre de l'objet
 dst.x -= 0.50f * dst.w;
 dst.y -= 0.50f * dst.h;
-// On affiche en position dst (unités en pixels)
+// On determine la source de la texture en fonction de la frame si nous sommes en animation
+if(self->animating){
+    SDL_Rect src = { 0 };
+    src.x = self->animation_frame * PLAYER_MOVING_ANIMATION_PERIOD;
+    src.y = 0;
+    src.w = PLAYER_MOVING_ANIMATION_PERIOD;
+    src.h = PLAYER_MOVING_ANIMATION_HEIGHT;
+    SDL_RenderCopyExF(renderer, self->texture, &src, &dst, 90.0f, NULL, 0);
+}
+else{
+    // On affiche en position dst (unités en pixels)
 SDL_RenderCopyExF(
 renderer, self->texture, NULL, &dst, 90.0f, NULL, 0);
+}
+
+
 
 /*
 // On render la barre de vie
