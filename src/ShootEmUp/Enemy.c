@@ -40,6 +40,9 @@ switch (self->type) {
         case ENEMY_DEBUG:
             EnemyDebug_Render(self->enemy);
             break;
+        case ENEMY_BASE:
+            EnemyBase_Render(self->enemy);
+            break;
         default:
             break;
     }

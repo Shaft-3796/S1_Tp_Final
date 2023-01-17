@@ -59,7 +59,7 @@ void Scene_UpdateLevel(Scene *self)
     {
         /* Add one enemy */
         Enemy *enemy = Enemy_New(ENEMY_BASE);
-        EnemyBase_New(enemy, self, Vec2_Set(10.0f, 4.5f), 10);
+        EnemyBase_New(enemy, self, Vec2_Set(15.0f, 4.5f), 5);
 
         /* TEMP */
         Perk *Perk = Perk_New(self, 1, Vec2_Set(6.0f, 4.5f));
