@@ -2,6 +2,7 @@
 
 #include "Settings.h"
 #include "Math.h"
+#include "Enemy_debug.h"
 
 typedef struct Scene_s Scene;
 
@@ -18,6 +19,14 @@ typedef enum EnemyState_e
     /// destruction est termin�e.
     ENEMY_DEAD,
 } EnemyState;
+
+/// @brief Any enemy is cated to this structure by functions in the scene.c
+/// to acess enemies attributes from a void pointer
+typedef struct GenericEnemy_s{
+    Vec2 position;
+    float radius;
+    EnemyState state;
+} GenericEnemy;
 
 /// --- Manager ---
 /// @brief Structure contenant l'ensemble des types ennemis.
@@ -64,3 +73,7 @@ void Enemy_Render(Enemy *self);
 /// @param self l'ennemi.
 /// @param damage la quantit� de dommages (nombre de points de vie � perdre).
 void Enemy_Damage(Enemy *self, int damage);
+
+/// @brief caste un ennemi en son type
+GenericEnemy * Enemy_Cast(Enemy * enemy);
+

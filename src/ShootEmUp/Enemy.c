@@ -55,3 +55,8 @@ void Enemy_Damage(Enemy *self, int damage)
             break;
     }
 }
+
+GenericEnemy * Enemy_Cast(Enemy* enemy)
+{
+    return (GenericEnemy *)(enemy->enemy);
+}

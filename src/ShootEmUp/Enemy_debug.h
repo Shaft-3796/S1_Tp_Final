@@ -5,6 +5,7 @@
 #include "Enemy.h"
 
 typedef struct Scene_s Scene;
+typedef struct Enemy_s Enemy;
 
 
 /// @brief Structure repr�sentant un ennemi.
@@ -18,10 +19,6 @@ typedef struct EnemyDebug_s
 
     /// @brief Position de l'ennemi exprim�e dans le r�f�rentiel monde.
     Vec2 position;
-
-    /// @brief Type de l'ennemi.
-    /// Les valeurs possibles sont d�finies dans EnemyType.
-    int type;
 
     /// @brief Etat de l'ennemi.
     /// Les valeurs possibles sont d�finies dans EnemyState.
@@ -48,7 +45,7 @@ typedef struct EnemyDebug_s
 /// @param type le type de l'ennemi.
 /// @param position la position de d�part de l'ennemi exprim�e dans le r�f�rentiel monde.
 /// @return L'ennemi cr��.
-EnemyDebug *EnemyDebug_New(Enemy enemy, Scene *scene, int type, Vec2 position, int hp);
+EnemyDebug *EnemyDebug_New(Enemy *enemy, Scene *scene, Vec2 position, int hp);
 
 /// @brief D�truit un ennemi.
 /// Cette m�thode est appel�e par la sc�ne.

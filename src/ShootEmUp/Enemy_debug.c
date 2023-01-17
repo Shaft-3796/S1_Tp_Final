@@ -2,14 +2,13 @@
 #include "Scene.h"
 #include "Enemy.h"
 
-EnemyDebug *EnemyDebug_New(Enemy enemy, Scene *scene, int type, Vec2 position, int hp)
+EnemyDebug *EnemyDebug_New(Enemy *enemy, Scene *scene, Vec2 position, int hp)
 {
     EnemyDebug *self = (EnemyDebug *)calloc(1, sizeof(EnemyDebug));
     AssertNew(self);
 
     self->scene = scene;
     self->position = position;
-    self->type = type;
     self->state = ENEMY_FIRING;
     self->hp = hp;
 
@@ -17,7 +16,7 @@ EnemyDebug *EnemyDebug_New(Enemy enemy, Scene *scene, int type, Vec2 position, i
     self->texture = assets->fighter;
 
     /* DO NOT REMOVE */
-    enemy.enemy = self;
+    enemy->enemy = self;
 
     return self;
 }
