@@ -15,6 +15,7 @@ Player *Player_New(Scene *scene)
     self->radius = 0.25f;
     self->texture = assets->base_player;
     self->speed = BASE_PLAYER_SPEED_MULTIPLIER;
+    self->life = 20;
 
     /* --- Perks --- */
     self->perk_astro = false;
@@ -124,7 +125,16 @@ dst.y -= 0.50f * dst.h;
 // On affiche en position dst (unités en pixels)
 SDL_RenderCopyExF(
 renderer, self->texture, NULL, &dst, 90.0f, NULL, 0);
+// On render la barre de vie
+SDL_Rect source = { 0, 36, 64, 10 };
+SDL_FRect life_bar_frame_dst = {0};
+life_bar_frame_dst.h = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+life_bar_frame_dst.w = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+Camera_WorldToView(camera, self->position, &life_bar_frame_dst.x, &life_bar_frame_dst.y);
+SDL_RenderCopyF(
+renderer, assets->lifeBarFrame, NULL, &life_bar_frame_dst);
 }
+
 
 void Player_Damage(Player *self, int damage)
 {
