@@ -2,41 +2,41 @@
 
 #include "Settings.h"
 
-/// @brief Structure représentant un gestionnaire des entrées utilisateur.
+/// @brief Structure reprï¿½sentant un gestionnaire des entrï¿½es utilisateur.
 typedef struct Input_s
 {
-    /// @brief Booléen indiquant si le bouton "quitter" vient d'être pressé.
+    /// @brief Boolï¿½en indiquant si le bouton "quitter" vient d'ï¿½tre pressï¿½.
     bool quitPressed;
 
-    /// @brief Booléen indiquant si la touche de tir vient d'être pressée.
-    //bool shootPressed;
+    /// @brief Boolï¿½en indiquant si la touche de tir vient d'ï¿½tre pressï¿½e.
+    bool shootPressed;
 
-    /// @brief Nombre indiquant le déplacement horizontal du joueur.
+    /// @brief Nombre indiquant le dï¿½placement horizontal du joueur.
     /// Les valeurs pour un clavier ou un joystick sont dans l'intervalle
     /// [-1.0f, 1.0f].
-    /// La valeur 0.0f désigne la position par défaut.
-    /// Une valeur négative désigne un déplacement vers la gauche.
-    /// Une valeur positive désigne un déplacement vers la droite.
+    /// La valeur 0.0f dï¿½signe la position par dï¿½faut.
+    /// Une valeur nï¿½gative dï¿½signe un dï¿½placement vers la gauche.
+    /// Une valeur positive dï¿½signe un dï¿½placement vers la droite.
     float hAxis;
 
-    /// @brief Nombre indiquant le déplacement vertical du joueur.
+    /// @brief Nombre indiquant le dï¿½placement vertical du joueur.
     /// Les valeurs pour un clavier ou un joystick sont dans l'intervalle
     /// [-1.0f, 1.0f].
-    /// La valeur 0.0f désigne la position par défaut.
-    /// Une valeur négative désigne un déplacement vers le bas.
-    /// Une valeur positive désigne un déplacement vers le haut.
+    /// La valeur 0.0f dï¿½signe la position par dï¿½faut.
+    /// Une valeur nï¿½gative dï¿½signe un dï¿½placement vers le bas.
+    /// Une valeur positive dï¿½signe un dï¿½placement vers le haut.
     float vAxis;
 } Input;
 
-/// @brief Crée un nouveau gestionnaire des entrées utilisateur.
-/// @return Le gestionnaire créé.
+/// @brief Crï¿½e un nouveau gestionnaire des entrï¿½es utilisateur.
+/// @return Le gestionnaire crï¿½ï¿½.
 Input *Input_New();
 
-/// @brief Détruit un gestionnaire des entrées utilisateur.
+/// @brief Dï¿½truit un gestionnaire des entrï¿½es utilisateur.
 /// @param self le gestionnaire.
 void Input_Delete(Input *self);
 
-/// @brief Met à jour le gestionnaire des entrées utilisateur.
-/// Cette fonction effectue la boucle des événement SDL.
+/// @brief Met ï¿½ jour le gestionnaire des entrï¿½es utilisateur.
+/// Cette fonction effectue la boucle des ï¿½vï¿½nement SDL.
 /// @param self le gestionnaire.
 void Input_Update(Input *self);

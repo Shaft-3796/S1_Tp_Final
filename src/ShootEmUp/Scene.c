@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Perks.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -12,6 +13,13 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->input = Input_New();
     self->player = Player_New(self);
     self->waveIdx = 0;
+
+    // Background
+    SDL_Rect layer1Pos = { 0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT};
+    self->layer1Pos = layer1Pos;
+    SDL_Rect layer0Pos = { 0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT};
+    self->layer0Pos = layer0Pos;
+    self->backgroundSpeedMultiplier = 1.f;
 
     return self;
 }
@@ -46,7 +54,10 @@ void Scene_UpdateLevel(Scene *self)
 
     if (self->waveIdx == 0)
     {
-        Enemy *enemy = Enemy_New(self, ENEMY_FIGHTER, Vec2_Set(15.0f, 4.5f));
+        Enemy *enemy = Enemy_New(self, ENEMY_FIGHTER, Vec2_Set(15.0f, 4.5f), 10);
+        /* TEMP */
+        Perk *Perk = Perk_New(self, 1, Vec2_Set(6.0f, 4.5f));
+        Scene_AppendPerk(self, Perk);
         Scene_AppendEnemy(self, enemy);
         self->waveIdx++;
     }
@@ -56,11 +67,25 @@ bool Scene_Update(Scene *self)
 {
     Player *player = self->player;
 
-    // Met à jour les entrées utilisateur
+    // Met ï¿½ jour les entrï¿½es utilisateur
     Input_Update(self->input);
 
+    // Met ï¿½ jour la positions et les dimensions des calques du background
+    int offset = Timer_GetDelta(g_time)*(float)BACKGROUND_1_SPEED_MULTIPLIER*self->backgroundSpeedMultiplier;
+    self->layer1Pos.x += offset;
+    if(self->layer1Pos.x+self->layer1Pos.w >= BACKGROUND_WIDTH)
+    {
+        self->layer1Pos.x -= BACKGROUND_PERIOD*2;
+    }
+    offset = Timer_GetDelta(g_time)*(float)BACKGROUND_0_SPEED_MULTIPLIER*self->backgroundSpeedMultiplier;
+    self->layer0Pos.x += offset;
+    if(self->layer0Pos.x+self->layer0Pos.w >= BACKGROUND_WIDTH)
+    {
+        self->layer0Pos.x -= BACKGROUND_PERIOD*2;
+    }
+
     // -------------------------------------------------------------------------
-    // Met à jour les tirs
+    // Met ï¿½ jour les tirs
 
     int i = 0;
     while (i < self->bulletCount)
@@ -71,10 +96,10 @@ bool Scene_Update(Scene *self)
         Bullet_Update(bullet);
 
         bool outOfBounds =
-            (bullet->position.x < -1.0f) ||
-            (bullet->position.x > 17.0f) ||
-            (bullet->position.y < -1.0f) ||
-            (bullet->position.y > 10.0f);
+            (bullet->position.x < -5.0f) ||
+            (bullet->position.x > 20.0f) ||
+            (bullet->position.y < -5.0f) ||
+            (bullet->position.y > 20.0f);
 
         if (outOfBounds)
         {
@@ -93,7 +118,7 @@ bool Scene_Update(Scene *self)
                 float dist = Vec2_Distance(bullet->position, enemy->position);
                 if (dist < bullet->radius + enemy->radius)
                 {
-                    // Inflige des dommages à l'ennemi
+                    // Inflige des dommages ï¿½ l'ennemi
                     Enemy_Damage(enemy, 1);
 
                     // Supprime le tir
@@ -126,7 +151,7 @@ bool Scene_Update(Scene *self)
     }
 
     // -------------------------------------------------------------------------
-    // Met à jour les ennemis
+    // Met ï¿½ jour les ennemis
 
     i = 0;
     while (i < self->enemyCount)
@@ -151,12 +176,41 @@ bool Scene_Update(Scene *self)
     }
 
     // -------------------------------------------------------------------------
-    // Met à jour le joueur
+    // Met ï¿½ jour le joueur
 
     Player_Update(self->player);
 
     // -------------------------------------------------------------------------
-    // Met à jour le niveau
+    // Met ï¿½ jour les Perk
+
+    i = 0;
+    while (i < self->perkCount)
+    {
+        Perk *perk = self->perk[i];
+        bool removed = false;
+
+        Perk_Update(perk);
+
+        // Check for Perk collision with player
+        float dist = Vec2_Distance(perk->position, self->player->position);
+        if (dist < perk->radius + player->radius)
+        {
+            // Applique l'effet de la Perk
+            Perk_Apply_Effect(perk, self->player);
+            Scene_RemovePerk(self, i);
+            removed = true;
+
+        }
+
+        // Passe au prochain perk
+        if (removed == false)
+        {
+            i++;
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // Met ï¿½ jour le niveau
 
     Scene_UpdateLevel(self);
 
@@ -168,8 +222,11 @@ void Scene_Render(Scene *self)
     // Affichage du fond
     SDL_Renderer *renderer = Scene_GetRenderer(self);
     Assets *assets = Scene_GetAssets(self);
-    SDL_RenderCopy(renderer, assets->layers[0], NULL, NULL);
-    SDL_RenderCopy(renderer, assets->layers[1], NULL, NULL);
+    SDL_RenderCopy(renderer, assets->layers[0], &(self->layer0Pos), NULL);
+    SDL_RenderCopy(renderer, assets->layers[1], &(self->layer1Pos), NULL);
+    SDL_RenderCopy(renderer, assets->layers[2], &(self->layer1Pos), NULL);
+    // SDL_RenderCopy(renderer, assets->layers[0], &selection_l2, NULL);
+
 
     // Affichage des bullets
     int bulletCount = self->bulletCount;
@@ -187,6 +244,13 @@ void Scene_Render(Scene *self)
 
     // Affichage du joueur
     Player_Render(self->player);
+
+    // Affichage des Perk
+    int perkCount = self->perkCount;
+    for (int i = 0; i < perkCount; i++)
+    {
+        Perk_Render(self->perk[i]);
+    }
 }
 
 void Scene_AppendObject(void *object, void **objectArray, int *count, int capacity)
@@ -260,4 +324,21 @@ void Scene_RemoveBullet(Scene *self, int index)
 {
     Bullet_Delete(self->bullets[index]);
     Scene_RemoveObject(index, (void **)(self->bullets), &(self->bulletCount));
+}
+
+/* --- Perk --- */
+void Scene_AppendPerk(Scene *self, Perk *perk)
+{
+    Scene_AppendObject(
+        perk,
+        (void **)(self->perk),
+        &(self->perkCount),
+        PERKS_CAPACITY
+    );
+}
+
+void Scene_RemovePerk(Scene *self, int index)
+{
+    Perk_Delete(self->perk[index]);
+    Scene_RemoveObject(index, (void **)(self->perk), &(self->perkCount));
 }

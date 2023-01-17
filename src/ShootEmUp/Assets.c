@@ -15,11 +15,16 @@ Assets *Assets_New(SDL_Renderer *renderer)
     // Chargement des textures
 
     TextureSpec texSpecs[] = {
-        { &self->layers[0],     "../Assets/Background/layer_01.png"   },
-        { &self->layers[1],     "../Assets/Background/layer_02.png"   },
-        { &self->playerBullet,  "../Assets/Player/bullet_default.png" },
+        { &self->layers[0],     "../Assets/Background/layer_00_wide.png"   },
+        { &self->layers[1],     "../Assets/Background/layer_01_wide.png"   },
+        { &self->layers[2],     "../Assets/Background/layer_02_wide.png"   },
+        { &self->base_player_bullets,  "../Assets/Player/BaseBullets.png" },
         { &self->fighter,       "../Assets/Enemy/fighter.png"         },
         { &self->fighterBullet, "../Assets/Enemy/fighter_bullet.png"  },
+        { &self->base_player, "../Assets/Player/BasePlayer.png"  },
+        { &self->moving_base_player, "../Assets/Player/MovingBasePlayer.png"  },
+        { &self->moving_base_player_2, "../Assets/Player/MovingBasePlayer2.png"  },
+        { &self->astro, "../Assets/Perks/Perk_Astro.png"  },
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 
@@ -46,14 +51,16 @@ void Assets_Delete(Assets *self)
     if (!self) return;
 
     // -------------------------------------------------------------------------
-    // Libère les textures
+    // Libï¿½re les textures
 
     SDL_Texture **texPointers[] = {
         &self->layers[0],
         &self->layers[1],
-        &self->playerBullet,
+        &self->base_player_bullets,
         &self->fighter,
         &self->fighterBullet,
+        &self->base_player,
+        &self->moving_base_player,
     };
     int count = sizeof(texPointers) / sizeof(SDL_Texture **);
 

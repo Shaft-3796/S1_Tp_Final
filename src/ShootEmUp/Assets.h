@@ -3,30 +3,40 @@
 #include "Settings.h"
 
 /// @brief Structure contenant l'ensemble des assets du jeu.
-/// Cela correspond aux ressources utilisées (textures, musiques, sons...)
+/// Cela correspond aux ressources utilisï¿½es (textures, musiques, sons...)
 typedef struct Assets_s
 {
-    /// @brief Tableau des différents calques de fond.
-    SDL_Texture *layers[2];
+    /// @brief Tableau des diffï¿½rents calques de fond.
+    SDL_Texture *layers[3];
 
-    /// @brief Texture du vaisseau du joueur.
-    //SDL_Texture *player;
+    /// @brief Texture du vaisseau du joueur de base.
+    SDL_Texture *base_player;
 
-    /// @brief Texture du tir du joueur.
-    SDL_Texture *playerBullet;
+    /// @brief Texture du vaisseau du joueur de base en mouvement.
+    SDL_Texture *moving_base_player;
+
+    /// @brief Texture du vaisseau du joueur de base en mouvement frame 2.
+    SDL_Texture *moving_base_player_2;
+
+    /// @brief Texture du tir de base du joueur.
+    SDL_Texture *base_player_bullets;
 
     /// @brief Texture du vaisseau ennemi.
     SDL_Texture *fighter;
 
     /// @brief Texture du tir d'un ennemi.
     SDL_Texture *fighterBullet;
+
+    /* --- Perk --- */
+    /// @brief Texture de l'astor
+    SDL_Texture *astro;
 } Assets;
 
-/// @brief Crée la structure contenant les assets du jeu.
+/// @brief Crï¿½e la structure contenant les assets du jeu.
 /// @param renderer le moteur de rendu.
 /// @return La structure contenant les assets du jeu.
 Assets *Assets_New(SDL_Renderer *renderer);
 
-/// @brief Détruit la structure contenant les assets du jeu.
+/// @brief Dï¿½truit la structure contenant les assets du jeu.
 /// @param self les assets.
 void Assets_Delete(Assets *self);
