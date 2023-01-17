@@ -35,6 +35,7 @@ typedef struct Assets_s
     /// @brief Barre de vie
     SDL_Texture *lifeBar;
 
+    SDL_Texture *base_enemy;
 
 } Assets;
 

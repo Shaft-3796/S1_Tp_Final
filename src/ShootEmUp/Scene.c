@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "Perks.h"
 #include "Enemy.h"
-#include "Enemy_debug.h"
+#include "Enemy_Base.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -58,8 +58,8 @@ void Scene_UpdateLevel(Scene *self)
     if (self->waveIdx == 0)
     {
         /* Add one enemy */
-        Enemy *enemy = Enemy_New(ENEMY_DEBUG);
-        EnemyDebug_New(enemy, self, Vec2_Set(15.0f, 4.5f), 10);
+        Enemy *enemy = Enemy_New(ENEMY_BASE);
+        EnemyBase_New(enemy, self, Vec2_Set(15.0f, 4.5f), 10);
 
         /* TEMP */
         Perk *Perk = Perk_New(self, 1, Vec2_Set(6.0f, 4.5f));

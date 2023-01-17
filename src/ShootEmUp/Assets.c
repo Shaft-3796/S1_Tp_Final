@@ -62,6 +62,7 @@ void Assets_Delete(Assets *self)
         &self->fighter,
         &self->fighterBullet,
         &self->base_player,
+        & self->base_enemy,
         &self->moving_base_player,
     };
     int count = sizeof(texPointers) / sizeof(SDL_Texture **);

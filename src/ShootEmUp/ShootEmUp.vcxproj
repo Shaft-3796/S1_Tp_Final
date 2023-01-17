@@ -138,9 +138,12 @@
     <ClCompile Include="Camera.c" />
     <ClCompile Include="Common.c" />
     <ClCompile Include="Enemy.c" />
+    <ClCompile Include="Enemy_Base.c" />
+    <ClCompile Include="Enemy_debug.c" />
     <ClCompile Include="Input.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Math.c" />
+    <ClCompile Include="Perks.c" />
     <ClCompile Include="Player.c" />
     <ClCompile Include="Scene.c" />
     <ClCompile Include="Timer.c" />
@@ -151,8 +154,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enemy_Base.h" />
+    <ClInclude Include="Enemy_debug.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="Perks.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Settings.h" />

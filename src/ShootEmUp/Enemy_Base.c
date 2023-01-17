@@ -10,11 +10,10 @@ EnemyBase *EnemyBase_New(Enemy *enemy, Scene *scene, Vec2 position, int life)
     self->scene = scene;
     self->position = position;
     self->state = ENEMY_FIRING;
-    self->texture = assets->base_enemy;
     self->life = life;
 
     Assets *assets = Scene_GetAssets(self->scene);
-    self->texture = assets->fighter;
+    self->texture = assets->base_enemy;
 
     /* DO NOT REMOVE */
     enemy->enemy = self;
