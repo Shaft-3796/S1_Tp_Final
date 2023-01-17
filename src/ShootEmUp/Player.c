@@ -84,10 +84,10 @@ if (new_position.x > 0.5 && new_position.x < 8 && new_position.y > 0.5 && new_po
 
 if(self->scene->input->shootPressed)
 {
-   Vec2 velocity = Vec2_Set(4.0f, 0.0f);
-Bullet *bullet = Bullet_New(
-self->scene, self->position, velocity, BULLET_PLAYER, 90.0f);
-Scene_AppendBullet(self->scene, bullet);
+    Vec2 velocity = Vec2_Set(4.0f, 0.0f);
+    Bullet *bullet = Bullet_New(
+    self->scene, self->position, velocity, BULLET_PLAYER, 90.0f);
+    Scene_AppendBullet(self->scene, bullet);
 }
 
 /* --- Perks --- */
