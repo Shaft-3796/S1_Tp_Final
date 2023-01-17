@@ -7,19 +7,29 @@
 typedef struct Assets_s
 {
     /// @brief Tableau des diff�rents calques de fond.
-    SDL_Texture *layers[2];
+    SDL_Texture *layers[3];
 
-    /// @brief Texture du vaisseau du joueur.
-    SDL_Texture *player;
+    /// @brief Texture du vaisseau du joueur de base.
+    SDL_Texture *base_player;
 
-    /// @brief Texture du tir du joueur.
-    SDL_Texture *playerBullet;
+    /// @brief Texture du vaisseau du joueur de base en mouvement.
+    SDL_Texture *moving_base_player;
+
+    /// @brief Texture du vaisseau du joueur de base en mouvement frame 2.
+    SDL_Texture *moving_base_player_2;
+
+    /// @brief Texture du tir de base du joueur.
+    SDL_Texture *base_player_bullets;
 
     /// @brief Texture du vaisseau ennemi.
     SDL_Texture *fighter;
 
     /// @brief Texture du tir d'un ennemi.
     SDL_Texture *fighterBullet;
+
+    /* --- Perk --- */
+    /// @brief Texture de l'astor
+    SDL_Texture *astro;
 } Assets;
 
 /// @brief Cr�e la structure contenant les assets du jeu.

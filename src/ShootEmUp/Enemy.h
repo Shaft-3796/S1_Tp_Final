@@ -5,73 +5,76 @@
 
 typedef struct Scene_s Scene;
 
-/// @brief Enumération représentant les états possibles d'un ennemi.
+/// @brief Enumï¿½ration reprï¿½sentant les ï¿½tats possibles d'un ennemi.
 typedef enum EnemyState_e
 {
-    /// @brief Etat par défaut d'un ennemi.
+    /// @brief Etat par dï¿½faut d'un ennemi.
     ENEMY_FIRING,
 
     /// @brief Etat d'un ennemi quand il joue l'animation de destruction.
     ENEMY_DYING,
 
     /// @brief Etat d'un ennemi quand il est mort et que son animation de
-    /// destruction est terminée.
+    /// destruction est terminï¿½e.
     ENEMY_DEAD,
 } EnemyState;
 
-/// @brief Enumération des types possibles pour un ennemi.
+/// @brief Enumï¿½ration des types possibles pour un ennemi.
 typedef enum EnemyType_e
 {
     /// @brief Ennemi simple.
     ENEMY_FIGHTER,
 } EnemyType;
 
-/// @brief Structure représentant un ennemi.
+/// @brief Structure reprï¿½sentant un ennemi.
 typedef struct Enemy_s
 {
-    /// @brief Scène associée.
+    /// @brief Scï¿½ne associï¿½e.
     Scene *scene;
 
-    /// @brief Texture utilisée pour le rendu.
+    /// @brief Texture utilisï¿½e pour le rendu.
     SDL_Texture *texture;
 
-    /// @brief Position de l'ennemi exprimée dans le référentiel monde.
+    /// @brief Position de l'ennemi exprimï¿½e dans le rï¿½fï¿½rentiel monde.
     Vec2 position;
 
     /// @brief Type de l'ennemi.
-    /// Les valeurs possibles sont définies dans EnemyType.
+    /// Les valeurs possibles sont dï¿½finies dans EnemyType.
     int type;
 
     /// @brief Etat de l'ennemi.
-    /// Les valeurs possibles sont définies dans EnemyState.
+    /// Les valeurs possibles sont dï¿½finies dans EnemyState.
     int state;
 
     /// @brief Largeur de la texture de l'ennemi
-    /// exprimée dans le référentiel monde.
+    /// exprimï¿½e dans le rï¿½fï¿½rentiel monde.
     float worldW;
 
     /// @brief Hauteur de la texture de l'ennemi
-    /// exprimée dans le référentiel monde.
+    /// exprimï¿½e dans le rï¿½fï¿½rentiel monde.
     float worldH;
 
-    /// @brief Rayon de l'ennemi exprimé dans le référentiel monde.
-    /// Il est utilisé dans le moteur physique pour tester les collisions.
+    /// @brief Rayon de l'ennemi exprimï¿½ dans le rï¿½fï¿½rentiel monde.
+    /// Il est utilisï¿½ dans le moteur physique pour tester les collisions.
     float radius;
+
+    /// @brief Vie de l'ennemi.
+    int hp;
 } Enemy;
 
-/// @brief Crée un nouvel ennemi.
-/// @param scene la scène.
+/// @brief Crï¿½e un nouvel ennemi.
+/// @param scene la scï¿½ne.
 /// @param type le type de l'ennemi.
-/// @param position la position de départ de l'ennemi exprimée dans le référentiel monde.
-/// @return L'ennemi créé.
-Enemy *Enemy_New(Scene *scene, int type, Vec2 position);
+/// @param position la position de dï¿½part de l'ennemi exprimï¿½e dans le rï¿½fï¿½rentiel monde.
+/// @return L'ennemi crï¿½ï¿½.
+Enemy *Enemy_New(Scene *scene, int type, Vec2 position, int hp);
 
-/// @brief Détruit un ennemi.
-/// Cette méthode est appelée par la scène.
+/// @brief Dï¿½truit un ennemi.
+/// Cette mï¿½thode est appelï¿½e par la scï¿½ne.
 /// @param self l'ennemi.
 void Enemy_Delete(Enemy *self);
 
-/// @brief Met à jour un ennemi.
+/// @brief Met ï¿½ jour un ennemi.
 /// @param self l'ennemi.
 void Enemy_Update(Enemy *self);
 
@@ -79,7 +82,7 @@ void Enemy_Update(Enemy *self);
 /// @param self l'ennemi.
 void Enemy_Render(Enemy *self);
 
-/// @brief Inflige des dommages à un ennemi.
+/// @brief Inflige des dommages ï¿½ un ennemi.
 /// @param self l'ennemi.
-/// @param damage la quantité de dommages (nombre de points de vie à perdre).
+/// @param damage la quantitï¿½ de dommages (nombre de points de vie ï¿½ perdre).
 void Enemy_Damage(Enemy *self, int damage);

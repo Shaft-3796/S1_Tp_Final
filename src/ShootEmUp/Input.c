@@ -18,6 +18,7 @@ void Input_Delete(Input *self)
 void Input_Update(Input *self)
 {
     self->quitPressed = false;
+    self->shootPressed = false;
 
     SDL_Event evt;
     while (SDL_PollEvent(&evt))
@@ -39,12 +40,12 @@ void Input_Update(Input *self)
                 break;
 
             case SDL_SCANCODE_RIGHT:
-                // Deplacement à droite
+                // Deplacement ï¿½ droite
                 self->hAxis = 1.f;
                 break;
 
             case SDL_SCANCODE_LEFT:
-                // Deplacement à gauche
+                // Deplacement ï¿½ gauche
                 self->hAxis = -1.f;
                 break;
 
@@ -56,6 +57,11 @@ void Input_Update(Input *self)
             case SDL_SCANCODE_DOWN:
                 // Deplacement en bas
                 self->vAxis = -1.f;
+                break;
+
+            case SDL_SCANCODE_SPACE:
+                // shoot
+                self->shootPressed = true;
                 break;
 
             default:
@@ -70,13 +76,13 @@ void Input_Update(Input *self)
             switch (evt.key.keysym.scancode)
             {
             case SDL_SCANCODE_RIGHT:
-                // Deplacement à droite
+                // Deplacement ï¿½ droite
                 if (self->hAxis > 0.f)
                     self->hAxis = 0.f;
                 break;
 
             case SDL_SCANCODE_LEFT:
-                // Deplacement à gauche
+                // Deplacement ï¿½ gauche
                 if (self->hAxis < 0.f)
                     self->hAxis = 0.f;
                 break;

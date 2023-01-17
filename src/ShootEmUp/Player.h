@@ -5,51 +5,66 @@
 
 typedef struct Scene_s Scene;
 
-/// @brief Enumération représentant les états possibles du joueur.
+/// @brief Enumï¿½ration reprï¿½sentant les ï¿½tats possibles du joueur.
 typedef enum PlayerState_e
 {
-    /// @brief Etat par défaut du joueur.
+    /// @brief Etat par dï¿½faut du joueur.
     PLAYER_FLYING,
 
     /// @brief Etat du joueur quand il joue l'animation de destruction.
     PLAYER_DYING,
 
     /// @brief Etat du joueur quand il est mort et que son animation de
-    /// destruction est terminée.
+    /// destruction est terminï¿½e.
     PLAYER_DEAD,
 } PlayerState;
 
-/// @brief Structure représentant le joueur.
+/// @brief Structure reprï¿½sentant le joueur.
 typedef struct Player_s
 {
-    /// @brief Scène associée.
+    /// @brief Scï¿½ne associï¿½e.
     Scene *scene;
 
-    /// @brief Texture utilisée pour le rendu.
+    /// @brief Texture utilisï¿½e pour le rendu.
     SDL_Texture *texture;
 
-    /// @brief Position du joueur exprimée dans le référentiel monde.
+    /// @brief Position du joueur exprimï¿½e dans le rï¿½fï¿½rentiel monde.
     Vec2 position;
 
     /// @brief Etat du joueur.
-    /// Les valeurs possibles sont définies dans PlayerState.
+    /// Les valeurs possibles sont dï¿½finies dans PlayerState.
     int state;
 
-    /// @brief Rayon du joueur exprimé dans le référentiel monde.
-    /// Il est utilisé dans le moteur physique pour tester les collisions.
+    /// @brief Rayon du joueur exprimï¿½ dans le rï¿½fï¿½rentiel monde.
+    /// Il est utilisï¿½ dans le moteur physique pour tester les collisions.
     float radius;
+
+    /// @brief Vitesse du joueur exprimï¿½e dans le rï¿½fï¿½rentiel monde.
+    int speed;
+
+    /* --- Perks --- */
+    /// @brief Perk Astro active.
+    bool perk_astro;
+
+    /// @brief Temps Ã©coulÃ© depuis le dÃ©but de l'effet de la Perk Astro.
+    float perk_astro_timer;
+
+    /* --- Animation --- */
+    /// @brief Temps ï¿½coulï¿½ depuis le dï¿½but de l'animation de fumÃ©e.
+    float smoke_timer;
+
 } Player;
 
-/// @brief Crée un nouveau joueur.
-/// @param scene la scène.
-/// @return Le joueur créé.
+/// @brief Crï¿½e un nouveau joueur.
+/// @param scene la scï¿½ne.
+/// @return Le joueur crï¿½ï¿½.
 Player *Player_New(Scene *scene);
 
-/// @brief Détruit un joueur.
+/// @brief Dï¿½truit un joueur.
 /// @param self le joueur.
 void Player_Delete(Player *self);
 
-/// @brief Met à jour le joueur.
+/// @brief Met ï¿½ jour le joueur.
 /// @param self le joueur.
 void Player_Update(Player *self);
 
@@ -59,5 +74,5 @@ void Player_Render(Player *self);
 
 /// @brief Inflige des dommages au joueur.
 /// @param self le joueur.
-/// @param damage la quantité de dommages (nombre de points de vie à perdre).
+/// @param damage la quantitï¿½ de dommages (nombre de points de vie ï¿½ perdre).
 void Player_Damage(Player *self, int damage);
