@@ -1,7 +1,6 @@
 #include "Scene.h"
 #include "Perks.h"
 #include "Enemy.h"
-#include "Enemy_Base.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {

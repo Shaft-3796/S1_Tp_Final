@@ -44,8 +44,8 @@ void EnemyBase_Render(EnemyBase *self)
     float scale = Camera_GetWorldToViewScale(camera);
     SDL_FRect dst = { 0 };
     // Changez 48 par une autre valeur pour grossir ou réduire l'objet
-    dst.h = 48 * PIX_TO_WORLD * scale;
-    dst.w = 48 * PIX_TO_WORLD * scale;
+    dst.h = 88 * PIX_TO_WORLD * scale;
+    dst.w = 88 * PIX_TO_WORLD * scale;
     Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
     // Le point de référence est le centre de l'objet
     dst.x -= 0.50f * dst.w;

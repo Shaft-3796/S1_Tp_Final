@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Enemy_debug.h"
+#include "Enemy_Base.h"
 #include "Scene.h"
 
 Enemy *Enemy_New(EnemyTypes type)
@@ -16,6 +17,9 @@ void Enemy_Delete(Enemy *self)
         case ENEMY_DEBUG:
             EnemyDebug_Delete(self->enemy);
             break;
+        case ENEMY_BASE:
+            EnemyBase_Delete(self->enemy);
+            break;
         default:
             break;
     }
@@ -28,6 +32,9 @@ void Enemy_Update(Enemy *self)
     switch (self->type) {
         case ENEMY_DEBUG:
             EnemyDebug_Update(self->enemy);
+            break;
+        case ENEMY_BASE:
+            EnemyBase_Update(self->enemy);
             break;
         default:
             break;
@@ -53,6 +60,9 @@ void Enemy_Damage(Enemy *self, int damage)
     switch (self->type) {
         case ENEMY_DEBUG:
             EnemyDebug_Damage(self->enemy, damage);
+            break;
+        case ENEMY_BASE:
+            EnemyBase_Damage(self->enemy, damage);
             break;
         default:
             break;
