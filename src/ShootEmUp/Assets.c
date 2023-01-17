@@ -25,7 +25,7 @@ Assets *Assets_New(SDL_Renderer *renderer)
         { &self->moving_base_player, "../Assets/Player/MovingBasePlayer.png"  },
         { &self->moving_base_player_2, "../Assets/Player/MovingBasePlayer2.png"  },
         { &self->astro, "../Assets/Perks/Perk_Astro.png"  },
-        { &self->lifeBar, "../Assets/Ui/LifeBar.png"  },
+        { &self->lifeBar, "../Assets/UI/LifeBar.png"  },
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 
