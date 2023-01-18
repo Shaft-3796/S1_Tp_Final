@@ -62,8 +62,11 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */
-        Perk *Perk = Perk_New(self, 1, Vec2_Set(6.0f, 4.5f));
-        Scene_AppendPerk(self, Perk);
+        Perk *perk = Perk_New(self, PERK_TYPE_ASTRO, Vec2_Set(6.0f, 4.5f));
+        Scene_AppendPerk(self, perk);
+
+        Perk *perk2 = Perk_New(self, PERK_TYPE_SHIELD, Vec2_Set(6.0f, 5.f));
+        Scene_AppendPerk(self, perk2);
 
         /* Add an asteroid */
         Bullet *asteroid = Asteroid_New(self, 5, 90.f);
@@ -140,6 +143,15 @@ bool Scene_Update(Scene *self)
         }
         else
         {
+            // Teste la collision avec le bouclié
+            float dist_s = Vec2_Distance(bullet->position, self->player->position);
+            if (dist_s < bullet->radius + player->shield_radius)
+            {
+                // Supprime le tir
+                Scene_RemoveBullet(self, i);
+                removed = true;
+            }
+
             // Teste la collision avec le joueur
             float dist = Vec2_Distance(bullet->position, self->player->position);
             if (dist < bullet->radius + player->radius)
