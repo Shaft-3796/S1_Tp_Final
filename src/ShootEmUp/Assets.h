@@ -7,7 +7,7 @@
 typedef struct Assets_s
 {
     /// @brief Tableau des diff�rents calques de fond.
-    SDL_Texture *layers[3];
+    SDL_Texture *layers[4];
 
     /// @brief Texture du vaisseau du joueur de base.
     SDL_Texture *base_player;
@@ -41,7 +41,6 @@ typedef struct Assets_s
     SDL_Texture *player_life_bar_content;
 
 
-
     /* --- Easter egg --- */
     /// @brief Texture du meilleur professeur du monde (en toute objectivité)
     SDL_Texture *bodin;
@@ -50,9 +49,11 @@ typedef struct Assets_s
     /// @brief Texture des astéroïdes
     SDL_Texture *asteroid;
 
-    /* --- Menu --- */
+    /* --- Scenes --- */
     /// @brief Texture du menu
     SDL_Texture *menu;
+    SDL_Texture *death;
+    SDL_Texture *black_hole;
 
 
 
