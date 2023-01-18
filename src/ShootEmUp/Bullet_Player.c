@@ -9,7 +9,7 @@ void BulletPlayer_Update(Bullet *self);
 void BulletPlayer_Render(Bullet *self);
 
 /// @brief Creates a new Bullet_Player.
-Bullet BulletPlayer_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
+Bullet* BulletPlayer_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
     /* --- Base Ini --- */
     Bullet *self = (Bullet *)calloc(1, sizeof(Bullet));
     self->texture = scene->assets->base_player_bullets;
@@ -30,6 +30,8 @@ Bullet BulletPlayer_New(Scene *scene, Vec2 position, Vec2 velocity, float angle)
     self->Delete = &BulletPlayer_Delete;
     self->Update = &BulletPlayer_Update;
     self->Render = &BulletPlayer_Render;
+
+    return self;
 }
 
 void BulletPlayer_Delete(Bullet *self)

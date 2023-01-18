@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Timer.h"
 #include "Math.h"
+#include "Bullet.h"
 
 // Protos
 void EnemyBase_Delete(Enemy *self);
@@ -23,13 +24,15 @@ Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
     self->worldH = 48;
     self->worldW = 48;
     self->radius = 0.5;
-    self->accumulator_bullet_shot = 0;
     /* --- --- --- --- */
 
-    /* --- Custom Ini --- */
+    /* --- Arguments ini --- */
     self->scene = scene;
     self->position = position;
     self->life = life;
+
+    /* --- Custom Ini --- */
+    self->accumulator_bullet_shot = 0;
 
     /* --- Functions bindings --- */
     self->Delete = &EnemyBase_Delete;
@@ -48,9 +51,9 @@ void EnemyBase_Delete(Enemy *self)
 
 void EnemyBase_Update(Enemy *self)
 {
-    while (self->accumulator_bullet_shot >= 1){
+    if (self->accumulator_bullet_shot >= 1){
         Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-        Bullet *bullet = Bullet_New(self->scene, self->position, velocity, BULLET_BASE_ENEMY, 90.0f);
+        Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f);
         Scene_AppendBullet(self->scene, bullet);
         self->accumulator_bullet_shot = 0;
     }

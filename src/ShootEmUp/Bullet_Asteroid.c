@@ -9,13 +9,13 @@ void BulletAsteroid_Update(Bullet *self);
 void BulletAsteroid_Render(Bullet *self);
 
 /// @brief Creates a new Bullet_Player.
-Bullet BulletAsteroid_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
+Bullet* BulletAsteroid_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
     /* --- Base Ini --- */
     Bullet *self = (Bullet *)calloc(1, sizeof(Bullet));
     self->texture = scene->assets->asteroid;
     self->worldW = 8 * PIX_TO_WORLD;
     self->worldH = 16 * PIX_TO_WORLD;
-    self->radius = 0.05f;
+    self->radius = 0.3f;
     self->fromPlayer = false;
     self->type = ASTEROID;
 
@@ -24,12 +24,13 @@ Bullet BulletAsteroid_New(Scene *scene, Vec2 position, Vec2 velocity, float angl
     self->position = position;
     self->velocity = velocity;
     self->angle = angle;
-    self->fromPlayer = true;
 
     /* --- Functions bindings --- */
     self->Delete = &BulletAsteroid_Delete;
     self->Update = &BulletAsteroid_Update;
     self->Render = &BulletAsteroid_Render;
+
+    return self;
 }
 
 void BulletAsteroid_Delete(Bullet *self)

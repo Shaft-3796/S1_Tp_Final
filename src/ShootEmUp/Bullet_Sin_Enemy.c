@@ -9,7 +9,7 @@ void BulletSinEnemy_Update(Bullet *self);
 void BulletSinEnemy_Render(Bullet *self);
 
 /// @brief Creates a new Bullet_Player.
-Bullet BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
+Bullet* BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
     /* --- Base Ini --- */
     Bullet *self = (Bullet *)calloc(1, sizeof(Bullet));
     self->texture = scene->assets->base_enemy_bullet;
@@ -33,6 +33,8 @@ Bullet BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float angl
     self->Delete = &BulletSinEnemy_Delete;
     self->Update = &BulletSinEnemy_Update;
     self->Render = &BulletSinEnemy_Render;
+
+    return self;
 }
 
 void BulletSinEnemy_Delete(Bullet *self)
@@ -44,10 +46,10 @@ void BulletSinEnemy_Delete(Bullet *self)
 void BulletSinEnemy_Update(Bullet *self)
 {
     if(self->position.y >= self->ordInit+1){
-                self->velocity.y * -1;
+                self->velocity.y *= -1;
             }
             if(self->position.y <= self->ordInit-1){
-                self->velocity.y * -1;
+                self->velocity.y *= -1;
             }
             else{
                 self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));

@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Timer.h"
 #include "Math.h"
+#include "Bullet.h"
 
 // Protos
 void EnemySin_Delete(Enemy *self);
@@ -50,7 +51,7 @@ void EnemySin_Update(Enemy *self)
 {
     while (self->accumulator_bullet_shot >= 1){
         Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-        Bullet *bullet = Bullet_New(self->scene, self->position, velocity, BULLET_SIN_ENEMY, 90.0f);
+        Bullet *bullet = BulletSinEnemy_New(self->scene, self->position, velocity, 90.0f);
         Scene_AppendBullet(self->scene, bullet);
         bullet->ordInit = self->position.y;
         self->accumulator_bullet_shot = 0;

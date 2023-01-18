@@ -39,7 +39,7 @@ void MenuScene_UpdateLevel(MenuScene *self)
 bool MenuScene_Update(MenuScene *self)
 {
     // Met � jour les entr�es utilisateur
-    Input_Update(self->input);
+    MenuInput_Update(self->input);
 
     // Met � jour la positions et les dimensions des calques du background
     int offset = Timer_GetDelta(g_time)*(float)BACKGROUND_1_SPEED_MULTIPLIER;

@@ -11,6 +11,12 @@
 #include "Enemy.h"
 #include "Enemy_Base.h"
 #include "Perks.h"
+#include "Bullet.h"
+#include "Bullet_Base_Enemy.h"
+#include "Bullet_Player.h"
+#include "Bullet_Asteroid.h"
+#include "Bullet_Sin_Enemy.h"
+
 
 // Nombre maximal d'ennemis actifs dans un niveau.
 #define ENEMY_CAPACITY 32

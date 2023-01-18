@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Enemy_debug.h"
 #include "Enemy_Sin.h"
+#include "Bullet_Asteroid.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -44,7 +45,7 @@ void Scene_Delete(Scene *self)
     }
     for (int i = 0; i < self->bulletCount; i++)
     {
-        Bullet_Delete(self->bullets[i]);
+        self->bullets[i]->Delete(self->bullets[i]);
         self->bullets[i] = NULL;
     }
 
@@ -59,7 +60,7 @@ void Scene_UpdateLevel(Scene *self)
     if (self->waveIdx == 0)
     {
         /* Add one  Base enemy */
-        Enemy *enemy = EnemySin_New(self, Vec2_Set(15.0f, 4.5f), 10);
+        Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10);
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */
@@ -70,7 +71,7 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendPerk(self, perk2);
 
         /* Add an asteroid */
-        Bullet *asteroid = Asteroid_New(self, 5, 90.f);
+        Bullet *asteroid = BulletAsteroid_New(self, Vec2_Set(18.f, 4.5f), Vec2_Set(-1*ASTEROID_SPEED_MULTIPLIER, 0.f), 90.f);
         Scene_AppendBullet(self, asteroid);
 
         self->waveIdx++;
@@ -107,7 +108,7 @@ bool Scene_Update(Scene *self)
         Bullet *bullet = self->bullets[i];
         bool removed = false;
 
-        Bullet_Update(bullet);
+        bullet->Update(bullet);
 
         bool outOfBounds =
             (bullet->position.x < -5.0f) ||
@@ -145,9 +146,8 @@ bool Scene_Update(Scene *self)
         else
         {
             // Teste la collision avec le bouclié
-            float dist_s = Vec2_Distance(bullet->position, self->player->position);
             float dist = Vec2_Distance(bullet->position, self->player->position);
-            if (dist_s < bullet->radius + player->shield_radius && player->perk_shield)
+            if (dist < bullet->radius + player->shield_radius && player->perk_shield)
             {
                 // Supprime le tir
                 Scene_RemoveBullet(self, i);
@@ -277,7 +277,7 @@ void Scene_Render(Scene *self)
     int bulletCount = self->bulletCount;
     for (int i = 0; i < bulletCount; i++)
     {
-        Bullet_Render(self->bullets[i]);
+        self->bullets[i]->Render(self->bullets[i]);
     }
 
     // Affichage des ennemis
@@ -368,7 +368,7 @@ void Scene_RemoveEnemy(Scene *self, int index)
 
 void Scene_RemoveBullet(Scene *self, int index)
 {
-    Bullet_Delete(self->bullets[index]);
+    self->bullets[index]->Delete(self->bullets[index]);
     Scene_RemoveObject(index, (void **)(self->bullets), &(self->bulletCount));
 }
 

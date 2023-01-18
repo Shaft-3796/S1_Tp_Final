@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Common.h"
 #include "Settings.h"
+#include "Bullet.h"
 
 Player *Player_New(Scene *scene)
 {
@@ -22,7 +23,7 @@ Player *Player_New(Scene *scene)
     self->perk_astro_timer = 0;
     self->perk_shield = false;
     self->perk_shield_timer = 0;
-    self->shield_radius = 1.25f;
+    self->shield_radius = 1.f;
 
     /* --- Anim --- */
     self->animation_timer = 0;
@@ -79,9 +80,9 @@ if (new_position.x > 0.5 && new_position.x < 8 && new_position.y > 0.5 && new_po
 
 if(self->scene->input->shootPressed)
 {
-    Vec2 velocity = Vec2_Set(4.0f, 0.0f);
-    Bullet *bullet = Bullet_New(
-    self->scene, self->position, velocity, BULLET_PLAYER, 90.0f);
+    Vec2 v = Vec2_Set(4.0f, 0.0f);
+    Bullet *bullet = BulletPlayer_New(
+    self->scene, self->position, v, 90.0f);
     Scene_AppendBullet(self->scene, bullet);
 }
 

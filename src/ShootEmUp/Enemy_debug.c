@@ -1,6 +1,7 @@
 #include "Enemy_debug.h"
 #include "Scene.h"
 #include "Enemy.h"
+#include "Bullet.h"
 
 // Protos
 void EnemyDebug_Delete(Enemy *self);
