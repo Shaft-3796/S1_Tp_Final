@@ -54,20 +54,47 @@ void EnemyBoss1_Delete(Enemy *self)
 void EnemyBoss1_Update(Enemy *self)
 {
     if (self->accumulator_bullet_shot >= self->shoot_period){
-        Vec2 velocity1 = Vec2_Set(-4.0f, 0.0f);
-        Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity1, 0.0f);
-        Scene_AppendBullet(self->scene, arc1);
-        Vec2 velocity2 = Vec2_Set(-4.0f, -1.5f);
-        Bullet *arc2 = BulletArcEnemy_New(self->scene, self->position, velocity2, 135.0f);
-        Scene_AppendBullet(self->scene, arc2);
-        Vec2 velocity3 = Vec2_Set(-4.0f, 1.5f);
-        Bullet *arc3 = BulletArcEnemy_New(self->scene, self->position, velocity3, 45.0f);
-        Scene_AppendBullet(self->scene, arc3);
-        self->accumulator_bullet_shot = 0;
+        if(self->life <= 30){
+            Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+            Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity, 0.0f);
+            Scene_AppendBullet(self->scene, arc1);
+        }
+        else if(self->life <= 10){
+            Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+            Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity, 0.0f);
+            Scene_AppendBullet(self->scene, arc1);
+            velocity.y = -1.0f;
+            Bullet *arc2 = BulletArcEnemy_New(self->scene, self->position, velocity, -45.0f);
+            Scene_AppendBullet(self->scene, arc2);
+            velocity.y = 1.0f;
+            Bullet *arc3 = BulletArcEnemy_New(self->scene, self->position, velocity, 45.0f);
+            Scene_AppendBullet(self->scene, arc3);
+            self->accumulator_bullet_shot = 0;
+        }
+        else{
+            Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+            Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity, 0.0f);
+            Scene_AppendBullet(self->scene, arc1);
+            velocity.y = -1.25f;
+            velocity.x = -3.0f;
+            Bullet *arc2 = BulletArcEnemy_New(self->scene, self->position, velocity, -77.5f);
+            Scene_AppendBullet(self->scene, arc2);
+            velocity.y = 1.25f;
+            Bullet *arc3 = BulletArcEnemy_New(self->scene, self->position, velocity, 77.5f);
+            Scene_AppendBullet(self->scene, arc3);
+            velocity.y = 0.65f;
+            velocity.x = -3.75f;
+            Bullet *arc4 = BulletArcEnemy_New(self->scene, self->position, velocity, 45.0f);
+            Scene_AppendBullet(self->scene, arc4);
+            velocity.y = -0.65f;
+            Bullet *arc5 = BulletArcEnemy_New(self->scene, self->position, velocity, -45.0f);
+            Scene_AppendBullet(self->scene, arc5);
+            self->accumulator_bullet_shot = 0;
+        }
     }
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);
 
-    // Mise à jour de la vitesse en fonction de l'état des touches
+    /*// Mise à jour de la vitesse en fonction de l'état des touches
     Vec2 velocity = Vec2_Set(0, self->direction);
     if(self->moveSens == VERTICAL){
         // Mise à jour de la position
@@ -83,7 +110,7 @@ void EnemyBoss1_Update(Enemy *self)
                     break;
             }
         }
-    }
+    }*/
 
 }
 

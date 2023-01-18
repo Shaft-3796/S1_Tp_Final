@@ -26,7 +26,7 @@ Bullet* BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float ang
     self->velocity = velocity;
     self->angle = angle;
 
-    /* --- Custom --- */
+    /* --- Custom --- */ 
     self->oscillation_acumulator = 0;
 
     /* --- Functions bindings --- */
