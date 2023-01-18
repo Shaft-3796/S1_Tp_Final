@@ -20,6 +20,8 @@ typedef enum BulletType_e
     /// @brief Projectile normal provenant d'un ennemi sin.
     BULLET_SIN_ENEMY,
 
+    BULLET_ARC_ENEMY,
+
     /// @brief Asteroid
     ASTEROID,
 } BulletType;

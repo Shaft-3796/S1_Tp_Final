@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Enemy_debug.h"
 #include "Enemy_Sin.h"
+#include "Enemy_Boss_1.h"
 #include "Bullet_Asteroid.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
@@ -63,8 +64,12 @@ void Scene_UpdateLevel(Scene *self)
         /*Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
         Scene_AppendEnemy(self, enemy);*/
 
-        /* Add one  Sin enemy */
-        Enemy *enemy = EnemySin_New(self, Vec2_Set(15.0f, 4.5f), 10, 3);
+        /* Add one Sin enemy */
+        /*Enemy *enemy = EnemySin_New(self, Vec2_Set(15.0f, 4.5f), 10, 3);
+        Scene_AppendEnemy(self, enemy);*/
+
+        /* Add one Boss enemy */
+        Enemy *enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 10, 3);
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */
