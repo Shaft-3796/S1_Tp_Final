@@ -75,6 +75,13 @@ typedef struct Scene_s
     /// @brief Multiplicateur de vitesse du calque de fond.
     float backgroundSpeedMultiplier;
 
+    /* --- Final animation --- */
+    /// @brief Accumulateur de temps pour l'animation de fin.
+    float finalAnimationAccumulator;
+
+    /// @brief Opacité à modifier pour l'anim de fin.
+    int opacity;
+
 
 } Scene;
 

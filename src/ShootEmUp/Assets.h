@@ -54,6 +54,7 @@ typedef struct Assets_s
     SDL_Texture *menu;
     SDL_Texture *death;
     SDL_Texture *black_hole;
+    SDL_Texture *game_over_layer;
 
 
 

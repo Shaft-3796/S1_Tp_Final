@@ -28,8 +28,11 @@ typedef struct DeathScene_s
 
 
     /* --- Background rendering --- */
-    float angle;
-    float angle_accumulator;
+    float multiplicator;
+    float multiplicator_accumulator;
+
+    /// @brief Position du calque de fond.
+    SDL_Rect layer0Pos;
 
 } DeathScene;
 

@@ -24,6 +24,10 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->layer0Pos = layer0Pos;
     self->backgroundSpeedMultiplier = 1.f;
 
+    // Anim de fin
+    self->finalAnimationAccumulator = 0.f;
+    self->opacity = 0;
+
     return self;
 }
 
@@ -95,6 +99,15 @@ bool Scene_Update(Scene *self)
     if(self->layer0Pos.x+self->layer0Pos.w >= BACKGROUND_WIDTH)
     {
         self->layer0Pos.x -= BACKGROUND_PERIOD*2;
+    }
+
+    // Met à jour l'anim de fin
+    if(self->player->state == PLAYER_DEAD){
+        self->finalAnimationAccumulator += Timer_GetDelta(g_time);
+        if(self->finalAnimationAccumulator >= 0.02f){
+            self->finalAnimationAccumulator = 0.f;
+            self->opacity += 1;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -258,7 +271,7 @@ bool Scene_Update(Scene *self)
         }
     }
 
-    return self->input->quitPressed || self->player->state == PLAYER_DEAD;
+    return self->input->quitPressed || self->opacity >= 255;
 }
 
 void Scene_Render(Scene *self)
@@ -269,8 +282,6 @@ void Scene_Render(Scene *self)
     SDL_RenderCopy(renderer, assets->layers[0], &(self->layer0Pos), NULL);
     SDL_RenderCopy(renderer, assets->layers[1], &(self->layer1Pos), NULL);
     SDL_RenderCopy(renderer, assets->layers[2], &(self->layer1Pos), NULL);
-    // SDL_RenderCopy(renderer, assets->layers[0], &selection_l2, NULL);
-
 
     // Affichage des bullets
     int bulletCount = self->bulletCount;
@@ -294,6 +305,12 @@ void Scene_Render(Scene *self)
     for (int i = 0; i < perkCount; i++)
     {
         Perk_Render(self->perk[i]);
+    }
+
+        // Anim de fin
+    if(self->player->state == PLAYER_DEAD){
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, self->opacity);
+        SDL_RenderFillRect(renderer, NULL);
     }
 }
 

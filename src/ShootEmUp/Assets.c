@@ -34,8 +34,9 @@ Assets *Assets_New(SDL_Renderer *renderer)
         { &self->bodin, "../Assets/Player/bodin.png"  },
         { &self->asteroid, "../Assets/Gameplay/Asteroid.png"  },
         {&self->menu, "../Assets/Menu/MenuLayer.png"},
-        {&self->death, "../Assets/Menu/DeathLayer2.png"},
+        {&self->death, "../Assets/Menu/DeathLayer3.png"},
         {&self->black_hole, "../Assets/Menu/black_hole_3_frame.png"},
+        {&self->game_over_layer, "../Assets/Menu/GameOverLayer.png"},
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 

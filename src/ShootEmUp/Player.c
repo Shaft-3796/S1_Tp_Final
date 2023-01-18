@@ -12,7 +12,7 @@ Player *Player_New(Scene *scene)
 
     self->scene = scene;
     self->position = Vec2_Set(1.0f, 4.5f);
-    self->radius = 0.25f;
+    self->radius = 0.5f;
     self->texture = assets->base_player;
     self->speed = BASE_PLAYER_SPEED_MULTIPLIER;
     self->life = 20;
