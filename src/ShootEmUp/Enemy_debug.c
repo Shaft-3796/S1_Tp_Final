@@ -2,37 +2,42 @@
 #include "Scene.h"
 #include "Enemy.h"
 
-EnemyDebug *EnemyDebug_New(Enemy *enemy, Scene *scene, Vec2 position, int hp)
-{
-    EnemyDebug *self = (EnemyDebug *)calloc(1, sizeof(EnemyDebug));
-    AssertNew(self);
 
+/// @brief Créer un nouvek enemi de type Debug
+Enemy* EnemyDebug_New(Scene *scene, Vec2 position, int life)
+{
+    /* --- Base Ini --- */
+    Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
+    self->type = ENEMY_DEBUG;
+    self->texture = scene->assets->fighter;
+    self->state = ENEMY_FIRING;
+    /* --- --- --- --- */
+
+    /* --- Custom Ini --- */
     self->scene = scene;
     self->position = position;
-    self->state = ENEMY_FIRING;
-    self->hp = hp;
+    self->life = life;
 
-    Assets *assets = Scene_GetAssets(self->scene);
-    self->texture = assets->fighter;
-
-    /* DO NOT REMOVE */
-    enemy->enemy = self;
-
-    return self;
+    /* --- Functions bindings --- */
+    self->Delete = &EnemyDebug_Delete;
+    self->Update = &EnemyDebug_Update;
+    self->Render = &EnemyDebug_Render;
+    self->Damage = &EnemyDebug_Damage;
+    /* --- --- --- --- --- --- --- */
 }
 
-void EnemyDebug_Delete(EnemyDebug *self)
+void EnemyDebug_Delete(Enemy *self)
 {
     if (!self) return;
     free(self);
 }
 
-void EnemyDebug_Update(EnemyDebug *self)
+void EnemyDebug_Update(Enemy *self)
 {
     
 }
 
-void EnemyDebug_Render(EnemyDebug *self)
+void EnemyDebug_Render(Enemy *self)
 {
 // On récupère des infos essentielles (communes à tout objet)
 Scene *scene = self->scene;
@@ -55,10 +60,10 @@ SDL_RenderCopyExF(
 renderer, self->texture, NULL, &dst, 270.f, NULL, 0);
 }
 
-void EnemyDebug_Damage(EnemyDebug *self, int damage)
+void EnemyDebug_Damage(Enemy *self, int damage)
 {
-    self->hp -= damage;
-    if (self->hp <= 0)
+    self->life -= damage;
+    if (self->life <= 0)
     {
         self->state = ENEMY_DEAD;
     }
