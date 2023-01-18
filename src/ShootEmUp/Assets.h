@@ -40,6 +40,10 @@ typedef struct Assets_s
     /// @brief Texture des astéroïdes
     SDL_Texture *asteroid;
 
+    /* --- Menu --- */
+    /// @brief Texture du menu
+    SDL_Texture *menu;
+
 
 
 } Assets;

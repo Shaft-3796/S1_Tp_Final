@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Timer.h"
 #include "Scene.h"
+#include "MenuScene.h"
 
 int main(int argc, char *argv[])
 {
@@ -47,6 +48,32 @@ int main(int argc, char *argv[])
     // Cr�e le temps global du jeu
     g_time = Timer_New();
     AssertNew(g_time);
+
+    //--------------------------------------------------------------------------
+    // Boucle de rendu du menu
+
+    MenuScene *menu_scene = MenuScene_New(renderer);
+
+    while (true)
+    {
+        // Met � jour le temps
+        Timer_Update(g_time);
+
+        // Met � jour la sc�ne
+        bool quitLoop = MenuScene_Update(menu_scene);
+        if (quitLoop)
+            break;
+
+        // Efface le rendu pr�c�dent
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+
+        // Dessine la sc�ne
+        MenuScene_Render(menu_scene);
+
+        // Affiche le nouveau rendu
+        SDL_RenderPresent(renderer);
+    }
 
     //--------------------------------------------------------------------------
     // Boucle de rendu

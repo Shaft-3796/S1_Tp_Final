@@ -27,6 +27,7 @@ Assets *Assets_New(SDL_Renderer *renderer)
         { &self->lifeBar, "../Assets/UI/LifeBar.png"  },
         { &self->bodin, "../Assets/Player/bodin.png"  },
         { &self->asteroid, "../Assets/Gameplay/Asteroid.png"  },
+        {&self->menu, "../Assets/Menu/MenuLayer.png"}
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 
