@@ -37,6 +37,7 @@ Assets *Assets_New(SDL_Renderer *renderer)
         {&self->death, "../Assets/Menu/DeathLayer3.png"},
         {&self->black_hole, "../Assets/Menu/black_hole_3_frame.png"},
         {&self->game_over_layer, "../Assets/Menu/GameOverLayer.png"},
+        {&self->lifeup, "../Assets/Perks/Perk_LifeUp.png"}
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 

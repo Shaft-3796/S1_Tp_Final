@@ -9,7 +9,8 @@ typedef struct Scene_s Scene;
 typedef enum PerkType_e
 {
     PERK_TYPE_ASTRO,
-    PERK_TYPE_SHIELD
+    PERK_TYPE_SHIELD,
+    PERK_TYPE_LIFEUP
 } PerkType;
 
 /// @brief Structure repr�sentant une Perk

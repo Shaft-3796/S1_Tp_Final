@@ -69,8 +69,11 @@ void Scene_UpdateLevel(Scene *self)
         Perk *perk = Perk_New(self, PERK_TYPE_ASTRO, Vec2_Set(6.0f, 4.5f));
         Scene_AppendPerk(self, perk);
 
-        Perk *perk2 = Perk_New(self, PERK_TYPE_SHIELD, Vec2_Set(6.0f, 5.f));
+        Perk *perk2 = Perk_New(self, PERK_TYPE_SHIELD, Vec2_Set(6.0f, 7.f));
         Scene_AppendPerk(self, perk2);
+
+        Perk *perk3 = Perk_New(self, PERK_TYPE_LIFEUP, Vec2_Set(6.0f, 2.f));
+        Scene_AppendPerk(self, perk3);
 
         /* Add an asteroid */
         Bullet *asteroid = Asteroid_New(self, 5, 90.f);

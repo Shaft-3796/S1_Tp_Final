@@ -66,6 +66,7 @@
 #define ASTRO_SPEED_MULTIPLIER 2.f
 #define ASTRO_BUFF_DURATION 5.f // in seconds
 #define SHIELD_BUFF_DURATION 5.f // in seconds
+#define LIFEUP_PV_BUFF 3
 
 /* --- Background --- */
 #define BACKGROUND_WIDTH 7680
