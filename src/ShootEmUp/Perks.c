@@ -4,7 +4,7 @@
 #include "Settings.h"
 #include "Player.h"
 
-Perk *Perk_New(Scene *scene, int type, Vec2 position)
+Perk *Perk_New(Scene *scene, PerkType type, Vec2 position)
 {
     Perk *self = (Perk *)calloc(1, sizeof(Perk));
     AssertNew(self);
@@ -17,24 +17,14 @@ Perk *Perk_New(Scene *scene, int type, Vec2 position)
     self->type = type;
     self->angle = 0;
     self->rotate_timer = 0;
-    if (type == 1)
-    {
-        self->texture = assets->astro;
+    switch (self->type) {
+        case PERK_TYPE_ASTRO:
+            self->texture = scene->assets->astro;
+            break;
+        case PERK_TYPE_SHIELD:
+            self->texture = scene->assets->shield;
+            break;
     }
-    /*
-    else if (type == 2)
-    {
-        self->texture = assets->shield;
-    }
-    else if (type == 3)
-    {
-        self->texture = assets->life;
-    }
-    else if (type == 4)
-    {
-        self->texture = assets->ammo;
-    }
-    */
 
     return self;
 }
@@ -83,25 +73,16 @@ renderer, self->texture, NULL, &dst, self->angle, NULL, 0);
 
 void Perk_Apply_Effect(Perk *self, Player *player)
 {
-    if (self->type == 1)
-    {
-        player->speed = player->speed * ASTRO_SPEED_MULTIPLIER;
-        player->scene->backgroundSpeedMultiplier = ASTRO_SPEED_MULTIPLIER;
-        player->perk_astro = true;
-        player->perk_astro_timer = 0;
+    switch (self->type) {
+        case PERK_TYPE_ASTRO:
+            player->speed = player->speed * ASTRO_SPEED_MULTIPLIER;
+            player->scene->backgroundSpeedMultiplier = ASTRO_SPEED_MULTIPLIER;
+            player->perk_astro = true;
+            player->perk_astro_timer = 0;
+            break;
+        case PERK_TYPE_SHIELD:
+            player->perk_shield = true;
+            player->perk_shield_timer = 0;
+            break;
     }
-    /*
-    else if (self->type == 2)
-    {
-        player->shield = 1;
-    }
-    else if (self->type == 3)
-    {
-        player->life = player->life + 1;
-    }
-    else if (self->type == 4)
-    {
-        player->ammo = player->ammo + 10;
-    }
-    */
 }

@@ -52,6 +52,16 @@ typedef struct Player_s
     /// @brief Temps écoulé depuis le début de l'effet de la Perk Astro.
     float perk_astro_timer;
 
+    /// @brief Perk Shield active.
+    bool perk_shield;
+
+    /// @brief Temps écoulé depuis le début de l'effet de la Perk Shield.
+    float perk_shield_timer;
+
+    /// @brief Rayon du bouclié.
+    float shield_radius;
+
+
     /* --- Animation --- */
     /// @brief Temps �coul� depuis le dernier changement de frame de l'animation.
     float animation_timer;

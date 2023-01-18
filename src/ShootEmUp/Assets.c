@@ -26,6 +26,8 @@ Assets *Assets_New(SDL_Renderer *renderer)
         { &self->base_player, "../Assets/Player/BasePlayer.png"  },
         { &self->moving_base_player, "../Assets/Player/MovingBasePlayer.png"  },
         { &self->astro, "../Assets/Perks/Perk_Astro.png"  },
+        { &self->shield, "../Assets/Perks/Perk_Shield.png"  },
+        { &self->shield_render, "../Assets/Perks/Perk_Shield_Render.png"  },
         { &self->lifeBar, "../Assets/UI/LifeBar.png"  },
         { &self->bodin, "../Assets/Player/bodin.png"  },
         { &self->asteroid, "../Assets/Gameplay/Asteroid.png"  },

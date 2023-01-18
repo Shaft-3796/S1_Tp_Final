@@ -65,6 +65,7 @@
 #define PERKS_ROTATION_SPEED 0.01f // in seconds
 #define ASTRO_SPEED_MULTIPLIER 2.f
 #define ASTRO_BUFF_DURATION 5.f // in seconds
+#define SHIELD_BUFF_DURATION 5.f // in seconds
 
 /* --- Background --- */
 #define BACKGROUND_WIDTH 7680

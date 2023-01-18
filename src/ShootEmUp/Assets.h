@@ -32,6 +32,8 @@ typedef struct Assets_s
     /* --- Perk --- */
     /// @brief Texture de l'astor
     SDL_Texture *astro;
+    SDL_Texture *shield;
+    SDL_Texture *shield_render;
 
     /* --- Ui --- */
     /// @brief Barre de vie

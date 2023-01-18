@@ -6,6 +6,12 @@
 
 typedef struct Scene_s Scene;
 
+typedef enum PerkType_e
+{
+    PERK_TYPE_ASTRO,
+    PERK_TYPE_SHIELD
+} PerkType;
+
 /// @brief Structure repr�sentant une Perk
 typedef struct Perk_s
 {
@@ -19,8 +25,7 @@ typedef struct Perk_s
     Vec2 position;
 
     /// @brief Type de Perk.
-    /// 1: Astro (boost de vitesse).
-    int type;
+    PerkType type;
 
     /// @brief Rayon de la Perk exprim� dans le r�f�rentiel monde.
     /// Il est utilis� dans le moteur physique pour tester les collisions.
@@ -37,7 +42,7 @@ typedef struct Perk_s
 /// @brief Cr�e une nouvelle Perk.
 /// @param scene la sc�ne.
 /// @return La Perk.
-Perk *Perk_New(Scene *scene, int type, Vec2 position);
+Perk *Perk_New(Scene *scene, PerkType type, Vec2 position);
 
 /// @brief D�truit une Perk.
 /// @param self la Perk.
