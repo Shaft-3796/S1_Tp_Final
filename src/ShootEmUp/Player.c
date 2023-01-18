@@ -111,9 +111,8 @@ void Player_Render(Player *self) {
     Camera *camera = Scene_GetCamera(scene);
 // On calcule la position en pixels en fonction de la position
 // en tuiles, la taille de la fenêtre et la taille des textures.
-    float scale = Camera_GetWorldToViewScale(camera);
+    float scale = Camera_GetWorldToViewScale(camera);  // Taille d'une tuile en pixel
     SDL_FRect dst = {0};
-// Changez 48 par une autre valeur pour grossir ou réduire l'objet
     dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
     dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
     Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
@@ -158,6 +157,11 @@ RenderPlayerUi(self, renderer, assets, camera, scale);
 void Player_Damage(Player *self, int damage)
 {
     self->life -= damage;
+    if (self->life <= 0)
+    {
+        self->life = 0;
+        self->state = PLAYER_DEAD;
+    }
 }
 
 /* Ui */
@@ -167,7 +171,7 @@ void RenderPlayerUi(Player *self, SDL_Renderer *renderer, Assets* assets, Camera
 SDL_FRect dst = {0};
 dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
 dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-Vec2 pos = Vec2_Set(0, 9.8);
+Vec2 pos = Vec2_Set(0.2, 9.8);
 Camera_WorldToView(camera, pos, &dst.x, &dst.y);
 SDL_RenderCopyF(
 renderer, assets->player_life_bar_frame, NULL, &dst);
@@ -180,9 +184,9 @@ src.w = 10 + (float)54/((float)self->max_life/self->life);
 src.x = 0;
 src.y = 0;
 SDL_FRect dst2 = {0};
-dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-Vec2 pos2 = Vec2_Set(0, 9.8);
+dst2.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+dst2.w = (PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale) * ((float)src.w/64);
+Vec2 pos2 = Vec2_Set(0.2, 9.8);
 Camera_WorldToView(camera, pos2, &dst2.x, &dst2.y);
 SDL_RenderCopyF(
 renderer, assets->player_life_bar_content, &src, &dst2);

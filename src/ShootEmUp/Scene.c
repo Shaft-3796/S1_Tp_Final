@@ -258,7 +258,7 @@ bool Scene_Update(Scene *self)
         }
     }
 
-    return self->input->quitPressed;
+    return self->input->quitPressed || self->player->state == PLAYER_DEAD;
 }
 
 void Scene_Render(Scene *self)
