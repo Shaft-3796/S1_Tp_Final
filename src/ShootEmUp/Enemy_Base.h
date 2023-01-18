@@ -20,7 +20,7 @@ Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life);
 void EnemyBase_Delete(Enemy *self);
 
 /// @brief Met � jour un ennemi.
-/// @param self l'ennemi.
+/// @param self l'ennemi.  
 void EnemyBase_Update(Enemy *self);
 
 /// @brief Dessine un ennemi dans le moteur de rendu.

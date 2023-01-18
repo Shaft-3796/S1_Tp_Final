@@ -37,7 +37,9 @@ void EnemyBase_Delete(Enemy *self)
 
 void EnemyBase_Update(Enemy *self)
 {
-    
+    Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+    Bullet *bullet = Bullet_New(self->scene, self->position, velocity, BULLET_BASE_ENEMY, 90.0f);
+    Scene_AppendBullet(self->scene, bullet);
 }
 
 void EnemyBase_Render(Enemy *self)

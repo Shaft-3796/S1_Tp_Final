@@ -42,9 +42,6 @@
     <ClCompile Include="Timer.c">
       <Filter>Fichiers sources\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.c">
-      <Filter>Fichiers sources\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Player.c">
       <Filter>Fichiers sources\Game</Filter>
     </ClCompile>
@@ -67,6 +64,12 @@
       <Filter>Fichiers sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="Perks.c">
+      <Filter>Fichiers sources\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuInput.c">
+      <Filter>Fichiers sources\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.c">
       <Filter>Fichiers sources\Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,6 +114,12 @@
       <Filter>Fichiers d%27en-tête\Game</Filter>
     </ClInclude>
     <ClInclude Include="Perks.h">
+      <Filter>Fichiers d%27en-tête\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuInput.h">
+      <Filter>Fichiers d%27en-tête\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
       <Filter>Fichiers d%27en-tête\Game</Filter>
     </ClInclude>
   </ItemGroup>
