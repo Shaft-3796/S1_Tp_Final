@@ -2,6 +2,11 @@
 #include "Scene.h"
 #include "Enemy.h"
 
+// Protos
+void EnemyDebug_Delete(Enemy *self);
+void EnemyDebug_Update(Enemy *self);
+void EnemyDebug_Render(Enemy *self);
+void EnemyDebug_Damage(Enemy *self, int damage);
 
 /// @brief Créer un nouvek enemi de type Debug
 Enemy* EnemyDebug_New(Scene *scene, Vec2 position, int life)

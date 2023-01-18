@@ -81,7 +81,7 @@ typedef struct Enemy_s
     /// @brief temps avant tir.
     float accumulator_bullet_shot;
 
-    /* --- VANILLA --- */
+    /* --- FUNCTIONS --- */
     /// @brief Pointeur sur fonction de destruction de l'ennemi.
     void (*Delete)(struct Enemy_s *self);
 

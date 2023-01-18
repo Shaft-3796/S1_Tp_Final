@@ -4,6 +4,12 @@
 #include "Timer.h"
 #include "Math.h"
 
+// Protos
+void EnemyBase_Delete(Enemy *self);
+void EnemyBase_Update(Enemy *self);
+void EnemyBase_Render(Enemy *self);
+void EnemyBase_Damage(Enemy *self, int damage);
+
 Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
 {
     /* --- Base Ini --- */
