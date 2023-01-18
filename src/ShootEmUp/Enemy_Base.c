@@ -42,7 +42,6 @@ void EnemyBase_Update(Enemy *self)
 
 void EnemyBase_Render(Enemy *self)
 {
-    printf("Base Enemy Render");
     // On récupère des infos essentielles (communes à tout objet)
     Scene *scene = self->scene;
     SDL_Renderer *renderer = Scene_GetRenderer(scene);
