@@ -20,6 +20,12 @@ typedef enum EnemyState_e
     ENEMY_DEAD,
 } EnemyState;
 
+typedef enum EnemyMove_e
+{
+    VERTICAL,
+    HORIZONTAL,
+} EnemyMove;
+
 
 /// @brief Structure contenant l'ensemble des types ennemis.
 typedef enum EnemyTypes_e
@@ -36,6 +42,9 @@ typedef struct Enemy_s
     /* --- VANILLA --- */
     /// @brief Type de l'ennemi
     EnemyTypes type;
+
+    /// @brief type de déplacement.
+    EnemyMove moveSens;
 
     /// @brief Sc�ne associ�e.
     Scene *scene;
@@ -65,9 +74,11 @@ typedef struct Enemy_s
     /// @brief Vie de l'ennemi.
     int life;
 
-    float accumulator_bullet_shot;
-
     /* --- Custom --- */
+    /// @brief direction de déplacement.
+    int direction;
+    /// @brief temps avant tir.
+    float accumulator_bullet_shot;
 
     /* --- VANILLA --- */
     /// @brief Pointeur sur fonction de destruction de l'ennemi.

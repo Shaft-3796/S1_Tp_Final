@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Enemy.h"
 #include "Timer.h"
+#include "Math.h"
 
 Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
 {
@@ -11,6 +12,8 @@ Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
     Assets *assets = Scene_GetAssets(scene);
     self->texture = assets->base_enemy;
     self->state = ENEMY_FIRING;
+    self->moveSens = VERTICAL;
+    self->direction = 1;
     self->worldH = 48;
     self->worldW = 48;
     self->radius = 0.5;
@@ -46,6 +49,25 @@ void EnemyBase_Update(Enemy *self)
         self->accumulator_bullet_shot = 0;
     }
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);
+
+    // Mise à jour de la vitesse en fonction de l'état des touches
+    Vec2 velocity = Vec2_Set(0, self->direction);
+    if(self->moveSens == VERTICAL){
+        // Mise à jour de la position
+        self->position = Vec2_Add(self->position, Vec2_Scale(velocity, Timer_GetDelta(g_time)));
+        Vec2 new_position = Vec2_Add(self->position,Vec2_Scale(velocity, Timer_GetDelta(g_time)));
+        if(new_position.y < 0.5 || new_position.y > 8.5){
+            switch (self->direction) {
+                case 1:
+                    self->direction = -1;
+                    break;
+                default:
+                    self->direction = 1;
+                    break;
+            }
+        }
+    }
+
 }
 
 void EnemyBase_Render(Enemy *self)
