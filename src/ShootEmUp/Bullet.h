@@ -64,8 +64,12 @@ typedef struct Bullet_s
     float angle;
 
     /* --- Custom --- */
-    /// @brief ordonné initiale du tir.
-    float ordInit;
+    /// @brief periode d'oscillation.
+    float oscillation_period;
+
+    /// @brief acumulateur d'oscillations.
+    float oscillation_acumulator;
+
 
     /* --- Function Pointers --- */
     /// @brief Pointeur sur fonction de destruction de l'ennemi.

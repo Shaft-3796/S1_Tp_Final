@@ -49,14 +49,13 @@ void EnemySin_Delete(Enemy *self)
 
 void EnemySin_Update(Enemy *self)
 {
+    self->accumulator_bullet_shot += Timer_GetDelta(g_time);
     while (self->accumulator_bullet_shot >= 1){
-        Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-        Bullet *bullet = BulletSinEnemy_New(self->scene, self->position, velocity, 90.0f);
+        Vec2 velocity = Vec2_Set(-4.0f, 1.0f);
+        Bullet *bullet = BulletSinEnemy_New(self->scene, self->position, velocity, 90.0f, 1.f);
         Scene_AppendBullet(self->scene, bullet);
-        bullet->ordInit = self->position.y;
         self->accumulator_bullet_shot = 0;
     }
-    self->accumulator_bullet_shot += Timer_GetDelta(g_time);
 
     // Mise à jour de la vitesse en fonction de l'état des touches
     Vec2 velocity = Vec2_Set(0, self->direction);
