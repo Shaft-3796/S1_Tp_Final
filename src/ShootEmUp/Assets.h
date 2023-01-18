@@ -28,6 +28,7 @@ typedef struct Assets_s
 
     SDL_Texture *base_enemy;
     SDL_Texture *base_enemy_bullet;
+    SDL_Texture *sin_enemy_rocket;
 
     /* --- Perk --- */
     /// @brief Texture de l'astor

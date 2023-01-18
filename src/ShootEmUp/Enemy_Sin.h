@@ -12,4 +12,4 @@ typedef struct Enemy_s Enemy;
 /// @param type le type de l'ennemi.
 /// @param position la position de d�part de l'ennemi exprim�e dans le r�f�rentiel monde.
 /// @return L'ennemi cr��.
-Enemy *EnemySin_New(Scene *scene, Vec2 position, int life);
+Enemy *EnemySin_New(Scene *scene, Vec2 position, int life, float shoot_period);

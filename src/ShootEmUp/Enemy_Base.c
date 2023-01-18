@@ -11,7 +11,7 @@ void EnemyBase_Update(Enemy *self);
 void EnemyBase_Render(Enemy *self);
 void EnemyBase_Damage(Enemy *self, int damage);
 
-Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
+Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
@@ -33,6 +33,7 @@ Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
 
     /* --- Custom Ini --- */
     self->accumulator_bullet_shot = 0;
+    self->shoot_period = shoot_period;
 
     /* --- Functions bindings --- */
     self->Delete = &EnemyBase_Delete;
@@ -51,7 +52,7 @@ void EnemyBase_Delete(Enemy *self)
 
 void EnemyBase_Update(Enemy *self)
 {
-    if (self->accumulator_bullet_shot >= 1){
+    if (self->accumulator_bullet_shot >= self->shoot_period){
         Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
         Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f);
         Scene_AppendBullet(self->scene, bullet);

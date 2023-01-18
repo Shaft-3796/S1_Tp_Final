@@ -80,6 +80,8 @@ typedef struct Enemy_s
     int direction;
     /// @brief temps avant tir.
     float accumulator_bullet_shot;
+    /// @brief temps avant prochain tir.
+    float shoot_period;
 
     /* --- FUNCTIONS --- */
     /// @brief Pointeur sur fonction de destruction de l'ennemi.

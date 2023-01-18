@@ -60,11 +60,11 @@ void Scene_UpdateLevel(Scene *self)
     if (self->waveIdx == 0)
     {
         /* Add one  Base enemy */
-        /*Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10);
+        /*Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
         Scene_AppendEnemy(self, enemy);*/
 
         /* Add one  Sin enemy */
-        Enemy *enemy = EnemySin_New(self, Vec2_Set(15.0f, 4.5f), 10);
+        Enemy *enemy = EnemySin_New(self, Vec2_Set(15.0f, 4.5f), 10, 3);
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */

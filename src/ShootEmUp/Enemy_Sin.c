@@ -12,7 +12,7 @@ void EnemySin_Update(Enemy *self);
 void EnemySin_Render(Enemy *self);
 void EnemySin_Damage(Enemy *self, int damage);
 
-Enemy *EnemySin_New(Scene *scene, Vec2 position, int life)
+Enemy *EnemySin_New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
@@ -32,6 +32,7 @@ Enemy *EnemySin_New(Scene *scene, Vec2 position, int life)
     self->moveSens = VERTICAL;
     self->direction = 1;
     self->accumulator_bullet_shot = 0;
+    self->shoot_period = shoot_period;
 
     /* --- Functions bindings --- */
     self->Delete = &EnemySin_Delete;
@@ -50,9 +51,9 @@ void EnemySin_Delete(Enemy *self)
 
 void EnemySin_Update(Enemy *self)
 {
-    if (self->accumulator_bullet_shot >= 1){
+    if (self->accumulator_bullet_shot >= self->shoot_period){
         Vec2 velocity = Vec2_Set(-4.0f, 1.5f);
-        Bullet *bullet = BulletSinEnemy_New(self->scene, self->position, velocity, 135.0f);
+        Bullet *bullet = BulletSinEnemy_New(self->scene, self->position, velocity, -45.0f);
         Scene_AppendBullet(self->scene, bullet);
         self->accumulator_bullet_shot = 0;
     }

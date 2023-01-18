@@ -13,7 +13,7 @@ void BulletSinEnemy_Render(Bullet *self);
 Bullet* BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
     /* --- Base Ini --- */
     Bullet *self = (Bullet *)calloc(1, sizeof(Bullet));
-    self->texture = scene->assets->base_enemy_bullet;
+    self->texture = scene->assets->sin_enemy_rocket;
     self->worldW = 8 * PIX_TO_WORLD;
     self->worldH = 16 * PIX_TO_WORLD;
     self->radius = 0.05f;
@@ -48,7 +48,7 @@ void BulletSinEnemy_Update(Bullet *self)
     if(self->oscillation_acumulator >= 0.75){
         self->velocity.y *= -1;
         self->oscillation_acumulator = 0;
-        self->angle = self->angle == 45.0f ? 135.0f : 45.0f;
+        self->angle = self->angle == -45.0f ? -135.0f : -45.0f;
     }
     //printf("Vitesse: %f, %f\n", self->velocity.x, self->velocity.y);
     self->oscillation_acumulator += Timer_GetDelta(g_time);
@@ -69,8 +69,8 @@ SDL_FRect dst = { 0 };
 // On calcule la destination en fonction de la position de l'objet
 float multiplier = 1.f;
 if(self->scene->input->resize_bullets){multiplier = 0.25f; }
-dst.h = BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
-dst.w = BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
+dst.h = (BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier)/2;
+dst.w = (BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier)/2;
 
 Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
 // Le point de référence est le centre de l'objet
