@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Perks.h"
 #include "Enemy.h"
+#include "Enemy_debug.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -37,7 +38,7 @@ void Scene_Delete(Scene *self)
 
     for (int i = 0; i < self->enemyCount; i++)
     {
-        Enemy_Delete(self->enemies[i]);
+        self->enemies[i]->Delete(self->enemies[i]);
         self->enemies[i] = NULL;
     }
     for (int i = 0; i < self->bulletCount; i++)
@@ -56,14 +57,18 @@ void Scene_UpdateLevel(Scene *self)
 
     if (self->waveIdx == 0)
     {
-        /* Add one enemy */
-        Enemy *enemy = Enemy_New(ENEMY_BASE);
-        EnemyBase_New(enemy, self, Vec2_Set(15.0f, 4.5f), 5);
+        /* Add one  Debug enemy */
+        Enemy *enemy = EnemyDebug_New(self, Vec2_Set(15.0f, 4.5f), 10);
+        Scene_AppendEnemy(self, enemy);
 
-        /* TEMP */
+        /* Add a perk */
         Perk *Perk = Perk_New(self, 1, Vec2_Set(6.0f, 4.5f));
         Scene_AppendPerk(self, Perk);
-        Scene_AppendEnemy(self, enemy);
+
+        /* Add an asteroid */
+        Bullet *asteroid = Asteroid_New(self, 5, 90.f);
+        Scene_AppendBullet(self, asteroid);
+
         self->waveIdx++;
     }
 }
@@ -120,11 +125,11 @@ bool Scene_Update(Scene *self)
             for (int j = 0; j < self->enemyCount; j++)
             {
                 Enemy *enemy = self->enemies[j];
-                float dist = Vec2_Distance(bullet->position, Enemy_Cast(enemy)->position);
-                if (dist < bullet->radius + Enemy_Cast(enemy)->radius)
+                float dist = Vec2_Distance(bullet->position, enemy->position);
+                if (dist < bullet->radius + enemy->radius)
                 {
                     // Inflige des dommages � l'ennemi
-                    Enemy_Damage(enemy, 1);
+                    enemy->Damage(enemy, 1);
 
                     // Supprime le tir
                     Scene_RemoveBullet(self, i);
@@ -164,9 +169,9 @@ bool Scene_Update(Scene *self)
         Enemy *enemy = self->enemies[i];
         bool removed = false;
 
-        Enemy_Update(enemy);
+        enemy->Update(enemy);
 
-        if (Enemy_Cast(enemy)->state == ENEMY_DEAD)
+        if (enemy->state == ENEMY_DEAD)
         {
             // Supprime l'ennemi
             Scene_RemoveEnemy(self, i);
@@ -219,6 +224,27 @@ bool Scene_Update(Scene *self)
 
     Scene_UpdateLevel(self);
 
+    // -------------------------------------------------------------------------
+    // Met � jour l'Easter Egg
+    if(self->input->easter_egg)
+    {
+        SDL_Texture* tmp = self->assets->bodin;
+        self->assets->bodin = self->assets->base_player_bullets;
+        self->assets->base_player_bullets = tmp;
+        self->input->easter_egg = false;
+        if(self->input->resize_bullets){
+            self->input->resize_bullets = false;
+        }
+        else{
+            self->input->resize_bullets = true;
+        }
+
+        for(int i=0; i<5; i++)
+        {
+            self->input->letters[i] = false;
+        }
+    }
+
     return self->input->quitPressed;
 }
 
@@ -244,7 +270,7 @@ void Scene_Render(Scene *self)
     int enemyCount = self->enemyCount;
     for (int i = 0; i < enemyCount; i++)
     {
-        Enemy_Render(self->enemies[i]);
+        self->enemies[i]->Render(self->enemies[i]);
     }
 
     // Affichage du joueur
@@ -321,7 +347,7 @@ void Scene_RemoveObject(int index, void **objectArray, int *count)
 
 void Scene_RemoveEnemy(Scene *self, int index)
 {
-    Enemy_Delete(self->enemies[index]);
+    self->enemies[index]->Delete(self->enemies[index]);
     Scene_RemoveObject(index, (void **)(self->enemies), &(self->enemyCount));
 }
 
