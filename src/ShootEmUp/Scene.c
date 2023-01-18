@@ -58,12 +58,13 @@ void Scene_UpdateLevel(Scene *self)
     if (self->waveIdx == 0)
     {
         /* Add one  Debug enemy */
-        Enemy *enemy = EnemyDebug_New(self, Vec2_Set(15.0f, 4.5f), 10);
+        Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10);
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */
         Perk *Perk = Perk_New(self, 1, Vec2_Set(6.0f, 4.5f));
         Scene_AppendPerk(self, Perk);
+
 
         /* Add an asteroid */
         Bullet *asteroid = Asteroid_New(self, 5, 90.f);

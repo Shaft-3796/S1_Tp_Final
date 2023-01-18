@@ -2,37 +2,43 @@
 #include "Scene.h"
 #include "Enemy.h"
 
-EnemyBase *EnemyBase_New(Enemy *enemy, Scene *scene, Vec2 position, int life)
+Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
 {
-    EnemyBase *self = (EnemyBase *)calloc(1, sizeof(EnemyBase));
-    AssertNew(self);
+    /* --- Base Ini --- */
+    Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
+    self->type = ENEMY_BASE;
+    self->texture = scene->assets->base_enemy;
+    self->state = ENEMY_FIRING;
+    self->worldH = 48;
+    self->worldW = 48;
+    self->radius = 0.5;
+    /* --- --- --- --- */
 
     self->scene = scene;
     self->position = position;
-    self->state = ENEMY_FIRING;
     self->life = life;
 
-    Assets *assets = Scene_GetAssets(self->scene);
-    self->texture = assets->base_enemy;
-
-    /* DO NOT REMOVE */
-    enemy->enemy = self;
-
+    /* --- Functions bindings --- */
+    self->Delete = &EnemyDebug_Delete;
+    self->Update = &EnemyDebug_Update;
+    self->Render = &EnemyDebug_Render;
+    self->Damage = &EnemyDebug_Damage;
+    /* --- --- --- --- --- --- --- */
     return self;
 }
 
-void EnemyBase_Delete(EnemyBase *self)
+void EnemyBase_Delete(Enemy *self)
 {
     if (!self) return;
     free(self);
 }
 
-void EnemyBase_Update(EnemyBase *self)
+void EnemyBase_Update(Enemy *self)
 {
     
 }
 
-void EnemyBase_Render(EnemyBase *self)
+void EnemyBase_Render(Enemy *self)
 {
     // On récupère des infos essentielles (communes à tout objet)
     Scene *scene = self->scene;
@@ -54,7 +60,7 @@ void EnemyBase_Render(EnemyBase *self)
     SDL_RenderCopyExF(renderer, self->texture, NULL, &dst, 270.f, NULL, 0);
 }
 
-void EnemyBase_Damage(EnemyBase *self, int damage)
+void EnemyBase_Damage(Enemy *self, int damage)
 {
     self->life -= damage;
     if (self->life <= 0)
