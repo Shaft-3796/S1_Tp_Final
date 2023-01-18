@@ -2,6 +2,7 @@
 #include "Perks.h"
 #include "Enemy.h"
 #include "Enemy_debug.h"
+#include "Enemy_Sin.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -58,7 +59,7 @@ void Scene_UpdateLevel(Scene *self)
     if (self->waveIdx == 0)
     {
         /* Add one  Base enemy */
-        Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10);
+        Enemy *enemy = EnemySin_New(self, Vec2_Set(15.0f, 4.5f), 10);
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */

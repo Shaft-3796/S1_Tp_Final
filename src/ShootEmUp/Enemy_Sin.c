@@ -12,18 +12,18 @@ Enemy *EnemySin_New(Scene *scene, Vec2 position, int life)
     Assets *assets = Scene_GetAssets(scene);
     self->texture = assets->base_enemy;
     self->state = ENEMY_FIRING;
-    self->moveSens = VERTICAL;
-    self->direction = 1;
     self->worldH = 48;
     self->worldW = 48;
     self->radius = 0.5;
-    self->accumulator_bullet_shot = 0;
     /* --- --- --- --- */
 
     /* --- Custom Ini --- */
     self->scene = scene;
     self->position = position;
     self->life = life;
+    self->moveSens = VERTICAL;
+    self->direction = 1;
+    self->accumulator_bullet_shot = 0;
 
     /* --- Functions bindings --- */
     self->Delete = &EnemySin_Delete;
@@ -44,8 +44,9 @@ void EnemySin_Update(Enemy *self)
 {
     while (self->accumulator_bullet_shot >= 1){
         Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-        Bullet *bullet = Bullet_New(self->scene, self->position, velocity, BULLET_SIN_ENEMY, 90.0f, self->position.y);
+        Bullet *bullet = Bullet_New(self->scene, self->position, velocity, BULLET_SIN_ENEMY, 90.0f);
         Scene_AppendBullet(self->scene, bullet);
+        bullet->ordInit = self->position.y;
         self->accumulator_bullet_shot = 0;
     }
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);

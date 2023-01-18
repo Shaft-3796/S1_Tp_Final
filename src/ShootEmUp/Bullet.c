@@ -2,7 +2,7 @@
 #include "Common.h"
 #include "Scene.h"
 
-Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float angle, float ordInit)
+Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float angle)
 {
     Bullet *self = (Bullet *)calloc(1, sizeof(Bullet));
     AssertNew(self);
@@ -12,7 +12,7 @@ Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float a
     self->type = type;
     self->angle = angle;
     self->scene = scene;
-    self->ordInit = ordInit;
+    self->ordInit = 0;
     self->fromPlayer = false;
 
     Assets *assets = Scene_GetAssets(scene);
@@ -68,23 +68,22 @@ void Bullet_Delete(Bullet *self)
 
 void Bullet_Update(Bullet *self)
 {
-    switch (type) {
+    switch (self->type) {
         case BULLET_SIN_ENEMY:
             if(self->position.y >= self->ordInit+1){
-                self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
-                self->position.y = -1;
+                self->velocity.y * -1;
+            }
+            if(self->position.y <= self->ordInit-1){
+                self->velocity.y * -1;
             }
             else{
                 self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
-                self->position.y = 1;
             }
             break;
         default:
             // On récupère des infos essentielles (communes à tout objet)
             Scene *scene = self->scene;
             Input *input = Scene_GetInput(scene);
-            // Mise à jour de la vitesse en fonction de l'état des touches
-            // Mise à jour de la position
             // New pos = old pos + speed * time
             self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
             break;

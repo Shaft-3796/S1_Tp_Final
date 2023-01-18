@@ -32,7 +32,8 @@ typedef enum EnemyTypes_e
 {
     ENEMY_BASE,
     ENEMY_ARC,
-    ENEMY_DEBUG
+    ENEMY_DEBUG,
+    ENEMY_SIN
 } EnemyTypes;
 
 

@@ -139,6 +139,7 @@
     <ClCompile Include="Common.c" />
     <ClCompile Include="Enemy_Base.c" />
     <ClCompile Include="Enemy_debug.c" />
+    <ClCompile Include="Enemy_Sin.c" />
     <ClCompile Include="Input.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Math.c" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy_Base.h" />
     <ClInclude Include="Enemy_debug.h" />
+    <ClInclude Include="Enemy_Sin.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MenuInput.h" />
