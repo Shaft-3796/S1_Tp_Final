@@ -7,22 +7,24 @@ Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
     self->type = ENEMY_BASE;
-    self->texture = scene->assets->base_enemy;
+    Assets *assets = Scene_GetAssets(scene);
+    self->texture = assets->base_enemy;
     self->state = ENEMY_FIRING;
     self->worldH = 48;
     self->worldW = 48;
     self->radius = 0.5;
     /* --- --- --- --- */
 
+    /* --- Custom Ini --- */
     self->scene = scene;
     self->position = position;
     self->life = life;
 
     /* --- Functions bindings --- */
-    self->Delete = &EnemyDebug_Delete;
-    self->Update = &EnemyDebug_Update;
-    self->Render = &EnemyDebug_Render;
-    self->Damage = &EnemyDebug_Damage;
+    self->Delete = &EnemyBase_Delete;
+    self->Update = &EnemyBase_Update;
+    self->Render = &EnemyBase_Render;
+    self->Damage = &EnemyBase_Damage;
     /* --- --- --- --- --- --- --- */
     return self;
 }
@@ -40,6 +42,7 @@ void EnemyBase_Update(Enemy *self)
 
 void EnemyBase_Render(Enemy *self)
 {
+    printf("Base Enemy Render");
     // On récupère des infos essentielles (communes à tout objet)
     Scene *scene = self->scene;
     SDL_Renderer *renderer = Scene_GetRenderer(scene);

@@ -57,8 +57,8 @@ void Scene_UpdateLevel(Scene *self)
 
     if (self->waveIdx == 0)
     {
-        /* Add one  Debug enemy */
-        Enemy *enemy = EnemyDebug_New(self, Vec2_Set(15.0f, 4.5f), 10);
+        /* Add one  Base enemy */
+        Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10);
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */
@@ -125,11 +125,11 @@ bool Scene_Update(Scene *self)
             for (int j = 0; j < self->enemyCount; j++)
             {
                 Enemy *enemy = self->enemies[j];
-                float dist = Vec2_Distance(bullet->position, Enemy_Cast(enemy)->position);
-                if (dist < bullet->radius + Enemy_Cast(enemy)->radius)
+                float dist = Vec2_Distance(bullet->position, enemy->position);
+                if (dist < bullet->radius + enemy->radius)
                 {
                     // Inflige des dommages � l'ennemi
-                    Enemy_Damage(enemy, 1);
+                    enemy->Damage(enemy, 1);
 
                     // Supprime le tir
                     Scene_RemoveBullet(self, i);
@@ -169,9 +169,9 @@ bool Scene_Update(Scene *self)
         Enemy *enemy = self->enemies[i];
         bool removed = false;
 
-        Enemy_Update(enemy);
+        enemy->Update(enemy);
 
-        if (Enemy_Cast(enemy)->state == ENEMY_DEAD)
+        if (enemy->state == ENEMY_DEAD)
         {
             // Supprime l'ennemi
             Scene_RemoveEnemy(self, i);
@@ -270,7 +270,7 @@ void Scene_Render(Scene *self)
     int enemyCount = self->enemyCount;
     for (int i = 0; i < enemyCount; i++)
     {
-        Enemy_Render(self->enemies[i]);
+        self->enemies[i]->Render(self->enemies[i]);
     }
 
     // Affichage du joueur
@@ -347,7 +347,8 @@ void Scene_RemoveObject(int index, void **objectArray, int *count)
 
 void Scene_RemoveEnemy(Scene *self, int index)
 {
-    Enemy_Delete(self->enemies[index]);
+    self->enemies[index]->Delete(self->enemies[index]);
+
     Scene_RemoveObject(index, (void **)(self->enemies), &(self->enemyCount));
 }
 

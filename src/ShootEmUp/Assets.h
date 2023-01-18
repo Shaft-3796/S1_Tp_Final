@@ -21,11 +21,13 @@ typedef struct Assets_s
     /// @brief Texture du tir de base du joueur.
     SDL_Texture *base_player_bullets;
 
+    /* --- Enemies --- */
     /// @brief Texture du vaisseau ennemi.
     SDL_Texture *fighter;
-
-    /// @brief Texture du tir d'un ennemi.
     SDL_Texture *fighterBullet;
+
+    SDL_Texture *base_enemy;
+    SDL_Texture *base_enemy_bullet;
 
     /* --- Perk --- */
     /// @brief Texture de l'astor
@@ -35,7 +37,7 @@ typedef struct Assets_s
     /// @brief Barre de vie
     SDL_Texture *lifeBar;
 
-    SDL_Texture *base_enemy;
+
 
     /* --- Easter egg --- */
     /// @brief Texture du meilleur professeur du monde (en toute objectivité)

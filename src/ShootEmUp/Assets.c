@@ -21,6 +21,8 @@ Assets *Assets_New(SDL_Renderer *renderer)
         { &self->base_player_bullets,  "../Assets/Player/BaseBullets.png" },
         { &self->fighter,       "../Assets/Enemy/fighter.png"         },
         { &self->fighterBullet, "../Assets/Enemy/fighter_bullet.png"  },
+        { &self->base_enemy, "../Assets/Enemy/BaseEnemy.png"  },
+        { &self->base_enemy_bullet, "../Assets/Enemy/BaseEnemyBullet.png"  },
         { &self->base_player, "../Assets/Player/BasePlayer.png"  },
         { &self->moving_base_player, "../Assets/Player/MovingBasePlayer.png"  },
         { &self->astro, "../Assets/Perks/Perk_Astro.png"  },

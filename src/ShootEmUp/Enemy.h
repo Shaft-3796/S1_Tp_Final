@@ -81,22 +81,5 @@ typedef struct Enemy_s
     void (*Damage)(struct Enemy_s *self, int damage);
 
 } Enemy;
-/// @brief D�truit un ennemi.
-/// Cette m�thode est appel�e par la sc�ne.
-/// @param self l'ennemi.
-void Enemy_Delete(Enemy *self);
-
-/// @brief Met � jour un ennemi.
-/// @param self l'ennemi.
-void Enemy_Update(Enemy *self);
-
-/// @brief Dessine un ennemi dans le moteur de rendu.
-/// @param self l'ennemi.
-void Enemy_Render(Enemy *self);
-
-/// @brief Inflige des dommages � un ennemi.
-/// @param self l'ennemi.
-/// @param damage la quantit� de dommages (nombre de points de vie � perdre).
-void Enemy_Damage(Enemy *self, int damage);
 
 
