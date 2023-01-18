@@ -44,6 +44,8 @@ typedef struct Player_s
 
     ///@brief vie du joueur
     int life;
+    ///@brief vie max du joueur
+    int max_life;
 
     /* --- Perks --- */
     /// @brief Perk Astro active.

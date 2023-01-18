@@ -16,6 +16,7 @@ Player *Player_New(Scene *scene)
     self->texture = assets->base_player;
     self->speed = BASE_PLAYER_SPEED_MULTIPLIER;
     self->life = 20;
+    self->max_life = 20;
 
     /* --- Perks --- */
     self->perk_astro = false;
@@ -99,73 +100,94 @@ if(self->perk_astro)
 }
 }
 
-void Player_Render(Player *self)
-{
+// PROTO
+void RenderPlayerUi(Player *self, SDL_Renderer *renderer, Assets* assets, Camera* camera, float scale);
+
+void Player_Render(Player *self) {
 // On récupère des infos essentielles (communes à tout objet)
-Scene *scene = self->scene;
-SDL_Renderer *renderer = Scene_GetRenderer(scene);
-Assets *assets = Scene_GetAssets(scene);
-Camera *camera = Scene_GetCamera(scene);
+    Scene *scene = self->scene;
+    SDL_Renderer *renderer = Scene_GetRenderer(scene);
+    Assets *assets = Scene_GetAssets(scene);
+    Camera *camera = Scene_GetCamera(scene);
 // On calcule la position en pixels en fonction de la position
 // en tuiles, la taille de la fenêtre et la taille des textures.
-float scale = Camera_GetWorldToViewScale(camera);
-SDL_FRect dst = { 0 };
+    float scale = Camera_GetWorldToViewScale(camera);
+    SDL_FRect dst = {0};
 // Changez 48 par une autre valeur pour grossir ou réduire l'objet
-dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
+    dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+    dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+    Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
 // Le point de référence est le centre de l'objet
-dst.x -= 0.50f * dst.w;
-dst.y -= 0.50f * dst.h;
+    dst.x -= 0.50f * dst.w;
+    dst.y -= 0.50f * dst.h;
 // On determine la source de la texture en fonction de la frame si nous sommes en animation
-if(self->animating){
-    SDL_Rect src = { 0 };
-    src.x = self->animation_frame * PLAYER_MOVING_ANIMATION_PERIOD;
-    src.y = 0;
-    src.w = PLAYER_MOVING_ANIMATION_PERIOD;
-    src.h = PLAYER_MOVING_ANIMATION_HEIGHT;
-    SDL_RenderCopyExF(renderer, self->texture, &src, &dst, 90.0f, NULL, 0);
-}
-else {
-    // On affiche en position dst (unités en pixels)
-    SDL_RenderCopyExF(
-            renderer, self->texture, NULL, &dst, 90.0f, NULL, 0);
-}
-// On affiche et updtadte le shield
-if(self->perk_shield)
-{
-    SDL_FRect shield_dst = { 0 };
-    shield_dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-    shield_dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-    Camera_WorldToView(camera, self->position, &shield_dst.x, &shield_dst.y);
-    // Le point de référence est le centre de l'objet
-    shield_dst.x -= 0.50f * shield_dst.w;
-    shield_dst.y -= 0.50f * shield_dst.h;
-    SDL_RenderCopyExF(renderer, assets->shield_render, NULL, &shield_dst, 90.0f, NULL, 0);
-    self->perk_shield_timer += Timer_GetDelta(g_time);
-    if(self->perk_shield_timer >= SHIELD_BUFF_DURATION)
-    {
-        self->perk_shield = false;
-        self->perk_shield_timer = 0.0f;
+    if (self->animating) {
+        SDL_Rect src = {0};
+        src.x = self->animation_frame * PLAYER_MOVING_ANIMATION_PERIOD;
+        src.y = 0;
+        src.w = PLAYER_MOVING_ANIMATION_PERIOD;
+        src.h = PLAYER_MOVING_ANIMATION_HEIGHT;
+        SDL_RenderCopyExF(renderer, self->texture, &src, &dst, 90.0f, NULL, 0);
+    } else {
+        // On affiche en position dst (unités en pixels)
+        SDL_RenderCopyExF(
+                renderer, self->texture, NULL, &dst, 90.0f, NULL, 0);
     }
+// On affiche et updtadte le shield
+    if (self->perk_shield) {
+        SDL_FRect shield_dst = {0};
+        shield_dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+        shield_dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+        Camera_WorldToView(camera, self->position, &shield_dst.x, &shield_dst.y);
+        // Le point de référence est le centre de l'objet
+        shield_dst.x -= 0.50f * shield_dst.w;
+        shield_dst.y -= 0.50f * shield_dst.h;
+        SDL_RenderCopyExF(renderer, assets->shield_render, NULL, &shield_dst, 90.0f, NULL, 0);
+        self->perk_shield_timer += Timer_GetDelta(g_time);
+        if (self->perk_shield_timer >= SHIELD_BUFF_DURATION) {
+            self->perk_shield = false;
+            self->perk_shield_timer = 0.0f;
+        }
+    }
+
+// On update la barre de vie
+RenderPlayerUi(self, renderer, assets, camera, scale);
+
 }
-
-// On render la barre de vie
-SDL_Rect source = { 0, 0, 20, 2};
-SDL_FRect dest = {0};
-dest.h = LIFE_BAR_H_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-dest.w = LIFE_BAR_W_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-Camera_WorldToView(camera, self->position, &dest.x, &dest.y);
-dest.x -= LIFE_BAR_W_OFFSET_MULTIPLIER * dest.w;
-dest.y -= LIFE_BAR_H_OFFSET_MULTIPLIER * dest.h;
-
-SDL_RenderCopyF(
-renderer, assets->lifeBar, &source, &dest);
-}
-
-
 
 void Player_Damage(Player *self, int damage)
 {
-    printf("Le potooship a mal\n");
+    self->life -= damage;
 }
+
+/* Ui */
+void RenderPlayerUi(Player *self, SDL_Renderer *renderer, Assets* assets, Camera* camera, float scale)
+{
+// On render la frame de la barre de vie
+SDL_FRect dst = {0};
+dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+Vec2 pos = Vec2_Set(0, 9.8);
+Camera_WorldToView(camera, pos, &dst.x, &dst.y);
+SDL_RenderCopyF(
+renderer, assets->player_life_bar_frame, NULL, &dst);
+
+
+// On rend le contenu de la barre de vie
+SDL_Rect src = {0};
+src.h = 64;
+src.w = 10 + (float)54/((float)self->max_life/self->life);
+src.x = 0;
+src.y = 0;
+SDL_FRect dst2 = {0};
+dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+Vec2 pos2 = Vec2_Set(0, 9.8);
+Camera_WorldToView(camera, pos2, &dst2.x, &dst2.y);
+SDL_RenderCopyF(
+renderer, assets->player_life_bar_content, &src, &dst2);
+
+// On rend les perks
+// TODO rendre les perks dans l'UI
+}
+

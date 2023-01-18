@@ -37,7 +37,8 @@ typedef struct Assets_s
 
     /* --- Ui --- */
     /// @brief Barre de vie
-    SDL_Texture *lifeBar;
+    SDL_Texture *player_life_bar_frame;
+    SDL_Texture *player_life_bar_content;
 
 
 
