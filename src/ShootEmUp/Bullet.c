@@ -2,7 +2,7 @@
 #include "Common.h"
 #include "Scene.h"
 
-Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float angle)
+Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float angle, float ordInit)
 {
     Bullet *self = (Bullet *)calloc(1, sizeof(Bullet));
     AssertNew(self);
@@ -12,6 +12,7 @@ Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float a
     self->type = type;
     self->angle = angle;
     self->scene = scene;
+    self->ordInit = ordInit;
     self->fromPlayer = false;
 
     Assets *assets = Scene_GetAssets(scene);
@@ -25,6 +26,13 @@ Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float a
         self->fromPlayer = false;
         break;
     case BULLET_BASE_ENEMY:
+        self->texture = assets->base_enemy_bullet;
+        self->worldW = 8 * PIX_TO_WORLD;
+        self->worldH = 16 * PIX_TO_WORLD;
+        self->radius = 0.05f;
+        self->fromPlayer = false;
+        break;
+    case BULLET_SIN_ENEMY:
         self->texture = assets->base_enemy_bullet;
         self->worldW = 8 * PIX_TO_WORLD;
         self->worldH = 16 * PIX_TO_WORLD;
@@ -60,13 +68,27 @@ void Bullet_Delete(Bullet *self)
 
 void Bullet_Update(Bullet *self)
 {
-// On récupère des infos essentielles (communes à tout objet)
-Scene *scene = self->scene;
-Input *input = Scene_GetInput(scene);
-// Mise à jour de la vitesse en fonction de l'état des touches
-// Mise à jour de la position
-// New pos = old pos + speed * time
-self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
+    switch (type) {
+        case BULLET_SIN_ENEMY:
+            if(self->position.y >= self->ordInit+1){
+                self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
+                self->position.y = -1;
+            }
+            else{
+                self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
+                self->position.y = 1;
+            }
+            break;
+        default:
+            // On récupère des infos essentielles (communes à tout objet)
+            Scene *scene = self->scene;
+            Input *input = Scene_GetInput(scene);
+            // Mise à jour de la vitesse en fonction de l'état des touches
+            // Mise à jour de la position
+            // New pos = old pos + speed * time
+            self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
+            break;
+    }
 }
 
 void Bullet_Render(Bullet *self)
@@ -106,6 +128,9 @@ dst.y -= 0.50f * dst.h;
     switch (self->type) {
         case BULLET_BASE_ENEMY:
             dst.x -= 0.25f * dst.w;
+            break;
+        default:
+            break;
     }
 // On affiche en position dst (unités en pixels)
 SDL_RenderCopyExF(

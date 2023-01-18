@@ -14,7 +14,11 @@ typedef enum BulletType_e
     /// @brief Projectile normal provenant d'un ennemi.
     BULLET_FIGHTER,
 
+    /// @brief Projectile normal provenant d'un ennemi basique.
     BULLET_BASE_ENEMY,
+
+    /// @brief Projectile normal provenant d'un ennemi sin.
+    BULLET_SIN_ENEMY,
 
     /// @brief Asteroid
     ASTEROID,
@@ -57,6 +61,9 @@ typedef struct Bullet_s
 
     /// @brief Angle de rotation du la texture pour le rendu.
     float angle;
+
+    /// @brief ordonné initiale du tir.
+    float ordInit;
 } Bullet;
 
 /// @brief Cr�e un nouveau projectile. Ce dernier doit ensuite �tre ajout� � la
@@ -67,7 +74,7 @@ typedef struct Bullet_s
 /// @param type le type du projectile.
 /// @param angle angle de rotation de la texture pour le rendu.
 /// @return Le projectile cr��.
-Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float angle);
+Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float angle, float ordInit);
 
 /// @brief D�truit un projectile.
 /// Cette m�thode est appel�e par la sc�ne.
