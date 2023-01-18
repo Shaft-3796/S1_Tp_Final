@@ -20,6 +20,9 @@ Player *Player_New(Scene *scene)
     /* --- Perks --- */
     self->perk_astro = false;
     self->perk_astro_timer = 0;
+    self->perk_shield = false;
+    self->perk_shield_timer = 0;
+    self->shield_radius = 1.25f;
 
     /* --- Anim --- */
     self->animation_timer = 0;
@@ -123,10 +126,28 @@ if(self->animating){
     src.h = PLAYER_MOVING_ANIMATION_HEIGHT;
     SDL_RenderCopyExF(renderer, self->texture, &src, &dst, 90.0f, NULL, 0);
 }
-else{
+else {
     // On affiche en position dst (unités en pixels)
-SDL_RenderCopyExF(
-renderer, self->texture, NULL, &dst, 90.0f, NULL, 0);
+    SDL_RenderCopyExF(
+            renderer, self->texture, NULL, &dst, 90.0f, NULL, 0);
+}
+// On affiche et updtadte le shield
+if(self->perk_shield)
+{
+    SDL_FRect shield_dst = { 0 };
+    shield_dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+    shield_dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+    Camera_WorldToView(camera, self->position, &shield_dst.x, &shield_dst.y);
+    // Le point de référence est le centre de l'objet
+    shield_dst.x -= 0.50f * shield_dst.w;
+    shield_dst.y -= 0.50f * shield_dst.h;
+    SDL_RenderCopyExF(renderer, assets->shield_render, NULL, &shield_dst, 90.0f, NULL, 0);
+    self->perk_shield_timer += Timer_GetDelta(g_time);
+    if(self->perk_shield_timer >= SHIELD_BUFF_DURATION)
+    {
+        self->perk_shield = false;
+        self->perk_shield_timer = 0.0f;
+    }
 }
 
 // On render la barre de vie
