@@ -1,6 +1,7 @@
 #include "Enemy_Base.h"
 #include "Scene.h"
 #include "Enemy.h"
+#include "Timer.h"
 
 Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
 {
@@ -13,6 +14,7 @@ Enemy *EnemyBase_New(Scene *scene, Vec2 position, int life)
     self->worldH = 48;
     self->worldW = 48;
     self->radius = 0.5;
+    self->accumulator_bullet_shot = 0;
     /* --- --- --- --- */
 
     /* --- Custom Ini --- */
@@ -37,9 +39,13 @@ void EnemyBase_Delete(Enemy *self)
 
 void EnemyBase_Update(Enemy *self)
 {
-    Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-    Bullet *bullet = Bullet_New(self->scene, self->position, velocity, BULLET_BASE_ENEMY, 90.0f);
-    Scene_AppendBullet(self->scene, bullet);
+    while (self->accumulator_bullet_shot >= 1){
+        Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+        Bullet *bullet = Bullet_New(self->scene, self->position, velocity, BULLET_BASE_ENEMY, 90.0f);
+        Scene_AppendBullet(self->scene, bullet);
+        self->accumulator_bullet_shot = 0;
+    }
+    self->accumulator_bullet_shot += Timer_GetDelta(g_time);
 }
 
 void EnemyBase_Render(Enemy *self)
@@ -58,7 +64,7 @@ void EnemyBase_Render(Enemy *self)
     dst.w = 88 * PIX_TO_WORLD * scale;
     Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
     // Le point de référence est le centre de l'objet
-    dst.x -= 0.50f * dst.w;
+    dst.x -= 0.5f * dst.w;
     dst.y -= 0.50f * dst.h;
     // On affiche en position dst (unités en pixels)
     SDL_RenderCopyExF(renderer, self->texture, NULL, &dst, 270.f, NULL, 0);

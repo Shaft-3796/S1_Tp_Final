@@ -103,6 +103,10 @@ Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
 // Le point de référence est le centre de l'objet
 dst.x -= 0.50f * dst.w;
 dst.y -= 0.50f * dst.h;
+    switch (self->type) {
+        case BULLET_BASE_ENEMY:
+            dst.x -= 0.25f * dst.w;
+    }
 // On affiche en position dst (unités en pixels)
 SDL_RenderCopyExF(
 renderer, self->texture, NULL, &dst, self->angle, NULL, 0);

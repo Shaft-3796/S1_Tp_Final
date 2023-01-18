@@ -65,6 +65,8 @@ typedef struct Enemy_s
     /// @brief Vie de l'ennemi.
     int life;
 
+    float accumulator_bullet_shot;
+
     /* --- Custom --- */
 
     /* --- VANILLA --- */
