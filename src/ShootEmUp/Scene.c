@@ -58,13 +58,12 @@ void Scene_UpdateLevel(Scene *self)
     if (self->waveIdx == 0)
     {
         /* Add one  Debug enemy */
-        Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10);
+        Enemy *enemy = EnemyDebug_New(self, Vec2_Set(15.0f, 4.5f), 10);
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */
         Perk *Perk = Perk_New(self, 1, Vec2_Set(6.0f, 4.5f));
         Scene_AppendPerk(self, Perk);
-
 
         /* Add an asteroid */
         Bullet *asteroid = Asteroid_New(self, 5, 90.f);
@@ -126,11 +125,11 @@ bool Scene_Update(Scene *self)
             for (int j = 0; j < self->enemyCount; j++)
             {
                 Enemy *enemy = self->enemies[j];
-                float dist = Vec2_Distance(bullet->position, enemy->position);
-                if (dist < bullet->radius + enemy->radius)
+                float dist = Vec2_Distance(bullet->position, Enemy_Cast(enemy)->position);
+                if (dist < bullet->radius + Enemy_Cast(enemy)->radius)
                 {
                     // Inflige des dommages � l'ennemi
-                    enemy->Damage(enemy, 1);
+                    Enemy_Damage(enemy, 1);
 
                     // Supprime le tir
                     Scene_RemoveBullet(self, i);
@@ -170,9 +169,9 @@ bool Scene_Update(Scene *self)
         Enemy *enemy = self->enemies[i];
         bool removed = false;
 
-        enemy->Update(enemy);
+        Enemy_Update(enemy);
 
-        if (enemy->state == ENEMY_DEAD)
+        if (Enemy_Cast(enemy)->state == ENEMY_DEAD)
         {
             // Supprime l'ennemi
             Scene_RemoveEnemy(self, i);
@@ -271,7 +270,7 @@ void Scene_Render(Scene *self)
     int enemyCount = self->enemyCount;
     for (int i = 0; i < enemyCount; i++)
     {
-        self->enemies[i]->Render(self->enemies[i]);
+        Enemy_Render(self->enemies[i]);
     }
 
     // Affichage du joueur
@@ -348,7 +347,7 @@ void Scene_RemoveObject(int index, void **objectArray, int *count)
 
 void Scene_RemoveEnemy(Scene *self, int index)
 {
-    self->enemies[index]->Delete(self->enemies[index]);
+    Enemy_Delete(self->enemies[index]);
     Scene_RemoveObject(index, (void **)(self->enemies), &(self->enemyCount));
 }
 

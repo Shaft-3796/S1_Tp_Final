@@ -19,14 +19,15 @@ Assets *Assets_New(SDL_Renderer *renderer)
         { &self->layers[1],     "../Assets/Background/layer_01_wide.png"   },
         { &self->layers[2],     "../Assets/Background/layer_02_wide.png"   },
         { &self->base_player_bullets,  "../Assets/Player/BaseBullets.png" },
-        { &self->fighter,       "../Assets/Enemy/fighter.png" },
+        { &self->fighter,       "../Assets/Enemy/fighter.png"         },
         { &self->fighterBullet, "../Assets/Enemy/fighter_bullet.png"  },
         { &self->base_player, "../Assets/Player/BasePlayer.png"  },
         { &self->moving_base_player, "../Assets/Player/MovingBasePlayer.png"  },
-        { &self->moving_base_player_2, "../Assets/Player/MovingBasePlayer2.png"  },
-        { &self->base_enemy, "../Assets/Enemy/BaseEnemy.png" },
         { &self->astro, "../Assets/Perks/Perk_Astro.png"  },
         { &self->lifeBar, "../Assets/UI/LifeBar.png"  },
+        { &self->bodin, "../Assets/Player/bodin.png"  },
+        { &self->asteroid, "../Assets/Gameplay/Asteroid.png"  },
+        {&self->menu, "../Assets/Menu/MenuLayer.png"}
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 
@@ -62,7 +63,6 @@ void Assets_Delete(Assets *self)
         &self->fighter,
         &self->fighterBullet,
         &self->base_player,
-        & self->base_enemy,
         &self->moving_base_player,
     };
     int count = sizeof(texPointers) / sizeof(SDL_Texture **);

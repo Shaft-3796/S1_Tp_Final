@@ -26,6 +26,11 @@ typedef struct Input_s
     /// Une valeur n�gative d�signe un d�placement vers le bas.
     /// Une valeur positive d�signe un d�placement vers le haut.
     float vAxis;
+
+    /* --- Easter egg --- */
+    bool letters[5];
+    bool easter_egg;
+    bool resize_bullets;
 } Input;
 
 /// @brief Cr�e un nouveau gestionnaire des entr�es utilisateur.

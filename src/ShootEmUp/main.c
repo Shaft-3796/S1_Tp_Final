@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Timer.h"
 #include "Scene.h"
+#include "MenuScene.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,7 +13,7 @@ int main(int argc, char *argv[])
     // Initialise la SDL
     Game_Init(SDL_INIT_VIDEO, IMG_INIT_PNG);
 
-    // Crée la fenêtre
+    // Crï¿½e la fenï¿½tre
     int sdlFlags = 0;
 #ifdef FULLSCREEN
     sdlFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
@@ -28,7 +29,7 @@ int main(int argc, char *argv[])
         assert(false); abort();
     }
 
-    // Crée le moteur de rendu
+    // Crï¿½e le moteur de rendu
     SDL_Renderer *renderer = SDL_CreateRenderer(
         window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     );
@@ -44,9 +45,35 @@ int main(int argc, char *argv[])
         assert(false); abort();
     }
 
-    // Crée le temps global du jeu
+    // Crï¿½e le temps global du jeu
     g_time = Timer_New();
     AssertNew(g_time);
+
+    //--------------------------------------------------------------------------
+    // Boucle de rendu du menu
+
+    MenuScene *menu_scene = MenuScene_New(renderer);
+
+    while (true)
+    {
+        // Met ï¿½ jour le temps
+        Timer_Update(g_time);
+
+        // Met ï¿½ jour la scï¿½ne
+        bool quitLoop = MenuScene_Update(menu_scene);
+        if (quitLoop)
+            break;
+
+        // Efface le rendu prï¿½cï¿½dent
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+
+        // Dessine la scï¿½ne
+        MenuScene_Render(menu_scene);
+
+        // Affiche le nouveau rendu
+        SDL_RenderPresent(renderer);
+    }
 
     //--------------------------------------------------------------------------
     // Boucle de rendu
@@ -55,19 +82,19 @@ int main(int argc, char *argv[])
 
     while (true)
     {
-        // Met à jour le temps
+        // Met ï¿½ jour le temps
         Timer_Update(g_time);
 
-        // Met à jour la scène
+        // Met ï¿½ jour la scï¿½ne
         bool quitLoop = Scene_Update(scene);
         if (quitLoop)
             break;
 
-        // Efface le rendu précédent
+        // Efface le rendu prï¿½cï¿½dent
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        // Dessine la scène
+        // Dessine la scï¿½ne
         Scene_Render(scene);
 
         // Affiche le nouveau rendu
@@ -75,7 +102,7 @@ int main(int argc, char *argv[])
     }
 
     //--------------------------------------------------------------------------
-    // Libération de la mémoire
+    // Libï¿½ration de la mï¿½moire
 
     Scene_Delete(scene);
     scene = NULL;

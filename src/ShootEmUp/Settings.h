@@ -42,6 +42,7 @@
 #define QHD_WIDTH 2560
 #define QHD_HEIGHT 1440
 
+
 #ifdef FHD
 #  define WINDOW_WIDTH   FHD_WIDTH
 #  define WINDOW_HEIGHT  FHD_HEIGHT
@@ -54,10 +55,10 @@
 #  define LOGICAL_HEIGHT FHD_HEIGHT
 #endif
 
+
 /* --- Custom settings --- */
 #define BASE_PLAYER_SPEED_MULTIPLIER 2.f
 #define PLAYER_SIZE_MULTIPLIER 100.f
-#define PLAYER_SMOKE_SPEED 0.1f // in seconds
 
 /* --- Perks --- */
 #define PERKS_SIZE_MULTIPLIER 75.f
@@ -72,4 +73,20 @@
 #define BACKGROUND_1_SPEED_MULTIPLIER 500 // in pixels per second
 
 /* --- UI --- */
-#define LIFE_BAR_SIZE_MULTIPLIER 1.5f
+#define LIFE_BAR_W_SIZE_MULTIPLIER 60.f
+#define LIFE_BAR_H_SIZE_MULTIPLIER 3.f
+#define LIFE_BAR_H_OFFSET_MULTIPLIER 15.f
+#define LIFE_BAR_W_OFFSET_MULTIPLIER 0.4f
+
+/* --- Formats for animations --- */
+#define PLAYER_MOVING_ANIMATION_PERIOD 64 // in pixels
+#define PLAYER_MOVING_ANIMATION_HEIGHT 64 // in pixels
+#define PLAYER_MOVING_ANIMATION_FRAMES 2 // number of frames
+#define PLAYER_MOVING_ANIMATION_DURATION 0.1f // in seconds
+
+/* --- Gameplay --- */
+#define ASTEROID_SPEED_MULTIPLIER 4.f
+#define ASTEROID_SIZE_MULTIPLIER 25.f
+
+/* --- Bullets --- */
+#define BULLET_SIZE_MULTIPLIER 100.f

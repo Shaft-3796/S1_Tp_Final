@@ -37,6 +37,20 @@ typedef struct Assets_s
 
     SDL_Texture *base_enemy;
 
+    /* --- Easter egg --- */
+    /// @brief Texture du meilleur professeur du monde (en toute objectivité)
+    SDL_Texture *bodin;
+
+    /* --- GamePlay --- */
+    /// @brief Texture des astéroïdes
+    SDL_Texture *asteroid;
+
+    /* --- Menu --- */
+    /// @brief Texture du menu
+    SDL_Texture *menu;
+
+
+
 } Assets;
 
 /// @brief Cr�e la structure contenant les assets du jeu.

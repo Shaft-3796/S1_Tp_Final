@@ -11,9 +11,6 @@ Enemy* EnemyDebug_New(Scene *scene, Vec2 position, int life)
     self->type = ENEMY_DEBUG;
     self->texture = scene->assets->fighter;
     self->state = ENEMY_FIRING;
-    self->worldH = 48;
-    self->worldW = 48;
-    self->radius = 0.5;
     /* --- --- --- --- */
 
     /* --- Custom Ini --- */
