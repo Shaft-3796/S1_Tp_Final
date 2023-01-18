@@ -51,9 +51,6 @@
     <ClCompile Include="Input.c">
       <Filter>Fichiers sources\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.c">
-      <Filter>Fichiers sources\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Assets.c">
       <Filter>Fichiers sources\Game</Filter>
     </ClCompile>
@@ -73,6 +70,18 @@
       <Filter>Fichiers sources\Game</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_Sin.c">
+      <Filter>Fichiers sources\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Asteroid.c">
+      <Filter>Fichiers sources\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Base_Enemy.c">
+      <Filter>Fichiers sources\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Player.c">
+      <Filter>Fichiers sources\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet_Sin_Enemy.c">
       <Filter>Fichiers sources\Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,6 +135,18 @@
       <Filter>Fichiers d%27en-tête\Game</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_Sin.h">
+      <Filter>Fichiers d%27en-tête\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet_Asteroid.h">
+      <Filter>Fichiers d%27en-tête\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet_Base_Enemy.h">
+      <Filter>Fichiers d%27en-tête\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet_Player.h">
+      <Filter>Fichiers d%27en-tête\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet_Sin_Enemy.h">
       <Filter>Fichiers d%27en-tête\Game</Filter>
     </ClInclude>
   </ItemGroup>

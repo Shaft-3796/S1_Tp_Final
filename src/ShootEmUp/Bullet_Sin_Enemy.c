@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "Scene.h"
 #include "Assets.h"
+#include "Bullet_Sin_Enemy.h"
 
 // Protos
 void BulletSinEnemy_Delete(Bullet *self);
@@ -9,7 +10,7 @@ void BulletSinEnemy_Update(Bullet *self);
 void BulletSinEnemy_Render(Bullet *self);
 
 /// @brief Creates a new Bullet_Player.
-Bullet* BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float angle, float oscillation_period){
+Bullet* BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
     /* --- Base Ini --- */
     Bullet *self = (Bullet *)calloc(1, sizeof(Bullet));
     self->texture = scene->assets->base_enemy_bullet;
@@ -24,10 +25,8 @@ Bullet* BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float ang
     self->position = position;
     self->velocity = velocity;
     self->angle = angle;
-    self->fromPlayer = true;
 
     /* --- Custom --- */
-    self->oscillation_period = oscillation_period;
     self->oscillation_acumulator = 0;
 
     /* --- Functions bindings --- */
@@ -46,18 +45,14 @@ void BulletSinEnemy_Delete(Bullet *self)
 
 void BulletSinEnemy_Update(Bullet *self)
 {
-    // On update l'accumulateur d'oscillation
-    self->oscillation_acumulator += Timer_GetDelta(g_time);
-    // Si l'oscillation est finie
-    if (self->oscillation_acumulator >= self->oscillation_period){
-        // On reset l'accumulateur
-        self->oscillation_acumulator = 0;
-        // On change l'ordonnée de la vitesse
+    if(self->oscillation_acumulator >= 0.75){
         self->velocity.y *= -1;
+        self->oscillation_acumulator = 0;
+        self->angle = self->angle == 45.0f ? 135.0f : 45.0f;
     }
-
-    // New pos = old pos + speed * time
-    self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
+    //printf("Vitesse: %f, %f\n", self->velocity.x, self->velocity.y);
+    self->oscillation_acumulator += Timer_GetDelta(g_time);
+    self->position = Vec2_Add(self->position, Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
 }
 
 void BulletSinEnemy_Render(Bullet *self)

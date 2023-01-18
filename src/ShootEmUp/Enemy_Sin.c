@@ -4,6 +4,7 @@
 #include "Timer.h"
 #include "Math.h"
 #include "Bullet.h"
+#include "Bullet_Sin_Enemy.h"
 
 // Protos
 void EnemySin_Delete(Enemy *self);
@@ -49,13 +50,13 @@ void EnemySin_Delete(Enemy *self)
 
 void EnemySin_Update(Enemy *self)
 {
-    self->accumulator_bullet_shot += Timer_GetDelta(g_time);
-    while (self->accumulator_bullet_shot >= 1){
-        Vec2 velocity = Vec2_Set(-4.0f, 1.0f);
-        Bullet *bullet = BulletSinEnemy_New(self->scene, self->position, velocity, 90.0f, 1.f);
+    if (self->accumulator_bullet_shot >= 1){
+        Vec2 velocity = Vec2_Set(-4.0f, 1.5f);
+        Bullet *bullet = BulletSinEnemy_New(self->scene, self->position, velocity, 135.0f);
         Scene_AppendBullet(self->scene, bullet);
         self->accumulator_bullet_shot = 0;
     }
+    self->accumulator_bullet_shot += Timer_GetDelta(g_time);
 
     // Mise à jour de la vitesse en fonction de l'état des touches
     Vec2 velocity = Vec2_Set(0, self->direction);
@@ -74,7 +75,6 @@ void EnemySin_Update(Enemy *self)
             }
         }
     }
-
 }
 
 void EnemySin_Render(Enemy *self)

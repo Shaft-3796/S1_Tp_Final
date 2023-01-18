@@ -134,7 +134,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Assets.c" />
-    <ClCompile Include="Bullet.c" />
+    <ClCompile Include="Bullet_Asteroid.c" />
+    <ClCompile Include="Bullet_Base_Enemy.c" />
+    <ClCompile Include="Bullet_Player.c" />
+    <ClCompile Include="Bullet_Sin_Enemy.c" />
     <ClCompile Include="Camera.c" />
     <ClCompile Include="Common.c" />
     <ClCompile Include="Enemy_Base.c" />
@@ -153,6 +156,10 @@
   <ItemGroup>
     <ClInclude Include="Assets.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Bullet_Asteroid.h" />
+    <ClInclude Include="Bullet_Base_Enemy.h" />
+    <ClInclude Include="Bullet_Player.h" />
+    <ClInclude Include="Bullet_Sin_Enemy.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Enemy.h" />
