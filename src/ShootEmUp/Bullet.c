@@ -33,6 +33,14 @@ Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float a
         self->radius = 0.05f;
         self->fromPlayer = true;
         break;
+
+    case ASTEROID:
+        self->texture = assets->asteroid;
+        self->worldW = 8 * PIX_TO_WORLD;
+        self->worldH = 16 * PIX_TO_WORLD;
+        self->radius = 0.05f;
+        self->fromPlayer = false;
+        break;
     }
 
     return self;
@@ -66,13 +74,25 @@ Camera *camera = Scene_GetCamera(scene);
 // en tuiles, la taille de la fenêtre et la taille des textures.
 float scale = Camera_GetWorldToViewScale(camera);
 SDL_FRect dst = { 0 };
-// Changez 48 par une autre valeur pour grossir ou réduire l'objet
-float multiplier = 1.f;
-if(self->scene->input->resize_bullets){
-    multiplier = 0.25f;
+switch (self->type) {
+    case BULLET_PLAYER:
+        float multiplier = 1.f;
+        if(self->scene->input->resize_bullets){multiplier = 0.25f;
+        }
+        dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
+        dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
+        break;
+    case ASTEROID:
+        dst.h = ASTEROID_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+        dst.w = ASTEROID_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+        break;
+    default:
+        dst.h = BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+        dst.w = BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+        break;
+
 }
-dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
-dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
+
 Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
 // Le point de référence est le centre de l'objet
 dst.x -= 0.50f * dst.w;
@@ -80,4 +100,13 @@ dst.y -= 0.50f * dst.h;
 // On affiche en position dst (unités en pixels)
 SDL_RenderCopyExF(
 renderer, self->texture, NULL, &dst, self->angle, NULL, 0);
+}
+
+/* --- Gameplay --- */
+
+// Shortcut function to create an asteroid
+Bullet* Asteroid_New(Scene *scene, int y_pos, float angle){
+    Vec2 position = {18, y_pos};
+    Vec2 velocity = {-1*ASTEROID_SPEED_MULTIPLIER, 0};
+    return Bullet_New(scene, position, velocity, ASTEROID, angle);
 }

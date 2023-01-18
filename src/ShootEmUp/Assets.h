@@ -36,6 +36,10 @@ typedef struct Assets_s
     /// @brief Texture du meilleur professeur du monde (en toute objectivité)
     SDL_Texture *bodin;
 
+    /* --- GamePlay --- */
+    /// @brief Texture des astéroïdes
+    SDL_Texture *asteroid;
+
 
 
 } Assets;

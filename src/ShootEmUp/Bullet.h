@@ -5,7 +5,7 @@
 
 typedef struct Scene_s Scene;
 
-/// @brief Enumération des types possibles pour un projectile.
+/// @brief Enumï¿½ration des types possibles pour un projectile.
 typedef enum BulletType_e
 {
     /// @brief Projectile normal provenant du joueur.
@@ -13,66 +13,72 @@ typedef enum BulletType_e
 
     /// @brief Projectile normal provenant d'un ennemi.
     BULLET_FIGHTER,
+
+    /// @brief Asteroid
+    ASTEROID,
 } BulletType;
 
-/// @brief Structure représentant un projectile.
+/// @brief Structure reprï¿½sentant un projectile.
 typedef struct Bullet_s
 {
-    /// @brief Scène associée.
+    /// @brief Scï¿½ne associï¿½e.
     Scene *scene;
 
-    /// @brief Texture utilisée pour le rendu.
+    /// @brief Texture utilisï¿½e pour le rendu.
     SDL_Texture *texture;
 
-    /// @brief Position du projectile exprimée dans le référentiel monde.
+    /// @brief Position du projectile exprimï¿½e dans le rï¿½fï¿½rentiel monde.
     Vec2 position;
 
-    /// @brief Vitesse du projectile exprimée dans le référentiel monde.
+    /// @brief Vitesse du projectile exprimï¿½e dans le rï¿½fï¿½rentiel monde.
     Vec2 velocity;
 
-    /// @brief Booléen indiquant si le projectile provient du joueur.
+    /// @brief Boolï¿½en indiquant si le projectile provient du joueur.
     /// Si il vaut false, il provient d'un ennemi.
     bool fromPlayer;
 
     /// @brief Type du projectile.
-    /// Les valeurs possibles sont définies dans BulletType.
+    /// Les valeurs possibles sont dï¿½finies dans BulletType.
     int type;
 
     /// @brief Largeur de la texture du projectile
-    /// exprimée dans le référentiel monde.
+    /// exprimï¿½e dans le rï¿½fï¿½rentiel monde.
     float worldW;
 
     /// @brief Hauteur de la texture du projectile
-    /// exprimée dans le référentiel monde.
+    /// exprimï¿½e dans le rï¿½fï¿½rentiel monde.
     float worldH;
 
-    /// @brief Rayon du projectile exprimé dans le référentiel monde.
-    /// Il est utilisé dans le moteur physique pour tester les collisions.
+    /// @brief Rayon du projectile exprimï¿½ dans le rï¿½fï¿½rentiel monde.
+    /// Il est utilisï¿½ dans le moteur physique pour tester les collisions.
     float radius;
 
     /// @brief Angle de rotation du la texture pour le rendu.
     float angle;
 } Bullet;
 
-/// @brief Crée un nouveau projectile. Ce dernier doit ensuite être ajouté à la
-/// scène via la méthode Scene_AppendBullet().
-/// @param scene la scène.
-/// @param position la position de départ du projectile exprimée dans le référentiel monde.
-/// @param velocity la vitesse du projectile exprimée dans le référentiel monde.
+/// @brief Crï¿½e un nouveau projectile. Ce dernier doit ensuite ï¿½tre ajoutï¿½ ï¿½ la
+/// scï¿½ne via la mï¿½thode Scene_AppendBullet().
+/// @param scene la scï¿½ne.
+/// @param position la position de dï¿½part du projectile exprimï¿½e dans le rï¿½fï¿½rentiel monde.
+/// @param velocity la vitesse du projectile exprimï¿½e dans le rï¿½fï¿½rentiel monde.
 /// @param type le type du projectile.
 /// @param angle angle de rotation de la texture pour le rendu.
-/// @return Le projectile créé.
+/// @return Le projectile crï¿½ï¿½.
 Bullet *Bullet_New(Scene *scene, Vec2 position, Vec2 velocity, int type, float angle);
 
-/// @brief Détruit un projectile.
-/// Cette méthode est appelée par la scène.
+/// @brief Dï¿½truit un projectile.
+/// Cette mï¿½thode est appelï¿½e par la scï¿½ne.
 /// @param self le projectile.
 void Bullet_Delete(Bullet *self);
 
-/// @brief Met à jour le projectile.
+/// @brief Met ï¿½ jour le projectile.
 /// @param self le projectile.
 void Bullet_Update(Bullet *self);
 
 /// @brief Dessine le projectile dans le moteur de rendu.
 /// @param self le projectile.
 void Bullet_Render(Bullet *self);
+
+/// @brief Shortcut function for asteroid creation
+Bullet* Asteroid_New(Scene *scene, int y_pos, float angle);

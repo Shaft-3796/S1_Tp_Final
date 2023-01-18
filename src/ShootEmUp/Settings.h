@@ -83,3 +83,10 @@
 #define PLAYER_MOVING_ANIMATION_HEIGHT 64 // in pixels
 #define PLAYER_MOVING_ANIMATION_FRAMES 2 // number of frames
 #define PLAYER_MOVING_ANIMATION_DURATION 0.1f // in seconds
+
+/* --- Gameplay --- */
+#define ASTEROID_SPEED_MULTIPLIER 4.f
+#define ASTEROID_SIZE_MULTIPLIER 25.f
+
+/* --- Bullets --- */
+#define BULLET_SIZE_MULTIPLIER 100.f
