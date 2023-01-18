@@ -22,7 +22,7 @@ Player *Player_New(Scene *scene)
     self->perk_astro_timer = 0;
     self->perk_shield = false;
     self->perk_shield_timer = 0;
-    self->shield_radius = 0.5f;
+    self->shield_radius = 1.25f;
 
     /* --- Anim --- */
     self->animation_timer = 0;

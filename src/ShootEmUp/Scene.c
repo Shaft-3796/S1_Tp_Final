@@ -145,7 +145,8 @@ bool Scene_Update(Scene *self)
         {
             // Teste la collision avec le bouclié
             float dist_s = Vec2_Distance(bullet->position, self->player->position);
-            if (dist_s < bullet->radius + player->shield_radius)
+            float dist = Vec2_Distance(bullet->position, self->player->position);
+            if (dist_s < bullet->radius + player->shield_radius && player->perk_shield)
             {
                 // Supprime le tir
                 Scene_RemoveBullet(self, i);
@@ -153,8 +154,8 @@ bool Scene_Update(Scene *self)
             }
 
             // Teste la collision avec le joueur
-            float dist = Vec2_Distance(bullet->position, self->player->position);
-            if (dist < bullet->radius + player->radius)
+
+            else if (dist < bullet->radius + player->radius)
             {
                 // Inflige des dommages au joueur
                 Player_Damage(player, 1);
