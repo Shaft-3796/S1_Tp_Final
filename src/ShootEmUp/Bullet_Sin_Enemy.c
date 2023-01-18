@@ -4,12 +4,12 @@
 #include "Assets.h"
 
 // Protos
-void BulletBaseEnemy_Delete(Bullet *self);
-void BulletBaseEnemy_Update(Bullet *self);
-void BulletBaseEnemy_Render(Bullet *self);
+void BulletSinEnemy_Delete(Bullet *self);
+void BulletSinEnemy_Update(Bullet *self);
+void BulletSinEnemy_Render(Bullet *self);
 
 /// @brief Creates a new Bullet_Player.
-Bullet BulletBaseEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
+Bullet BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
     /* --- Base Ini --- */
     Bullet *self = (Bullet *)calloc(1, sizeof(Bullet));
     self->texture = scene->assets->base_enemy_bullet;
@@ -17,7 +17,7 @@ Bullet BulletBaseEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float ang
     self->worldH = 16 * PIX_TO_WORLD;
     self->radius = 0.05f;
     self->fromPlayer = false;
-    self->type = BULLET_BASE_ENEMY;
+    self->type = BULLET_SIN_ENEMY;
 
     /* --- Arguments --- */
     self->scene = scene;
@@ -26,25 +26,37 @@ Bullet BulletBaseEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float ang
     self->angle = angle;
     self->fromPlayer = true;
 
+    /* --- Custom --- */
+    self->ordInit = 0;
+
     /* --- Functions bindings --- */
-    self->Delete = &BulletBaseEnemy_Delete;
-    self->Update = &BulletBaseEnemy_Update;
-    self->Render = &BulletBaseEnemy_Render;
+    self->Delete = &BulletSinEnemy_Delete;
+    self->Update = &BulletSinEnemy_Update;
+    self->Render = &BulletSinEnemy_Render;
 }
 
-void BulletBaseEnemy_Delete(Bullet *self)
+void BulletSinEnemy_Delete(Bullet *self)
 {
     if (!self) return;
     free(self);
 }
 
-void BulletBaseEnemy_Update(Bullet *self)
+void BulletSinEnemy_Update(Bullet *self)
 {
+    if(self->position.y >= self->ordInit+1){
+                self->velocity.y * -1;
+            }
+            if(self->position.y <= self->ordInit-1){
+                self->velocity.y * -1;
+            }
+            else{
+                self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
+            }
     // New pos = old pos + speed * time
     self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
 }
 
-void BulletBaseEnemy_Render(Bullet *self)
+void BulletSinEnemy_Render(Bullet *self)
 {
     // On récupère des infos essentielles (communes à tout objet)
 Scene *scene = self->scene;
