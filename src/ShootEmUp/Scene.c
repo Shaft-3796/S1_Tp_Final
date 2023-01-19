@@ -84,8 +84,8 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);*/
 
         /* Add one rafal enemy */
-        Enemy *enemy = EnemyTriangle_New(self, Vec2_Set(15.0f, 4.5f), 10, 2);
-        Scene_AppendEnemy(self, enemy);
+        /*Enemy *enemy = EnemyTriangle_New(self, Vec2_Set(15.0f, 4.5f), 10, 2);
+        Scene_AppendEnemy(self, enemy);*/
 
         /* Add a perk */
         Perk *perk = Perk_New(self, PERK_TYPE_ASTRO, Vec2_Set(6.0f, 4.5f));

@@ -86,7 +86,7 @@ void EnemyTeleport_Update(Enemy *self)
             positionPlayer.x = (float)((rand() % (15 + 1 - 12)) + 12);
             self->position = positionPlayer;
             self->accumulator_Teleport = 0;
-            Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+            Vec2 velocity = Vec2_Set(-8.0f, 0.0f);
             Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f);
             Scene_AppendBullet(self->scene, bullet);
             self->accumulator_bullet_shot = 0;
