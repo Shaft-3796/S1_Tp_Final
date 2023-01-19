@@ -9,6 +9,8 @@
 #include "Enemy_Rafale.h"
 #include "Enemy_triangle.h"
 #include "Enemy_Boss_2.h"
+#include "Enemy_Auto.h"
+#include "Enemy_Bomb.h"
 
 // Protos
 void randomSpawnPerk(Scene *self, PerkType type);
@@ -117,15 +119,20 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);*/
 
         /* Add one Boss1 enemy */
-        /*
+
         Enemy *enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
         Scene_AppendEnemy(self, enemy);
-        */
+
 
         /* Add one Boss2 enemy */
-
+        /*
         Enemy *enemy = EnemyBoss2_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
-        Scene_AppendEnemy(self, enemy);
+        Scene_AppendEnemy(self, enemy);*/
+
+        /* Add one Boss2 enemy */
+        /*
+        Enemy *enemy = EnemyBomb_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
+        Scene_AppendEnemy(self, enemy);*/
 
 
         /* Add a perk */

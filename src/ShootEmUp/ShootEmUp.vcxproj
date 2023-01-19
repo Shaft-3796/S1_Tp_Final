@@ -143,7 +143,9 @@
     <ClCompile Include="Camera.c" />
     <ClCompile Include="Common.c" />
     <ClCompile Include="DeathScene.c" />
+    <ClCompile Include="Enemy_Auto.c" />
     <ClCompile Include="Enemy_Base.c" />
+    <ClCompile Include="Enemy_Bomb.c" />
     <ClCompile Include="Enemy_Boss_1.c" />
     <ClCompile Include="Enemy_Boss_2.c" />
     <ClCompile Include="Enemy_debug.c" />
@@ -174,7 +176,9 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="DeathScene.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enemy_Auto.h" />
     <ClInclude Include="Enemy_Base.h" />
+    <ClInclude Include="Enemy_Bomb.h" />
     <ClInclude Include="Enemy_Boss_1.h" />
     <ClInclude Include="Enemy_Boss_2.h" />
     <ClInclude Include="Enemy_debug.h" />
