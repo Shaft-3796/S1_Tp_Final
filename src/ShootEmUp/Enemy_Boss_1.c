@@ -58,6 +58,7 @@ void EnemyBoss1_Update(Enemy *self)
             Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
             Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity, 0.0f);
             Scene_AppendBullet(self->scene, arc1);
+            self->accumulator_bullet_shot = 0;
         }
         else if(self->life <= 10){
             Vec2 velocity = Vec2_Set(-4.0f, 0.0f);

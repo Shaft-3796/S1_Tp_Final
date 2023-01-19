@@ -5,6 +5,7 @@
 #include "Enemy_Sin.h"
 #include "Enemy_Boss_1.h"
 #include "Bullet_Asteroid.h"
+#include "Enemy_Teleport.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -69,7 +70,11 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);*/
 
         /* Add one Boss enemy */
-        Enemy *enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
+        /*Enemy *enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
+        Scene_AppendEnemy(self, enemy);*/
+
+        /* Add one Teleport enemy */
+        Enemy *enemy = EnemyTeleport_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */
@@ -85,12 +90,12 @@ void Scene_UpdateLevel(Scene *self)
 
         self->waveIdx++;
     }
-    if(self->waveIdx == 1){
+    /*if(self->waveIdx == 1){
         Enemy *enemy = EnemySin_New(self, Vec2_Set(15.0f, 6.75f), 10, 3);
         Scene_AppendEnemy(self, enemy);
         Enemy *enemy1 = EnemySin_New(self, Vec2_Set(12.0f, 2.25f), 10, 3);
         Scene_AppendEnemy(self, enemy1);
-    }
+    }*/
 }
 
 bool Scene_Update(Scene *self)

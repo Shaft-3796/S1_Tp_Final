@@ -24,6 +24,7 @@ typedef enum EnemyMove_e
 {
     VERTICAL,
     HORIZONTAL,
+    TELEPORT,
 } EnemyMove;
 
 
@@ -33,6 +34,7 @@ typedef enum EnemyTypes_e
     ENEMY_BASE,
     ENEMY_ARC,
     ENEMY_DEBUG,
+    ENEMY_TELEPORT,
     ENEMY_SIN,
     ENEMY_BOSS_1
 } EnemyTypes;
@@ -83,6 +85,8 @@ typedef struct Enemy_s
     float accumulator_bullet_shot;
     /// @brief temps avant prochain tir.
     float shoot_period;
+    /// @brief temps avant teleportation.
+    float accumulator_Teleport;
 
     /* --- FUNCTIONS --- */
     /// @brief Pointeur sur fonction de destruction de l'ennemi.

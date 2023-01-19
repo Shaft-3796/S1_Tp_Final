@@ -145,6 +145,7 @@
     <ClCompile Include="Enemy_Boss_1.c" />
     <ClCompile Include="Enemy_debug.c" />
     <ClCompile Include="Enemy_Sin.c" />
+    <ClCompile Include="Enemy_Teleport.c" />
     <ClCompile Include="Input.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Math.c" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Enemy_Boss_1.h" />
     <ClInclude Include="Enemy_debug.h" />
     <ClInclude Include="Enemy_Sin.h" />
+    <ClInclude Include="Enemy_Teleport.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MenuInput.h" />
