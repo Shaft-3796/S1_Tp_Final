@@ -27,6 +27,9 @@ Perk *Perk_New(Scene *scene, PerkType type, Vec2 position)
         case PERK_TYPE_LIFEUP:
             self->texture = scene->assets->lifeup;
             break;
+        case PERK_TYPE_POWERSHOOT:
+            self->texture = scene->assets->powershoot;
+            break;
     }
 
     return self;
@@ -94,6 +97,12 @@ void Perk_Apply_Effect(Perk *self, Player *player)
             player->scene->is_lifeup = false;
             player->scene->lifeup_respawn_accumulator = 0;
             player->scene->lifeup_respawn_time = (rand() % (LIFEUP_RESPAWN_TIME_MAX - LIFEUP_RESPAWN_TIME_MIN + 1)) + LIFEUP_RESPAWN_TIME_MIN;
+            break;
+        case PERK_TYPE_POWERSHOOT:
+            player->scene->is_powershoot = false;
+            player->power_shoot = true;
+            player->scene->powershoot_respawn_accumulator = 0;
+            player->scene->powershoot_respawn_time = (rand() % (powershoot_RESPAWN_TIME_MAX - powershoot_RESPAWN_TIME_MIN + 1)) + powershoot_RESPAWN_TIME_MIN;
             break;
     }
 }

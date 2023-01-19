@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Settings.h"
 #include "Bullet.h"
+#include "Math.h"
 
 Player *Player_New(Scene *scene)
 {
@@ -25,6 +26,7 @@ Player *Player_New(Scene *scene)
     self->perk_shield = false;
     self->perk_shield_timer = 0;
     self->shield_radius = 1.f;
+    self->power_shoot = false;
 
     /* --- Anim --- */
     self->animation_timer = 0;
@@ -81,10 +83,21 @@ if (new_position.x > 0.5 && new_position.x < 8 && new_position.y > 0.5 && new_po
 
 if(self->scene->input->shootPressed)
 {
-    Vec2 v = Vec2_Set(4.0f, 0.0f);
-    Bullet *bullet = BulletPlayer_New(
-    self->scene, self->position, v, 90.0f);
-    Scene_AppendBullet(self->scene, bullet);
+    if(!self->power_shoot){
+        Vec2 v = Vec2_Set(6.0f, 0.0f);
+        Bullet *bullet = BulletPlayer_New(
+        self->scene, self->position, v, 90.0f);
+        Scene_AppendBullet(self->scene, bullet);
+    }
+    else{
+        for(int ang=90.0f; ang>-270.0f; ang-=5.0f){
+            Vec2 v = Vec2_Set(cosf((90.f-ang)* M_PI / 180.0)*6, sinf((90.f-ang)* M_PI / 180.0)*6);
+            Bullet* bullet = BulletPlayer_New(
+            self->scene, self->position, v, ang);
+            Scene_AppendBullet(self->scene, bullet);
+        }
+        self->power_shoot = false;
+    }
 }
 
 /* --- Perks --- */

@@ -22,7 +22,7 @@
 #define ENEMY_CAPACITY 32
 
 // Nombre maximal de projectiles actifs dans un niveau.
-#define BULLET_CAPACITY 256
+#define BULLET_CAPACITY 1500
 
 // Nombre maximal de Perk.
 #define PERKS_CAPACITY 32
@@ -85,6 +85,11 @@ typedef struct Scene_s
     bool is_lifeup;
     float lifeup_respawn_accumulator;
     float lifeup_respawn_time;
+
+    // powershoot
+    bool is_powershoot;
+    float powershoot_respawn_accumulator;
+    float powershoot_respawn_time;
 
     // Asteroid
     int asteroid_to_spawn;

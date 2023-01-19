@@ -63,6 +63,9 @@ typedef struct Player_s
     /// @brief Rayon du bouclié.
     float shield_radius;
 
+    /// @brief True si le prochain tir sera un power tir
+    bool power_shoot;
+
 
     /* --- Animation --- */
     /// @brief Temps �coul� depuis le dernier changement de frame de l'animation.

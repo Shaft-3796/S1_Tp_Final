@@ -37,6 +37,10 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->lifeup_respawn_accumulator = 0.0f;
     self->lifeup_respawn_time = 0.0f;
 
+    self->is_powershoot = true;
+    self->powershoot_respawn_accumulator = 0.0f;
+    self->powershoot_respawn_time = 0.0f;
+
     // Background
     SDL_Rect layer1Pos = { 0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT};
     self->layer1Pos = layer1Pos;
@@ -100,6 +104,7 @@ void Scene_UpdateLevel(Scene *self)
         randomSpawnPerk(self, PERK_TYPE_ASTRO);
         randomSpawnPerk(self, PERK_TYPE_SHIELD);
         randomSpawnPerk(self, PERK_TYPE_LIFEUP);
+        randomSpawnPerk(self, PERK_TYPE_POWERSHOOT);
 
         /* Add an asteroid */
         self->asteroid_to_spawn = 3;
@@ -132,6 +137,11 @@ void randomSpawnPerk(Scene *self, PerkType type){
             self->is_lifeup = true;
             self->lifeup_respawn_accumulator = 0.0f;
             self->lifeup_respawn_time = 0.0f;
+            break;
+        case PERK_TYPE_POWERSHOOT:
+            self->is_powershoot = true;
+            self->powershoot_respawn_accumulator = 0.0f;
+            self->powershoot_respawn_time = 0.0f;
             break;
         default:
             break;
@@ -176,6 +186,16 @@ void Scene_UpdatePerks(Scene *self)
         {
 
             randomSpawnPerk(self, PERK_TYPE_LIFEUP);
+        }
+    }
+
+    if(!self->is_powershoot)
+    {
+        self->powershoot_respawn_accumulator += Timer_GetDelta(g_time);
+        if(self->powershoot_respawn_accumulator >= self->powershoot_respawn_time)
+        {
+
+            randomSpawnPerk(self, PERK_TYPE_POWERSHOOT);
         }
     }
 

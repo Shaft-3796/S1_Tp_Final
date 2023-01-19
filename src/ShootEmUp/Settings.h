@@ -74,6 +74,8 @@
 #define SHIELD_RESPAWN_TIME_MIN 10
 #define ASTRO_RESPAWN_TIME_MAX 25
 #define ASTRO_RESPAWN_TIME_MIN 10
+#define powershoot_RESPAWN_TIME_MAX 25
+#define powershoot_RESPAWN_TIME_MIN 10
 
 /* --- Background --- */
 #define BACKGROUND_WIDTH 7680

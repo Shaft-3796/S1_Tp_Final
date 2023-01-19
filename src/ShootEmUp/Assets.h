@@ -37,6 +37,7 @@ typedef struct Assets_s
     SDL_Texture *shield;
     SDL_Texture *shield_render;
     SDL_Texture *lifeup;
+    SDL_Texture *powershoot;
 
     /* --- Ui --- */
     /// @brief Barre de vie
