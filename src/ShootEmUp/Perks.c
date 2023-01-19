@@ -91,6 +91,9 @@ void Perk_Apply_Effect(Perk *self, Player *player)
             player->life+=LIFEUP_PV_BUFF;
             if(player->life > player->max_life)
                 player->life = player->max_life;
+            player->scene->is_lifeup = false;
+            player->scene->lifeup_respawn_accumulator = 0;
+            player->scene->lifeup_respawn_time = (rand() % (LIFEUP_RESPAWN_TIME_MAX - LIFEUP_RESPAWN_TIME_MIN + 1)) + LIFEUP_RESPAWN_TIME_MIN;
             break;
     }
 }

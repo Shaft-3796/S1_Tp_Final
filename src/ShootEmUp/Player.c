@@ -92,6 +92,9 @@ if(self->perk_astro)
     self->perk_astro_timer += Timer_GetDelta(g_time);
     if(self->perk_astro_timer >= ASTRO_BUFF_DURATION)
     {
+        self->scene->is_astro = false;
+        self->scene->astro_respawn_accumulator = 0;
+        self->scene->astro_respawn_time = (rand() % (ASTRO_RESPAWN_TIME_MAX - ASTRO_RESPAWN_TIME_MIN + 1)) + ASTRO_RESPAWN_TIME_MIN;
         self->perk_astro = false;
         self->perk_astro_timer = 0.0f;
         self->speed /= ASTRO_SPEED_MULTIPLIER;
@@ -144,6 +147,9 @@ void Player_Render(Player *self) {
         SDL_RenderCopyExF(renderer, assets->shield_render, NULL, &shield_dst, 90.0f, NULL, 0);
         self->perk_shield_timer += Timer_GetDelta(g_time);
         if (self->perk_shield_timer >= SHIELD_BUFF_DURATION) {
+            self->scene->is_shield = false;
+            self->scene->shield_respawn_accumulator = 0;
+            self->scene->shield_respawn_time = (rand() % (SHIELD_RESPAWN_TIME_MAX - SHIELD_RESPAWN_TIME_MIN + 1)) + SHIELD_RESPAWN_TIME_MIN;
             self->perk_shield = false;
             self->perk_shield_timer = 0.0f;
         }
@@ -169,8 +175,8 @@ void RenderPlayerUi(Player *self, SDL_Renderer *renderer, Assets* assets, Camera
 {
 // On render la frame de la barre de vie
 SDL_FRect dst = {0};
-dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+dst.h = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+dst.w = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
 Vec2 pos = Vec2_Set(0.2, 9.8);
 Camera_WorldToView(camera, pos, &dst.x, &dst.y);
 SDL_RenderCopyF(
@@ -184,14 +190,11 @@ src.w = 10 + (float)54/((float)self->max_life/self->life);
 src.x = 0;
 src.y = 0;
 SDL_FRect dst2 = {0};
-dst2.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
-dst2.w = (PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale) * ((float)src.w/64);
+dst2.h = LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+dst2.w = (LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale) * ((float)src.w/64);
 Vec2 pos2 = Vec2_Set(0.2, 9.8);
 Camera_WorldToView(camera, pos2, &dst2.x, &dst2.y);
 SDL_RenderCopyF(
 renderer, assets->player_life_bar_content, &src, &dst2);
-
-// On rend les perks
-// TODO rendre les perks dans l'UI
 }
 

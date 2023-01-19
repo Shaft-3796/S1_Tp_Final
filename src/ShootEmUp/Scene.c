@@ -2,6 +2,10 @@
 #include "Perks.h"
 #include "Enemy.h"
 #include "Enemy_debug.h"
+#include "stdlib.h"
+
+/* Protos */
+void randomSpawnPerk(Scene* scene, PerkType type);
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -16,6 +20,19 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->player = Player_New(self);
     self->waveIdx = 0;
     self->maxLife = 20;
+
+    /* Perks */
+    self->is_astro = true;
+    self->astro_respawn_accumulator = 0.0f;
+    self->astro_respawn_time = 0.0f;
+
+    self->is_shield = true;
+    self->shield_respawn_accumulator = 0.0f;
+    self->shield_respawn_time = 0.0f;
+
+    self->is_lifeup = true;
+    self->lifeup_respawn_accumulator = 0.0f;
+    self->lifeup_respawn_time = 0.0f;
 
     // Background
     SDL_Rect layer1Pos = { 0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT};
@@ -66,20 +83,89 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */
-        Perk *perk = Perk_New(self, PERK_TYPE_ASTRO, Vec2_Set(6.0f, 4.5f));
-        Scene_AppendPerk(self, perk);
-
-        Perk *perk2 = Perk_New(self, PERK_TYPE_SHIELD, Vec2_Set(6.0f, 7.f));
-        Scene_AppendPerk(self, perk2);
-
-        Perk *perk3 = Perk_New(self, PERK_TYPE_LIFEUP, Vec2_Set(6.0f, 2.f));
-        Scene_AppendPerk(self, perk3);
+        randomSpawnPerk(self, PERK_TYPE_ASTRO);
+        randomSpawnPerk(self, PERK_TYPE_SHIELD);
+        randomSpawnPerk(self, PERK_TYPE_LIFEUP);
 
         /* Add an asteroid */
         Bullet *asteroid = Asteroid_New(self, 5, 90.f);
         Scene_AppendBullet(self, asteroid);
 
         self->waveIdx++;
+    }
+}
+
+/* --- Perks --- */
+
+void randomSpawnPerk(Scene *self, PerkType type){
+    switch (type) {
+        case PERK_TYPE_ASTRO:
+            self->is_astro = true;
+            self->astro_respawn_accumulator = 0.0f;
+            self->astro_respawn_time = 0.0f;
+            break;
+        case PERK_TYPE_SHIELD:
+            self->is_shield = true;
+            self->shield_respawn_accumulator = 0.0f;
+            self->shield_respawn_time = 0.0f;
+            break;
+        case PERK_TYPE_LIFEUP:
+            self->is_lifeup = true;
+            self->lifeup_respawn_accumulator = 0.0f;
+            self->lifeup_respawn_time = 0.0f;
+            break;
+        default:
+            break;
+
+    }
+    Vec2 pos = Vec2_Set((rand()%(76)+5)/10, (rand()%(71)+5)/10);
+    Perk *perk = Perk_New(self, type, pos);
+    Scene_AppendPerk(self, perk);
+}
+
+
+void Scene_UpdatePerks(Scene *self)
+{
+    if(!self->is_astro)
+    {
+        self->astro_respawn_accumulator += Timer_GetDelta(g_time);
+        if(self->astro_respawn_accumulator >= self->astro_respawn_time)
+        {
+            randomSpawnPerk(self, PERK_TYPE_ASTRO);
+        }
+    }
+
+    if(!self->is_shield)
+    {
+        self->shield_respawn_accumulator += Timer_GetDelta(g_time);
+        if(self->shield_respawn_accumulator >= self->shield_respawn_time)
+        {
+
+            randomSpawnPerk(self, PERK_TYPE_SHIELD);
+        }
+    }
+
+    if(!self->is_lifeup)
+    {
+        self->lifeup_respawn_accumulator += Timer_GetDelta(g_time);
+        if(self->lifeup_respawn_accumulator >= self->lifeup_respawn_time)
+        {
+
+            randomSpawnPerk(self, PERK_TYPE_LIFEUP);
+        }
+    }
+
+    // We also update asteroids
+    if(self->asteroid_to_spawn > 0)
+    {
+        self->asteroid_respawn_accumulator += Timer_GetDelta(g_time);
+        if(self->asteroid_respawn_accumulator >= 1)
+        {
+            self->asteroid_to_spawn -= 1;
+            self->asteroid_respawn_accumulator = 0.0f;
+            Bullet *asteroid = Asteroid_New(self, 5, 90.f);
+            Scene_AppendBullet(self, asteroid);
+        }
     }
 }
 
@@ -247,6 +333,8 @@ bool Scene_Update(Scene *self)
             i++;
         }
     }
+
+    Scene_UpdatePerks(self);
 
     // -------------------------------------------------------------------------
     // Met � jour le niveau

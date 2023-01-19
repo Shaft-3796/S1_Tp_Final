@@ -1,4 +1,4 @@
-
+#include "stdlib.h"
 #include "Settings.h"
 #include "Common.h"
 #include "Timer.h"
@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
 {
     //--------------------------------------------------------------------------
     // Initialisation
+    srand(time(NULL));
 
     // Initialise la SDL
     Game_Init(SDL_INIT_VIDEO, IMG_INIT_PNG);
