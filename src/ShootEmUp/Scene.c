@@ -312,6 +312,40 @@ bool Scene_Update(Scene *self)
     // Met � jour les entr�es utilisateur
     Input_Update(self->input);
 
+    // Mouse control
+    if(MOUSE_CONTROL){
+        int mouse_x, mouse_y;
+        SDL_GetMouseState(&mouse_x, &mouse_y);
+        Vec2 mouse_pos = Vec2_Set(mouse_x, mouse_y);
+        Vec2 player_pos = Vec2_Set(player->position.x, player->position.y);
+        player_pos.x *= Camera_GetWorldToViewScale(self->camera);
+        player_pos.y *= Camera_GetWorldToViewScale(self->camera);
+        player_pos.y = LOGICAL_HEIGHT - player_pos.y;
+        fflush(stdout);
+
+        if(mouse_pos.x > player_pos.x+5){
+            self->input->hAxis = 1.f;
+        }
+        else if(mouse_pos.x < player_pos.x-5){
+            self->input->hAxis = -1.f;
+        }
+        else{
+            self->input->hAxis = 0.f;
+        }
+
+        if(mouse_pos.y < player_pos.y-5){
+            self->input->vAxis = 1.f;
+        }
+        else if(mouse_pos.y > player_pos.y+5){
+            self->input->vAxis = -1.f;
+        }
+        else{
+            self->input->vAxis = 0.f;
+        }
+
+
+    }
+
     // Met � jour la positions et les dimensions des calques du background
     int offset = Timer_GetDelta(g_time)*(float)BACKGROUND_1_SPEED_MULTIPLIER*self->backgroundSpeedMultiplier;
     self->layer1Pos.x += offset;

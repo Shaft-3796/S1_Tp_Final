@@ -47,8 +47,10 @@ void Player_Update(Player *self)
 // On récupère des infos essentielles (communes à tout objet)
 Scene *scene = self->scene;
 Input *input = Scene_GetInput(scene);
+int mod = 0;
 // Mise à jour de la vitesse en fonction de l'état des touches
 Vec2 velocity = Vec2_Set(input->hAxis*self->speed, input->vAxis*self->speed);
+check:;
 // Mise à jour de la position
 // New pos = old pos + speed * time
 Vec2 new_position = Vec2_Add(self->position,Vec2_Scale(velocity, Timer_GetDelta(g_time)));
@@ -78,7 +80,18 @@ if (new_position.x > 0.5 && new_position.x < 8 && new_position.y > 0.5 && new_po
     }
     self->position = new_position;
 }
-
+else{
+    if(mod==0){
+        velocity = Vec2_Set(0, input->vAxis*self->speed);
+        mod++;
+        goto check;
+    }
+    else if(mod==1){
+        velocity = Vec2_Set(input->hAxis*self->speed, 0);
+        mod++;
+        goto check;
+    }
+}
 
 
 if(self->scene->input->shootPressed)
