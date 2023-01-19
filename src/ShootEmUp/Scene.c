@@ -60,6 +60,7 @@ Scene *Scene_New(SDL_Renderer *renderer)
     // Anim de fin
     self->finalAnimationAccumulator = 0.f;
     self->opacity = 0;
+    self->soundAnim = 0;
 
     // Anim de damage
     self->damageAnimationAccumulator = -1.f; // -1 = pas d'anim
@@ -446,6 +447,10 @@ bool Scene_Update(Scene *self)
             self->finalAnimationAccumulator = 0.f;
             self->opacity += 1;
         }
+        if(self->soundAnim == 0){
+            playSound("Death_Player");
+            self->soundAnim += 1;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -528,7 +533,7 @@ bool Scene_Update(Scene *self)
                 Scene_RemoveBullet(self, i);
                 removed = true;
 
-                playSound();
+                playSound("Player_Hit");
             }
         }
 
@@ -555,6 +560,7 @@ bool Scene_Update(Scene *self)
             // Supprime l'ennemi
             Scene_RemoveEnemy(self, i);
             removed = true;
+            playSound("Death_Enemy");
         }
 
         // Passe au prochain ennemi
@@ -588,7 +594,7 @@ bool Scene_Update(Scene *self)
             Perk_Apply_Effect(perk, self->player);
             Scene_RemovePerk(self, i);
             removed = true;
-
+            playSound("Bonus");
         }
 
         // Passe au prochain perk

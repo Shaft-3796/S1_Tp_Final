@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "Scene.h"
 #include "Assets.h"
+#include "Music.h"
 
 // Protos
 void BulletBombEnemy_Delete(Bullet *self);
@@ -68,6 +69,8 @@ void BulletBombEnemy_Update(Bullet *self)
         }
         // On récupère la position de la frame
         self->sourceRect = (SDL_Rect){ 64+64*frames, 0, 64, 64 };
+
+        playSound("Explosion");
     }
 
     self->bomb_explosion_time += Timer_GetDelta(g_time);
