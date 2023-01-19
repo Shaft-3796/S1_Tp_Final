@@ -19,6 +19,7 @@ Bullet* BulletSinEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float ang
     self->radius = 0.05f;
     self->fromPlayer = false;
     self->type = BULLET_SIN_ENEMY;
+    self->damage = BULLET_DAMAGE_3;
 
     /* --- Arguments --- */
     self->scene = scene;

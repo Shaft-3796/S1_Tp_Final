@@ -101,3 +101,30 @@
 
 /* --- Bullets --- */
 #define BULLET_SIZE_MULTIPLIER 75.f
+
+/* --- Enemies Life --- */
+#define MAX_LIFE_BOSS 50
+#define MAX_LIFE_ENEMY_1 5
+#define MAX_LIFE_ENEMY_2 10
+#define MAX_LIFE_ENEMY_3 15
+
+/* --- Enemies shoot period --- */
+#define SHOOT_PERIOD_ENEMY_1 1.0f
+#define SHOOT_PERIOD_ENEMY_2 1.5f
+#define SHOOT_PERIOD_ENEMY_3 2.5f
+#define SHOOT_PERIOD_ENEMY_4 3.0f
+
+/* --- Enemies position en x --- */
+#define POSITION_X_ENEMY_1 15.0f
+#define POSITION_X_ENEMY_2 14.0f
+#define POSITION_X_ENEMY_3 13.0f
+
+/* --- Enemies position en y --- */
+#define POSITION_Y_ENEMY_1 4.5f
+#define POSITION_Y_ENEMY_2 2.25f
+#define POSITION_Y_ENEMY_3 7.75f
+
+/* --- Bullet damage --- */
+#define BULLET_DAMAGE_1 1
+#define BULLET_DAMAGE_2 2
+#define BULLET_DAMAGE_3 3

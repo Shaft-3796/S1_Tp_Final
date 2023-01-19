@@ -18,6 +18,7 @@ Bullet* BulletAsteroid_New(Scene *scene, Vec2 position, Vec2 velocity, float ang
     self->radius = 0.3f;
     self->fromPlayer = false;
     self->type = ASTEROID;
+    self->damage = BULLET_DAMAGE_1;
 
     /* --- Arguments --- */
     self->scene = scene;

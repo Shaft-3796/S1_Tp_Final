@@ -69,6 +69,9 @@ typedef struct Bullet_s
     /// @brief Angle de rotation du la texture pour le rendu.
     float angle;
 
+    /// @brief dégâts de la balle.
+    int damage;
+
     /* --- Custom --- */
     /// @brief periode d'oscillation.
     float oscillation_period;

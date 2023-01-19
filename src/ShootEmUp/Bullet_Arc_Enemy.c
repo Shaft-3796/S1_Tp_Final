@@ -18,6 +18,7 @@ Bullet* BulletArcEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float ang
     self->radius = 0.3f;
     self->fromPlayer = false;
     self->type = BULLET_ARC_ENEMY;
+    self->damage = BULLET_DAMAGE_2;
 
     /* --- Arguments --- */
     self->scene = scene;
