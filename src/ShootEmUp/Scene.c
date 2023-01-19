@@ -5,6 +5,10 @@
 #include "Enemy_Sin.h"
 #include "Enemy_Boss_1.h"
 #include "Bullet_Asteroid.h"
+#include "stdlib.h"
+
+/* Protos */
+void randomSpawnPerk(Scene* scene, PerkType type);
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -20,12 +24,29 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->waveIdx = 0;
     self->maxLife = 20;
 
+    /* Perks */
+    self->is_astro = true;
+    self->astro_respawn_accumulator = 0.0f;
+    self->astro_respawn_time = 0.0f;
+
+    self->is_shield = true;
+    self->shield_respawn_accumulator = 0.0f;
+    self->shield_respawn_time = 0.0f;
+
+    self->is_lifeup = true;
+    self->lifeup_respawn_accumulator = 0.0f;
+    self->lifeup_respawn_time = 0.0f;
+
     // Background
     SDL_Rect layer1Pos = { 0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT};
     self->layer1Pos = layer1Pos;
     SDL_Rect layer0Pos = { 0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT};
     self->layer0Pos = layer0Pos;
     self->backgroundSpeedMultiplier = 1.f;
+
+    // Anim de fin
+    self->finalAnimationAccumulator = 0.f;
+    self->opacity = 0;
 
     return self;
 }
@@ -73,11 +94,9 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */
-        Perk *perk = Perk_New(self, PERK_TYPE_ASTRO, Vec2_Set(6.0f, 4.5f));
-        Scene_AppendPerk(self, perk);
-
-        Perk *perk2 = Perk_New(self, PERK_TYPE_SHIELD, Vec2_Set(6.0f, 5.f));
-        Scene_AppendPerk(self, perk2);
+        randomSpawnPerk(self, PERK_TYPE_ASTRO);
+        randomSpawnPerk(self, PERK_TYPE_SHIELD);
+        randomSpawnPerk(self, PERK_TYPE_LIFEUP);
 
         /* Add an asteroid */
         Bullet *asteroid = BulletAsteroid_New(self, Vec2_Set(18.f, 4.5f), Vec2_Set(-1*ASTEROID_SPEED_MULTIPLIER, 0.f), 90.f);
@@ -90,6 +109,80 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
         Enemy *enemy1 = EnemySin_New(self, Vec2_Set(12.0f, 2.25f), 10, 3);
         Scene_AppendEnemy(self, enemy1);
+    }
+}
+
+/* --- Perks --- */
+
+void randomSpawnPerk(Scene *self, PerkType type){
+    switch (type) {
+        case PERK_TYPE_ASTRO:
+            self->is_astro = true;
+            self->astro_respawn_accumulator = 0.0f;
+            self->astro_respawn_time = 0.0f;
+            break;
+        case PERK_TYPE_SHIELD:
+            self->is_shield = true;
+            self->shield_respawn_accumulator = 0.0f;
+            self->shield_respawn_time = 0.0f;
+            break;
+        case PERK_TYPE_LIFEUP:
+            self->is_lifeup = true;
+            self->lifeup_respawn_accumulator = 0.0f;
+            self->lifeup_respawn_time = 0.0f;
+            break;
+        default:
+            break;
+
+    }
+    Vec2 pos = Vec2_Set((rand()%(76)+5)/10, (rand()%(71)+5)/10);
+    Perk *perk = Perk_New(self, type, pos);
+    Scene_AppendPerk(self, perk);
+}
+
+
+void Scene_UpdatePerks(Scene *self)
+{
+    if(!self->is_astro)
+    {
+        self->astro_respawn_accumulator += Timer_GetDelta(g_time);
+        if(self->astro_respawn_accumulator >= self->astro_respawn_time)
+        {
+            randomSpawnPerk(self, PERK_TYPE_ASTRO);
+        }
+    }
+
+    if(!self->is_shield)
+    {
+        self->shield_respawn_accumulator += Timer_GetDelta(g_time);
+        if(self->shield_respawn_accumulator >= self->shield_respawn_time)
+        {
+
+            randomSpawnPerk(self, PERK_TYPE_SHIELD);
+        }
+    }
+
+    if(!self->is_lifeup)
+    {
+        self->lifeup_respawn_accumulator += Timer_GetDelta(g_time);
+        if(self->lifeup_respawn_accumulator >= self->lifeup_respawn_time)
+        {
+
+            randomSpawnPerk(self, PERK_TYPE_LIFEUP);
+        }
+    }
+
+    // We also update asteroids
+    if(self->asteroid_to_spawn > 0)
+    {
+        self->asteroid_respawn_accumulator += Timer_GetDelta(g_time);
+        if(self->asteroid_respawn_accumulator >= 1)
+        {
+            self->asteroid_to_spawn -= 1;
+            self->asteroid_respawn_accumulator = 0.0f;
+            Bullet *asteroid = Asteroid_New(self, 5, 90.f);
+            Scene_AppendBullet(self, asteroid);
+        }
     }
 }
 
@@ -112,6 +205,15 @@ bool Scene_Update(Scene *self)
     if(self->layer0Pos.x+self->layer0Pos.w >= BACKGROUND_WIDTH)
     {
         self->layer0Pos.x -= BACKGROUND_PERIOD*2;
+    }
+
+    // Met à jour l'anim de fin
+    if(self->player->state == PLAYER_DEAD){
+        self->finalAnimationAccumulator += Timer_GetDelta(g_time);
+        if(self->finalAnimationAccumulator >= 0.02f){
+            self->finalAnimationAccumulator = 0.f;
+            self->opacity += 1;
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -248,6 +350,8 @@ bool Scene_Update(Scene *self)
         }
     }
 
+    Scene_UpdatePerks(self);
+
     // -------------------------------------------------------------------------
     // Met � jour le niveau
 
@@ -274,7 +378,7 @@ bool Scene_Update(Scene *self)
         }
     }
 
-    return self->input->quitPressed;
+    return self->input->quitPressed || self->opacity >= 255;
 }
 
 void Scene_Render(Scene *self)
@@ -310,6 +414,12 @@ void Scene_Render(Scene *self)
     for (int i = 0; i < perkCount; i++)
     {
         Perk_Render(self->perk[i]);
+    }
+
+        // Anim de fin
+    if(self->player->state == PLAYER_DEAD){
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, self->opacity);
+        SDL_RenderFillRect(renderer, NULL);
     }
 }
 

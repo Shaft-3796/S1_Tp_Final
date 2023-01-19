@@ -71,6 +71,25 @@ typedef struct Scene_s
     /// @brief Nombre de Perk courrants.
     int perkCount;
 
+    // Astro
+    bool is_astro;
+    float astro_respawn_accumulator;
+    float astro_respawn_time;
+
+    // Shield
+    bool is_shield;
+    float shield_respawn_accumulator;
+    float shield_respawn_time;
+
+    // Lifeup
+    bool is_lifeup;
+    float lifeup_respawn_accumulator;
+    float lifeup_respawn_time;
+
+    // Asteroid
+    int asteroid_to_spawn;
+    float asteroid_respawn_accumulator;
+
     /* --- Background rendering --- */
     /// @brief Position du calque de fond.
     SDL_Rect layer0Pos;
@@ -80,6 +99,15 @@ typedef struct Scene_s
 
     /// @brief Multiplicateur de vitesse du calque de fond.
     float backgroundSpeedMultiplier;
+
+    /* --- Final animation --- */
+    /// @brief Accumulateur de temps pour l'animation de fin.
+    float finalAnimationAccumulator;
+
+    /// @brief Opacité à modifier pour l'anim de fin.
+    int opacity;
+
+    /* -_-_-_- LEVEL DESIGN -_-_-_- */
 
 
 } Scene;

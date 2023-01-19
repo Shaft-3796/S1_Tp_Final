@@ -1,14 +1,16 @@
-
+#include "stdlib.h"
 #include "Settings.h"
 #include "Common.h"
 #include "Timer.h"
 #include "Scene.h"
 #include "MenuScene.h"
+#include "DeathScene.h"
 
 int main(int argc, char *argv[])
 {
     //--------------------------------------------------------------------------
     // Initialisation
+    srand(time(NULL));
 
     // Initialise la SDL
     Game_Init(SDL_INIT_VIDEO, IMG_INIT_PNG);
@@ -96,6 +98,32 @@ int main(int argc, char *argv[])
 
         // Dessine la sc�ne
         Scene_Render(scene);
+
+        // Affiche le nouveau rendu
+        SDL_RenderPresent(renderer);
+    }
+
+    //--------------------------------------------------------------------------
+    // Boucle de rendu du Death screen
+
+    DeathScene *death_scene = DeathScene_New(renderer);
+
+    while (true)
+    {
+        // Met � jour le temps
+        Timer_Update(g_time);
+
+        // Met � jour la sc�ne
+        bool quitLoop = DeathScene_Update(death_scene);
+        if (quitLoop)
+            break;
+
+        // Efface le rendu pr�c�dent
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+
+        // Dessine la sc�ne
+        DeathScene_Render(death_scene);
 
         // Affiche le nouveau rendu
         SDL_RenderPresent(renderer);
