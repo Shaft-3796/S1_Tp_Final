@@ -1,26 +1,25 @@
-#include "Enemy_Teleport.h"
+#include "Enemy_Base.h"
 #include "Scene.h"
 #include "Enemy.h"
 #include "Timer.h"
 #include "Math.h"
 #include "Bullet.h"
-#include "stdlib.h"
 
 // Protos
-void EnemyTeleport_Delete(Enemy *self);
-void EnemyTeleport_Update(Enemy *self);
-void EnemyTeleport_Render(Enemy *self);
-void EnemyTeleport_Damage(Enemy *self, int damage);
+void EnemyRafal_Delete(Enemy *self);
+void EnemyRafal_Update(Enemy *self);
+void EnemyRafal_Render(Enemy *self);
+void EnemyRafal_Damage(Enemy *self, int damage);
 
-Enemy *EnemyTeleport_New(Scene *scene, Vec2 position, int life, float shoot_period)
+Enemy *EnemyRafal_New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
-    self->type = ENEMY_TELEPORT;
+    self->type = ENEMY_RAFAL;
     Assets *assets = Scene_GetAssets(scene);
     self->texture = assets->base_enemy;
     self->state = ENEMY_FIRING;
-    self->moveSens = TELEPORT;
+    self->moveSens = VERTICAL;
     self->direction = 1;
     self->worldH = 48;
     self->worldW = 48;
@@ -39,27 +38,40 @@ Enemy *EnemyTeleport_New(Scene *scene, Vec2 position, int life, float shoot_peri
     self->rafal_period = 0;
 
     /* --- Functions bindings --- */
-    self->Delete = &EnemyTeleport_Delete;
-    self->Update = &EnemyTeleport_Update;
-    self->Render = &EnemyTeleport_Render;
-    self->Damage = &EnemyTeleport_Damage;
+    self->Delete = &EnemyRafal_Delete;
+    self->Update = &EnemyRafal_Update;
+    self->Render = &EnemyRafal_Render;
+    self->Damage = &EnemyRafal_Damage;
     /* --- --- --- --- --- --- --- */
     return self;
 }
 
-void EnemyTeleport_Delete(Enemy *self)
+void EnemyRafal_Delete(Enemy *self)
 {
     if (!self) return;
     free(self);
 }
 
-void EnemyTeleport_Update(Enemy *self)
+void EnemyRafal_Update(Enemy *self)
 {
-    if (self->accumulator_bullet_shot >= self->shoot_period){
+    if (self->accumulator_bullet_shot >= self->shoot_period && self->rafal_period == 0){
+        Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+        Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f); 
+        Scene_AppendBullet(self->scene, bullet);
+        self->rafal_period += 1;
+    }
+    if (self->accumulator_bullet_shot >= self->shoot_period+0.25f && self->rafal_period == 1){
+        Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+        Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f);
+        Scene_AppendBullet(self->scene, bullet);
+        self->rafal_period += 1;
+    }
+    if (self->accumulator_bullet_shot >= self->shoot_period+0.5f){
         Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
         Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f);
         Scene_AppendBullet(self->scene, bullet);
         self->accumulator_bullet_shot = 0;
+        self->rafal_period = 0;
     }
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);
 
@@ -80,22 +92,10 @@ void EnemyTeleport_Update(Enemy *self)
             }
         }
     }
-    if(self->moveSens == TELEPORT){
-        if (self->accumulator_Teleport >= (rand() % (5 + 1 - 2)) + 2){
-            Vec2 positionPlayer = self->scene->player->position;
-            positionPlayer.x = (float)((rand() % (15 + 1 - 12)) + 12);
-            self->position = positionPlayer;
-            self->accumulator_Teleport = 0;
-            Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-            Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f);
-            Scene_AppendBullet(self->scene, bullet);
-            self->accumulator_bullet_shot = 0;
-        }
-        self->accumulator_Teleport += Timer_GetDelta(g_time);
-    }
+
 }
 
-void EnemyTeleport_Render(Enemy *self)
+void EnemyRafal_Render(Enemy *self)
 {
     // On récupère des infos essentielles (communes à tout objet)
     Scene *scene = self->scene;
@@ -107,8 +107,8 @@ void EnemyTeleport_Render(Enemy *self)
     float scale = Camera_GetWorldToViewScale(camera);
     SDL_FRect dst = { 0 };
     // Changez 48 par une autre valeur pour grossir ou réduire l'objet
-    dst.h = 88 * PIX_TO_WORLD * scale;
-    dst.w = 88 * PIX_TO_WORLD * scale;
+    dst.h = ENEMY_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+    dst.w = ENEMY_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
     Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
     // Le point de référence est le centre de l'objet
     dst.x -= 0.5f * dst.w;
@@ -117,7 +117,7 @@ void EnemyTeleport_Render(Enemy *self)
     SDL_RenderCopyExF(renderer, self->texture, NULL, &dst, 270.f, NULL, 0);
 }
 
-void EnemyTeleport_Damage(Enemy *self, int damage)
+void EnemyRafal_Damage(Enemy *self, int damage)
 {
     self->life -= damage;
     if (self->life <= 0)

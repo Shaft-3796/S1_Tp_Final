@@ -36,7 +36,8 @@ typedef enum EnemyTypes_e
     ENEMY_DEBUG,
     ENEMY_TELEPORT,
     ENEMY_SIN,
-    ENEMY_BOSS_1
+    ENEMY_BOSS_1,
+    ENEMY_RAFAL,
 } EnemyTypes;
 
 
@@ -87,6 +88,8 @@ typedef struct Enemy_s
     float shoot_period;
     /// @brief temps avant teleportation.
     float accumulator_Teleport;
+    /// @brief temps avant rafale.
+    int rafal_period;
 
     /* --- FUNCTIONS --- */
     /// @brief Pointeur sur fonction de destruction de l'ennemi.

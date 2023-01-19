@@ -141,9 +141,11 @@
     <ClCompile Include="Bullet_Sin_Enemy.c" />
     <ClCompile Include="Camera.c" />
     <ClCompile Include="Common.c" />
+    <ClCompile Include="DeathScene.c" />
     <ClCompile Include="Enemy_Base.c" />
     <ClCompile Include="Enemy_Boss_1.c" />
     <ClCompile Include="Enemy_debug.c" />
+    <ClCompile Include="Enemy_Rafale.c" />
     <ClCompile Include="Enemy_Sin.c" />
     <ClCompile Include="Enemy_Teleport.c" />
     <ClCompile Include="Input.c" />
@@ -166,10 +168,12 @@
     <ClInclude Include="Bullet_Sin_Enemy.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="DeathScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy_Base.h" />
     <ClInclude Include="Enemy_Boss_1.h" />
     <ClInclude Include="Enemy_debug.h" />
+    <ClInclude Include="Enemy_Rafale.h" />
     <ClInclude Include="Enemy_Sin.h" />
     <ClInclude Include="Enemy_Teleport.h" />
     <ClInclude Include="Input.h" />

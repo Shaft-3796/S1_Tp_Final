@@ -33,6 +33,8 @@ Enemy *EnemySin_New(Scene *scene, Vec2 position, int life, float shoot_period)
     self->direction = 1;
     self->accumulator_bullet_shot = 0;
     self->shoot_period = shoot_period;
+    self->accumulator_Teleport = 0;
+    self->rafal_period = 0;
 
     /* --- Functions bindings --- */
     self->Delete = &EnemySin_Delete;
