@@ -30,7 +30,7 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->camera = Camera_New(LOGICAL_WIDTH, LOGICAL_HEIGHT);
     self->input = Input_New();
     self->player = Player_New(self);
-    self->waveIdx = 12;
+    self->waveIdx = 0;
     self->maxLife = 20;
 
     /* Perks */
