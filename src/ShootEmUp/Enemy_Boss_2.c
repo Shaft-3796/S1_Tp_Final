@@ -159,8 +159,14 @@ void PhaseAvB2(Enemy *self){
 }
 
 void SpawnEnemyB2(Enemy *self){
-    Enemy *enemy = EnemyRevert_New(self->scene, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1);
+    Enemy *enemy = EnemyRevert_New(self->scene, Vec2_Set(14.3, POSITION_Y_ENEMY_4), MAX_LIFE_ENEMY_1);
     Scene_AppendEnemy(self->scene, enemy);
-    enemy = EnemyRevert_New(self->scene, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1);
+    enemy = EnemyRevert_New(self->scene, Vec2_Set(14.3, POSITION_Y_ENEMY_5), MAX_LIFE_ENEMY_1);
+    Scene_AppendEnemy(self->scene, enemy);
+    enemy = EnemyRevert_New(self->scene, Vec2_Set(13.9, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_1);
+    Scene_AppendEnemy(self->scene, enemy);
+    enemy = EnemyRevert_New(self->scene, Vec2_Set(14.1, 3.87), MAX_LIFE_ENEMY_1);
+    Scene_AppendEnemy(self->scene, enemy);
+    enemy = EnemyRevert_New(self->scene, Vec2_Set(14.1, 5.13), MAX_LIFE_ENEMY_1);
     Scene_AppendEnemy(self->scene, enemy);
 }

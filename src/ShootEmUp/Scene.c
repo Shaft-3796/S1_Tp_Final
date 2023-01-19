@@ -30,7 +30,7 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->camera = Camera_New(LOGICAL_WIDTH, LOGICAL_HEIGHT);
     self->input = Input_New();
     self->player = Player_New(self);
-    self->waveIdx = 0;
+    self->waveIdx = 12;
     self->maxLife = 20;
 
     /* Perks */
@@ -108,9 +108,6 @@ void Scene_UpdateLevel(Scene *self)
         randomSpawnPerk(self, PERK_TYPE_LIFEUP);
         randomSpawnPerk(self, PERK_TYPE_POWERSHOOT);
 
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
-
         self->waveIdx++;
     }
     else if(self->waveIdx == 1)
@@ -120,9 +117,6 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
         enemy = EnemyRafal_New(self, Vec2_Set(POSITION_X_ENEMY_2, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_2);
         Scene_AppendEnemy(self, enemy);
-
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
 
         self->waveIdx++;
     }
@@ -149,9 +143,6 @@ void Scene_UpdateLevel(Scene *self)
         enemy = EnemyTriangle_New(self, Vec2_Set(POSITION_X_ENEMY_2, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_2, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
 
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
-
         self->waveIdx++;
     }
     else if(self->waveIdx == 4)
@@ -164,9 +155,6 @@ void Scene_UpdateLevel(Scene *self)
         enemy = EnemySin_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_2, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
 
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
-
         self->waveIdx++;
     }
     else if(self->waveIdx == 5)
@@ -174,9 +162,6 @@ void Scene_UpdateLevel(Scene *self)
         /* Add one Base enemy and one rafal enemy*/
         Enemy* enemy = EnemyBoss1_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_BOSS, SHOOT_PERIOD_ENEMY_4);
         Scene_AppendEnemy(self, enemy);
-
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
 
         self->waveIdx++;
     }
@@ -188,9 +173,6 @@ void Scene_UpdateLevel(Scene *self)
         enemy = EnemyRafal_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_2);
         Scene_AppendEnemy(self, enemy);
 
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
-
         self->waveIdx++;
     }
     else if(self->waveIdx == 7)
@@ -200,9 +182,6 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
         enemy = EnemyAuto_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
-
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
 
         self->waveIdx++;
     }
@@ -218,9 +197,6 @@ void Scene_UpdateLevel(Scene *self)
         enemy = EnemyTriangle_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_2, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
 
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
-
         self->waveIdx++;
     }
     else if(self->waveIdx == 9)
@@ -234,9 +210,6 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
         enemy = EnemyBomb_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
         Scene_AppendEnemy(self, enemy);
-
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
 
         self->waveIdx++;
     }
@@ -256,9 +229,6 @@ void Scene_UpdateLevel(Scene *self)
         enemy = EnemyBomb_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
 
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
-
         self->waveIdx++;
     }
     else if(self->waveIdx == 11)
@@ -267,8 +237,17 @@ void Scene_UpdateLevel(Scene *self)
         Enemy* enemy = EnemyBoss2_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_BOSS, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
 
-        /* Add an asteroid */
-        self->asteroid_to_spawn = 3;
+        self->waveIdx++;
+    }
+    else if(self->waveIdx == 12)
+    {
+        /* Add one Base enemy and one rafal enemy*/
+        Enemy* enemy = EnemyBoss2_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_BOSS, SHOOT_PERIOD_ENEMY_3);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyBoss1_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_BOSS, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyBoss1_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_BOSS, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
 
         self->waveIdx++;
     }
