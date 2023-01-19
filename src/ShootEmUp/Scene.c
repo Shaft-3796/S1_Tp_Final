@@ -172,6 +172,7 @@ void Scene_UpdatePerks(Scene *self)
         }
     }
 
+    /*
     // We also update asteroids
     if(self->asteroid_to_spawn > 0)
     {
@@ -184,6 +185,7 @@ void Scene_UpdatePerks(Scene *self)
             Scene_AppendBullet(self, asteroid);
         }
     }
+     */
 }
 
 bool Scene_Update(Scene *self)
