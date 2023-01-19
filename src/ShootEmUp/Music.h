@@ -9,4 +9,4 @@
 
 void playMusic();
 
-void playSound(); //char Title[]
+void playSound(char Music_Title[]);

@@ -108,6 +108,8 @@ typedef struct Scene_s
     /* --- Final animation --- */
     /// @brief Accumulateur de temps pour l'animation de fin.
     float finalAnimationAccumulator;
+    /// @brief Nombre de sons dans l'anim.
+    int soundAnim;
 
     /// @brief Opacité à modifier pour l'anim de fin.
     int opacity;

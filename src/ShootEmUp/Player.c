@@ -4,6 +4,7 @@
 #include "Settings.h"
 #include "Bullet.h"
 #include "Math.h"
+#include "Music.h"
 
 Player *Player_New(Scene *scene)
 {
@@ -111,6 +112,7 @@ if(self->scene->input->shootPressed)
         }
         self->power_shoot = false;
     }
+    playSound("Laser_Gun");
 }
 
 /* --- Perks --- */
