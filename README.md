@@ -12,11 +12,15 @@ Votre objectif ? Terrasser les ennemis qui vous barrent la route au cours des di
 
 #### Gameplay
 
-##### Déplacement, tirs:
+##### Pilotage, tirs:
 
-*Votre personnage peut se déplacer dans une zone définie, soit avec le clavier soit avec la souris, nous reparlerons de ça plus tard.*
-
+*Votre personnage peut se déplacer dans une zone définie*
 *Vous devez tirer des lasers pour anéantir les ennemis, mais attentions à la riposte !*
+
+*Pour vous déplacer avec les touches directionnelles, remplacez la ligne 4 du fichier Settings.h par "#define MOUSE_CONTROL false"*
+*Pour vous déplacer avec la souris, remplacez la ligne 4 du fichier Settings.h par "#define MOUSE_CONTROL true"*
+
+*Vous pouvez tirer avec la touche espace ou avec le click gauche*
 
 ##### Perks:
 *Vous pouvez collecter des perks au cours de la partie dont voici les effets:*
