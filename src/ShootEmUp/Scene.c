@@ -99,8 +99,7 @@ void Scene_UpdateLevel(Scene *self)
         randomSpawnPerk(self, PERK_TYPE_LIFEUP);
 
         /* Add an asteroid */
-        Bullet *asteroid = BulletAsteroid_New(self, Vec2_Set(18.f, 4.5f), Vec2_Set(-1*ASTEROID_SPEED_MULTIPLIER, 0.f), 90.f);
-        Scene_AppendBullet(self, asteroid);
+        self->asteroid_to_spawn = 3;
 
         self->waveIdx++;
     }
@@ -140,6 +139,11 @@ void randomSpawnPerk(Scene *self, PerkType type){
     Scene_AppendPerk(self, perk);
 }
 
+void randomSpawnAsteroid(Scene *self){
+    Vec2 pos = Vec2_Set(18.f, (rand()%(71)+5)/10);
+    Bullet* asteroid = BulletAsteroid_New(self, pos, Vec2_Set(-1*ASTEROID_SPEED_MULTIPLIER, 0.f), 90.f);
+    Scene_AppendBullet(self, asteroid);
+}
 
 void Scene_UpdatePerks(Scene *self)
 {
@@ -172,7 +176,7 @@ void Scene_UpdatePerks(Scene *self)
         }
     }
 
-    /*
+
     // We also update asteroids
     if(self->asteroid_to_spawn > 0)
     {
@@ -181,11 +185,10 @@ void Scene_UpdatePerks(Scene *self)
         {
             self->asteroid_to_spawn -= 1;
             self->asteroid_respawn_accumulator = 0.0f;
-            Bullet *asteroid = Asteroid_New(self, 5, 90.f);
-            Scene_AppendBullet(self, asteroid);
+            randomSpawnAsteroid(self);
         }
     }
-     */
+
 }
 
 bool Scene_Update(Scene *self)

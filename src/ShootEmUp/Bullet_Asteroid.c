@@ -36,6 +36,7 @@ Bullet* BulletAsteroid_New(Scene *scene, Vec2 position, Vec2 velocity, float ang
 void BulletAsteroid_Delete(Bullet *self)
 {
     if (!self) return;
+    self->scene->asteroid_to_spawn += 1;
     free(self);
 }
 
