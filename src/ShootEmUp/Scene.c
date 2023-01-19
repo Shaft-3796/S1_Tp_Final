@@ -106,9 +106,10 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
         */
 
+        /*
         Enemy* enemy = EnemyRafal_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
         Scene_AppendEnemy(self, enemy);
-
+        */
 
         /* Add one Sin enemy */
         /*
@@ -120,10 +121,10 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);*/
 
         /* Add one Boss1 enemy */
-
+        /*
         enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
         Scene_AppendEnemy(self, enemy);
-
+        */
 
         /* Add one Boss2 enemy */
         /*
@@ -134,6 +135,9 @@ void Scene_UpdateLevel(Scene *self)
         /*
         Enemy *enemy = EnemyBomb_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
         Scene_AppendEnemy(self, enemy);*/
+
+        Enemy *enemy = EnemyBomb_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
+        Scene_AppendEnemy(self, enemy);
 
 
         /* Add a perk */
@@ -297,12 +301,20 @@ bool Scene_Update(Scene *self)
             (bullet->position.y < -5.0f) ||
             (bullet->position.y > 20.0f);
 
-        if (outOfBounds)
+        if (outOfBounds || (bullet->type == BULLET_BOMB_ENEMY && bullet->ready_to_delete))
         {
             // Supprime le tir
-            Scene_RemoveBullet(self, i);
+            if(bullet->type == BULLET_BOMB_ENEMY && bullet->ready_to_delete==1){
+                bullet->ready_to_delete=2;
+            }
+            else if(bullet->type == BULLET_BOMB_ENEMY && bullet->ready_to_delete==2){
+                Scene_RemoveBullet(self, i);
+                removed = true;
+                continue;
+            }
+            else{Scene_RemoveBullet(self, i);
             removed = true;
-            continue;
+            continue;}
         }
 
         if (bullet->fromPlayer)

@@ -76,10 +76,13 @@ typedef struct Bullet_s
     /// @brief acumulateur d'oscillations.
     float oscillation_acumulator;
 
+    bool follow_disable;
+
+    /// @brief for the bomb
     /// @brief temps avant explosion de la bombe.
     float bomb_explosion_time;
-
-    bool follow_disable;
+    int ready_to_delete;
+    SDL_Rect sourceRect;
 
 
     /* --- Function Pointers --- */

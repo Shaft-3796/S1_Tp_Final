@@ -12,11 +12,11 @@ void BulletBombEnemy_Render(Bullet *self);
 Bullet* BulletBombEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
     /* --- Base Ini --- */
     Bullet *self = (Bullet *)calloc(1, sizeof(Bullet));
-    self->texture = scene->assets->base_enemy_bullet;
+    self->texture = scene->assets->bomb;
     self->worldW = 8 * PIX_TO_WORLD;
     self->worldH = 16 * PIX_TO_WORLD;
     self->radius = 0.3f;
-    self->fromPlayer = false;
+    self->fromPlayer = 0;
     self->type = BULLET_BOMB_ENEMY;
 
     /* --- Arguments --- */
@@ -25,7 +25,10 @@ Bullet* BulletBombEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float an
     self->velocity = velocity;
     self->angle = angle;
     self->fromPlayer = false;
+
+    /* --- Custom --- */
     self->bomb_explosion_time = 0;
+    self->ready_to_delete = false;
 
     /* --- Functions bindings --- */
     self->Delete = &BulletBombEnemy_Delete;
@@ -43,18 +46,29 @@ void BulletBombEnemy_Delete(Bullet *self)
 
 void BulletBombEnemy_Update(Bullet *self)
 {
+    // Source de base
+    self->sourceRect = (SDL_Rect){ 0, 0, 64, 64 };
     // New pos = old pos + speed * time
     self->position = Vec2_Add(self->position,Vec2_Scale(self->velocity, Timer_GetDelta(g_time)));
     if(self->bomb_explosion_time >= 6.0f){
         self->velocity.x = 0;
         self->velocity.y = 0;
     }
-    if(self->bomb_explosion_time >= 6.25f){
-        self->radius = 2;
+    if(self->bomb_explosion_time >= 6.25f && self->bomb_explosion_time <= 6.5f){
+        self->sourceRect = (SDL_Rect){ 64, 0, 64, 64 };
     }
     if(self->bomb_explosion_time >= 6.5f){
-        BulletBombEnemy_Delete(self);
+        // On incrémente en fonction du temps et de la vitesse
+        int frames = (self->bomb_explosion_time- 6.5f) * 20;
+        if(frames >= 14){
+            frames = 14;
+            self->radius = 2;
+            self->ready_to_delete = self->ready_to_delete==2 ? 2 : 1;
+        }
+        // On récupère la position de la frame
+        self->sourceRect = (SDL_Rect){ 64+64*frames, 0, 64, 64 };
     }
+
     self->bomb_explosion_time += Timer_GetDelta(g_time);
 }
 
@@ -81,5 +95,5 @@ dst.y -= 0.50f * dst.h;
 
 // On affiche en position dst (unités en pixels)
 SDL_RenderCopyExF(
-renderer, self->texture, NULL, &dst, self->angle, NULL, 0);
+renderer, self->texture, &(self->sourceRect), &dst, self->angle, NULL, 0);
 }

@@ -34,6 +34,7 @@ typedef struct Assets_s
     SDL_Texture *revert_enemy;
     SDL_Texture *auto_bullet;
     SDL_Texture *boss1;
+    SDL_Texture *bomb;
 
     /* --- Perk --- */
     /// @brief Texture de l'astor
