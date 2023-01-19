@@ -46,7 +46,8 @@ Assets *Assets_New(SDL_Renderer *renderer)
         {&self->revert_enemy, "../Assets/Enemy/EnemyRevert.png"},
         {&self->base_player_bullets_corrupted, "../Assets/Player/BaseBulletsCorrupted.png"},
         {&self->auto_bullet, "../Assets/Enemy/AutoBullet.png"},
-        {&self->bomb, "../Assets/Enemy/BombAnim.png"}
+        {&self->bomb, "../Assets/Enemy/BombAnim.png"},
+        {&self->waves, "../Assets/UI/Waves.png"}
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 

@@ -1,4 +1,6 @@
 # TODO
 Code cleaning
 
-? Enemy life, easter egg fix
+Faire de nouvelles textures pour les mobs
+
+? Enemy life
