@@ -18,6 +18,7 @@ Assets *Assets_New(SDL_Renderer *renderer)
         { &self->layers[0],     "../Assets/Background/layer_00_wide.png"   },
         { &self->layers[1],     "../Assets/Background/layer_01_wide.png"   },
         { &self->layers[2],     "../Assets/Background/layer_02_wide.png"   },
+        { &self->layers[3],     "../Assets/Background/layer_01.png"   },
         { &self->base_player_bullets,  "../Assets/Player/BaseBullets.png" },
         { &self->fighter,       "../Assets/Enemy/fighter.png"         },
         { &self->fighterBullet, "../Assets/Enemy/fighter_bullet.png"  },
@@ -30,10 +31,15 @@ Assets *Assets_New(SDL_Renderer *renderer)
         { &self->astro, "../Assets/Perks/Perk_Astro.png"  },
         { &self->shield, "../Assets/Perks/Perk_Shield.png"  },
         { &self->shield_render, "../Assets/Perks/Perk_Shield_Render.png"  },
-        { &self->lifeBar, "../Assets/UI/LifeBar.png"  },
+        { &self->player_life_bar_frame, "../Assets/UI/PlayerLifeBarFrame.png"  },
+        { &self->player_life_bar_content, "../Assets/UI/PlayerLifeBarContent.png"  },
         { &self->bodin, "../Assets/Player/bodin.png"  },
         { &self->asteroid, "../Assets/Gameplay/Asteroid.png"  },
-        {&self->menu, "../Assets/Menu/MenuLayer.png"}
+        {&self->menu, "../Assets/Menu/MenuLayer.png"},
+        {&self->death, "../Assets/Menu/DeathLayer3.png"},
+        {&self->black_hole, "../Assets/Menu/black_hole_3_frame.png"},
+        {&self->game_over_layer, "../Assets/Menu/GameOverLayer.png"},
+        {&self->lifeup, "../Assets/Perks/Perk_LifeUp.png"}
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 

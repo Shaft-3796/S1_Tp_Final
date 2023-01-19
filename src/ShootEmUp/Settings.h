@@ -57,15 +57,23 @@
 
 
 /* --- Custom settings --- */
-#define BASE_PLAYER_SPEED_MULTIPLIER 2.f
-#define PLAYER_SIZE_MULTIPLIER 100.f
+#define BASE_PLAYER_SPEED_MULTIPLIER 4.f
+#define PLAYER_SIZE_MULTIPLIER 75.f
 
 /* --- Perks --- */
 #define PERKS_SIZE_MULTIPLIER 75.f
 #define PERKS_ROTATION_SPEED 0.01f // in seconds
-#define ASTRO_SPEED_MULTIPLIER 2.f
+#define ASTRO_SPEED_MULTIPLIER 1.5f
 #define ASTRO_BUFF_DURATION 5.f // in seconds
 #define SHIELD_BUFF_DURATION 5.f // in seconds
+#define LIFEUP_PV_BUFF 3
+
+#define LIFEUP_RESPAWN_TIME_MAX 25
+#define LIFEUP_RESPAWN_TIME_MIN 10
+#define SHIELD_RESPAWN_TIME_MAX 25
+#define SHIELD_RESPAWN_TIME_MIN 10
+#define ASTRO_RESPAWN_TIME_MAX 25
+#define ASTRO_RESPAWN_TIME_MIN 10
 
 /* --- Background --- */
 #define BACKGROUND_WIDTH 7680
@@ -74,10 +82,7 @@
 #define BACKGROUND_1_SPEED_MULTIPLIER 500 // in pixels per second
 
 /* --- UI --- */
-#define LIFE_BAR_W_SIZE_MULTIPLIER 60.f
-#define LIFE_BAR_H_SIZE_MULTIPLIER 3.f
-#define LIFE_BAR_H_OFFSET_MULTIPLIER 15.f
-#define LIFE_BAR_W_OFFSET_MULTIPLIER 0.4f
+#define LIFE_BAR_SIZE_MULTIPLIER 100.f
 
 /* --- Formats for animations --- */
 #define PLAYER_MOVING_ANIMATION_PERIOD 64 // in pixels
@@ -85,9 +90,12 @@
 #define PLAYER_MOVING_ANIMATION_FRAMES 2 // number of frames
 #define PLAYER_MOVING_ANIMATION_DURATION 0.1f // in seconds
 
+/* --- Enemies --- */
+#define ENEMY_SIZE_MULTIPLIER 75.f
+
 /* --- Gameplay --- */
 #define ASTEROID_SPEED_MULTIPLIER 4.f
 #define ASTEROID_SIZE_MULTIPLIER 25.f
 
 /* --- Bullets --- */
-#define BULLET_SIZE_MULTIPLIER 100.f
+#define BULLET_SIZE_MULTIPLIER 75.f

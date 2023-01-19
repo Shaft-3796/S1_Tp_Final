@@ -24,6 +24,9 @@ Perk *Perk_New(Scene *scene, PerkType type, Vec2 position)
         case PERK_TYPE_SHIELD:
             self->texture = scene->assets->shield;
             break;
+        case PERK_TYPE_LIFEUP:
+            self->texture = scene->assets->lifeup;
+            break;
     }
 
     return self;
@@ -83,6 +86,14 @@ void Perk_Apply_Effect(Perk *self, Player *player)
         case PERK_TYPE_SHIELD:
             player->perk_shield = true;
             player->perk_shield_timer = 0;
+            break;
+        case PERK_TYPE_LIFEUP:
+            player->life+=LIFEUP_PV_BUFF;
+            if(player->life > player->max_life)
+                player->life = player->max_life;
+            player->scene->is_lifeup = false;
+            player->scene->lifeup_respawn_accumulator = 0;
+            player->scene->lifeup_respawn_time = (rand() % (LIFEUP_RESPAWN_TIME_MAX - LIFEUP_RESPAWN_TIME_MIN + 1)) + LIFEUP_RESPAWN_TIME_MIN;
             break;
     }
 }
