@@ -21,7 +21,7 @@ Votre objectif ? Terrasser les ennemis qui vous barrent la route au cours des di
 
 *Pour vous déplacer avec la souris, remplacez la ligne 4 du fichier Settings.h par "#define MOUSE_CONTROL true"*
 
-*Vous pouvez tirer avec la touche espace ou avec le click gauche*
+*Vous pouvez tirer avec la touche espace ou avec le clique gauche*
 
 ##### Perks:
 *Vous pouvez collecter des perks au cours de la partie dont voici les effets:*
