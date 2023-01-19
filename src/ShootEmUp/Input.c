@@ -128,7 +128,6 @@ void Input_Update(Input *self) {
 
             case SDL_MOUSEBUTTONDOWN:
                 if (evt.button.button == SDL_BUTTON_LEFT) {
-                    printf("DOWN TRG\n");
                     fflush(stdout);
                     if (!self->waitForMouseUp) {
                         self->shootPressed = true;
@@ -144,7 +143,6 @@ void Input_Update(Input *self) {
 
             case SDL_MOUSEBUTTONUP:
                 if (evt.button.button == SDL_BUTTON_LEFT) {
-                    printf("UP TRG\n");
                     fflush(stdout);
                     self->shootPressed = false;
                     self->waitForMouseUp = false;
