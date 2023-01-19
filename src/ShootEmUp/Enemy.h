@@ -38,6 +38,7 @@ typedef enum EnemyTypes_e
     ENEMY_SIN,
     ENEMY_BOSS_1,
     ENEMY_RAFAL,
+    ENEMY_TRIANGLE,
 } EnemyTypes;
 
 

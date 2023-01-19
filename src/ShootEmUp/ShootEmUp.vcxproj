@@ -148,6 +148,7 @@
     <ClCompile Include="Enemy_Rafale.c" />
     <ClCompile Include="Enemy_Sin.c" />
     <ClCompile Include="Enemy_Teleport.c" />
+    <ClCompile Include="Enemy_triangle.c" />
     <ClCompile Include="Input.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Math.c" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Enemy_Rafale.h" />
     <ClInclude Include="Enemy_Sin.h" />
     <ClInclude Include="Enemy_Teleport.h" />
+    <ClInclude Include="Enemy_triangle.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MenuInput.h" />

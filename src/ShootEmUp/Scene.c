@@ -7,6 +7,7 @@
 #include "Bullet_Asteroid.h"
 #include "Enemy_Teleport.h"
 #include "Enemy_Rafale.h"
+#include "Enemy_triangle.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {
@@ -78,8 +79,12 @@ void Scene_UpdateLevel(Scene *self)
         /*Enemy *enemy = EnemyTeleport_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
         Scene_AppendEnemy(self, enemy);*/
 
-        /* Add one Teleport enemy */
-        Enemy *enemy = EnemyRafal_New(self, Vec2_Set(15.0f, 4.5f), 10, 3);
+        /* Add one rafal enemy */
+        /*Enemy *enemy = EnemyRafal_New(self, Vec2_Set(15.0f, 4.5f), 10, 3);
+        Scene_AppendEnemy(self, enemy);*/
+
+        /* Add one rafal enemy */
+        Enemy *enemy = EnemyTriangle_New(self, Vec2_Set(15.0f, 4.5f), 10, 2);
         Scene_AppendEnemy(self, enemy);
 
         /* Add a perk */

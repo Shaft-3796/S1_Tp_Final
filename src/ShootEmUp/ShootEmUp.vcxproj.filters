@@ -99,6 +99,9 @@
     <ClCompile Include="DeathScene.c">
       <Filter>Fichiers sources\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy_triangle.c">
+      <Filter>Fichiers sources\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Settings.h">
@@ -177,6 +180,9 @@
       <Filter>Fichiers d%27en-tête\Game</Filter>
     </ClInclude>
     <ClInclude Include="DeathScene.h">
+      <Filter>Fichiers d%27en-tête\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_triangle.h">
       <Filter>Fichiers d%27en-tête\Game</Filter>
     </ClInclude>
   </ItemGroup>
