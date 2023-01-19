@@ -48,6 +48,9 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->finalAnimationAccumulator = 0.f;
     self->opacity = 0;
 
+    // Anim de damage
+    self->damageAnimationAccumulator = -1.f; // -1 = pas d'anim
+
     return self;
 }
 
@@ -425,6 +428,18 @@ void Scene_Render(Scene *self)
     if(self->player->state == PLAYER_DEAD){
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, self->opacity);
         SDL_RenderFillRect(renderer, NULL);
+    }
+
+    // Anim de damage
+    if(self->damageAnimationAccumulator != -1.f){
+        self->damageAnimationAccumulator += Timer_GetDelta(g_time);
+        if(self->damageAnimationAccumulator > 0.1f){
+            self->damageAnimationAccumulator = -1.f;
+        }
+        else{
+            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 35);
+            SDL_RenderFillRect(renderer, NULL);
+        }
     }
 }
 

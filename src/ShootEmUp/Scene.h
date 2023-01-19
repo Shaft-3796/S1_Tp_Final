@@ -107,6 +107,10 @@ typedef struct Scene_s
     /// @brief Opacité à modifier pour l'anim de fin.
     int opacity;
 
+    /* --- Damage animation --- */
+    /// @brief Accumulateur de temps pour l'animation de dégats.
+    float damageAnimationAccumulator;
+
     /* -_-_-_- LEVEL DESIGN -_-_-_- */
 
 

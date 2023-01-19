@@ -169,6 +169,11 @@ void Player_Damage(Player *self, int damage)
         self->life = 0;
         self->state = PLAYER_DEAD;
     }
+
+    // Animation de dégats
+    if(self->scene->damageAnimationAccumulator == -1.f){
+        self->scene->damageAnimationAccumulator = 0.f;
+    }
 }
 
 /* Ui */
