@@ -4,6 +4,7 @@
 #include "Timer.h"
 #include "Math.h"
 #include "Bullet.h"
+#include "Bullet_Auto.h"
 
 // Protos
 void EnemyAuto_Delete(Enemy *self);
@@ -56,7 +57,7 @@ void EnemyAuto_Update(Enemy *self)
 {
     if (self->accumulator_bullet_shot >= self->shoot_period){
         Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-        Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f);
+        Bullet *bullet = BulletAuto_New(self->scene, self->position, velocity, 90.0f);
         Scene_AppendBullet(self->scene, bullet);
         self->accumulator_bullet_shot = 0;
     }

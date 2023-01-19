@@ -13,6 +13,7 @@
 #include "Enemy_Boss_2.h"
 #include "Enemy_Auto.h"
 #include "Enemy_Bomb.h"
+#include "Bullet.h"
 
 // Protos
 void randomSpawnPerk(Scene *self, PerkType type);
@@ -95,52 +96,11 @@ void Scene_UpdateLevel(Scene *self)
 
     if (self->waveIdx == 0)
     {
-        /* Add one  Base enemy */
-        /*
-        Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
-        Scene_AppendEnemy(self, enemy);
-         */
-
-        /*
-        enemy = EnemyTeleport_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
-        Scene_AppendEnemy(self, enemy);
-        */
-
-        /*
-        Enemy* enemy = EnemyRafal_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
-        Scene_AppendEnemy(self, enemy);
-        */
-
-        /* Add one Sin enemy */
-        /*
-        enemy = EnemySin_New(self, Vec2_Set(15.0f, 4.5f), 10, 3);
-        Scene_AppendEnemy(self, enemy);
-         */
-
-        /*Enemy* enemy = EnemyTriangle_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
-        Scene_AppendEnemy(self, enemy);*/
-
-        /* Add one Boss1 enemy */
-        /*
-        enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
-        Scene_AppendEnemy(self, enemy);
-        */
-
-        /* Add one Boss2 enemy */
-        /*
-        Enemy *enemy = EnemyBoss2_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
-        Scene_AppendEnemy(self, enemy);*/
-
-        /* Add one Boss2 enemy */
-        /*
-        Enemy *enemy = EnemyBomb_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
-        Scene_AppendEnemy(self, enemy);*/
-
-        Enemy *enemy = EnemyBomb_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
+        /* Add two Base enemy */
+        Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 2.25f), 15, 1.0f);
         Scene_AppendEnemy(self, enemy);
 
-
-        /* Add a perk */
+        /* Add one Perks */
         randomSpawnPerk(self, PERK_TYPE_ASTRO);
         randomSpawnPerk(self, PERK_TYPE_SHIELD);
         randomSpawnPerk(self, PERK_TYPE_LIFEUP);
@@ -151,11 +111,102 @@ void Scene_UpdateLevel(Scene *self)
 
         self->waveIdx++;
     }
-    else if(self->waveIdx == 1){
-        Enemy *enemy = EnemySin_New(self, Vec2_Set(15.0f, 6.75f), 10, 3);
+    else if(self->waveIdx == 1)
+    {
+        /* Add one Base enemy and one rafal enemy*/
+        Enemy* enemy = EnemyBase_New(self, Vec2_Set(15.0f, 2.25f), 15, 1.0f);
         Scene_AppendEnemy(self, enemy);
-        Enemy *enemy1 = EnemySin_New(self, Vec2_Set(12.0f, 2.25f), 10, 3);
-        Scene_AppendEnemy(self, enemy1);
+        enemy = EnemyRafal_New(self, Vec2_Set(14.0f, 7.75f), 15, 1.5f);
+        Scene_AppendEnemy(self, enemy);
+
+        /* Add one Perks */
+        randomSpawnPerk(self, PERK_TYPE_ASTRO);
+        randomSpawnPerk(self, PERK_TYPE_SHIELD);
+        randomSpawnPerk(self, PERK_TYPE_LIFEUP);
+        randomSpawnPerk(self, PERK_TYPE_POWERSHOOT);
+
+        /* Add an asteroid */
+        self->asteroid_to_spawn = 3;
+
+        self->waveIdx++;
+    }
+    else if(self->waveIdx == 2)
+    {
+        /* Add one Base enemy and one rafal enemy*/
+        Enemy* enemy = EnemyBase_New(self, Vec2_Set(15.0f, 2.25f), 15, 1.0f);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyBase_New(self, Vec2_Set(13.0f, 7.75f), 15, 1.0f);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemySin_New(self, Vec2_Set(14.0f, 4.5f), 15, 2.5f);
+        Scene_AppendEnemy(self, enemy);
+
+        /* Add one Perks */
+        randomSpawnPerk(self, PERK_TYPE_ASTRO);
+        randomSpawnPerk(self, PERK_TYPE_SHIELD);
+        randomSpawnPerk(self, PERK_TYPE_LIFEUP);
+        randomSpawnPerk(self, PERK_TYPE_POWERSHOOT);
+
+        /* Add an asteroid */
+        self->asteroid_to_spawn = 3;
+
+        self->waveIdx++;
+    }
+    else if(self->waveIdx == 3)
+    {
+        /* Add one Base enemy and one rafal enemy*/
+        Enemy* enemy = EnemyTriangle_New(self, Vec2_Set(15.0f, 2.25f), 15, 2.5f);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyTriangle_New(self, Vec2_Set(14.0f, 7.75f), 15, 2.5f);
+        Scene_AppendEnemy(self, enemy);
+
+        /* Add one Perks */
+        randomSpawnPerk(self, PERK_TYPE_ASTRO);
+        randomSpawnPerk(self, PERK_TYPE_SHIELD);
+        randomSpawnPerk(self, PERK_TYPE_LIFEUP);
+        randomSpawnPerk(self, PERK_TYPE_POWERSHOOT);
+
+        /* Add an asteroid */
+        self->asteroid_to_spawn = 3;
+
+        self->waveIdx++;
+    }
+    else if(self->waveIdx == 4)
+    {
+        /* Add one Base enemy and one rafal enemy*/
+        Enemy* enemy = EnemyRafal_New(self, Vec2_Set(15.0f, 2.25f), 15, 1.5f);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyRafal_New(self, Vec2_Set(14.0f, 7.75f), 15, 1.5f);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemySin_New(self, Vec2_Set(14.0f, 4.5f), 15, 2.5f);
+        Scene_AppendEnemy(self, enemy);
+
+        /* Add one Perks */
+        randomSpawnPerk(self, PERK_TYPE_ASTRO);
+        randomSpawnPerk(self, PERK_TYPE_SHIELD);
+        randomSpawnPerk(self, PERK_TYPE_LIFEUP);
+        randomSpawnPerk(self, PERK_TYPE_POWERSHOOT);
+
+        /* Add an asteroid */
+        self->asteroid_to_spawn = 3;
+
+        self->waveIdx++;
+    }
+    else if(self->waveIdx == 5)
+    {
+        /* Add one Base enemy and one rafal enemy*/
+        Enemy* enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 2.25f), 15, 1.5f);
+        Scene_AppendEnemy(self, enemy);
+
+        /* Add one Perks */
+        randomSpawnPerk(self, PERK_TYPE_ASTRO);
+        randomSpawnPerk(self, PERK_TYPE_SHIELD);
+        randomSpawnPerk(self, PERK_TYPE_LIFEUP);
+        randomSpawnPerk(self, PERK_TYPE_POWERSHOOT);
+
+        /* Add an asteroid */
+        self->asteroid_to_spawn = 3;
+
+        self->waveIdx++;
     }
 }
 
@@ -581,7 +632,6 @@ void Scene_RemoveObject(int index, void **objectArray, int *count)
 void Scene_RemoveEnemy(Scene *self, int index)
 {
     self->enemies[index]->Delete(self->enemies[index]);
-
     Scene_RemoveObject(index, (void **)(self->enemies), &(self->enemyCount));
 }
 
