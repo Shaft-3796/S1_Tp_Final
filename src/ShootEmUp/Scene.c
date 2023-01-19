@@ -163,7 +163,7 @@ void randomSpawnPerk(Scene *self, PerkType type){
             break;
 
     }
-    Vec2 pos = Vec2_Set((rand()%(76)+5)/10, (rand()%(71)+5)/10);
+    Vec2 pos = Vec2_Set(((float)rand()/(float)RAND_MAX)*7+0.5, ((float)rand()/(float)RAND_MAX)*8+0.5);
     Perk *perk = Perk_New(self, type, pos);
     Scene_AppendPerk(self, perk);
 }
