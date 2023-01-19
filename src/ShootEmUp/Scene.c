@@ -8,6 +8,8 @@
 #include "Enemy_Teleport.h"
 #include "Enemy_Rafale.h"
 #include "Enemy_triangle.h"
+#include "Enemy_Revert.h"
+#include "Bullet_Auto.h"
 
 // Protos
 void randomSpawnPerk(Scene *self, PerkType type);
@@ -101,8 +103,10 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
         */
 
+        /*
         Enemy* enemy = EnemyRafal_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
         Scene_AppendEnemy(self, enemy);
+         */
 
         /* Add one Sin enemy */
         /*
@@ -115,6 +119,12 @@ void Scene_UpdateLevel(Scene *self)
         enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
         Scene_AppendEnemy(self, enemy);
          */
+
+        Enemy* enemy = EnemyRevert_New(self, Vec2_Set(15.0f, 4.5f), 5);
+        Scene_AppendEnemy(self, enemy);
+
+        Bullet* bullet = BulletAuto_New(self, Vec2_Set(15.0f, 4.5f), Vec2_Set(0.0f, 0.0f), 0.0f);
+        Scene_AppendBullet(self, bullet);
 
         /* Add a perk */
         randomSpawnPerk(self, PERK_TYPE_ASTRO);
@@ -296,6 +306,12 @@ bool Scene_Update(Scene *self)
                 {
                     // Inflige des dommages � l'ennemi
                     enemy->Damage(enemy, 1);
+
+                    // On verifie si l'ennemi est un Enemy revert
+                    if(enemy->type == ENEMY_REVERT){
+                        enemy->Revert(enemy, bullet);
+                        break;
+                    }
 
                     // Supprime le tir
                     Scene_RemoveBullet(self, i);

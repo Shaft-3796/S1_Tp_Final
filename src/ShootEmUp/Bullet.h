@@ -22,6 +22,8 @@ typedef enum BulletType_e
 
     BULLET_ARC_ENEMY,
 
+    BULLET_AUTO,
+
     /// @brief Asteroid
     ASTEROID,
 } BulletType;
@@ -71,6 +73,9 @@ typedef struct Bullet_s
 
     /// @brief acumulateur d'oscillations.
     float oscillation_acumulator;
+
+
+    bool follow_disable;
 
 
     /* --- Function Pointers --- */
