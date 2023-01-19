@@ -85,6 +85,7 @@
 
 /* --- UI --- */
 #define LIFE_BAR_SIZE_MULTIPLIER 100.f
+#define WAVE_SIZE_MULTIPLIER 75.f
 
 /* --- Formats for animations --- */
 #define PLAYER_MOVING_ANIMATION_PERIOD 64 // in pixels

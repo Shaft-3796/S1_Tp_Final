@@ -49,7 +49,7 @@ void DeathScene_Delete(DeathScene *self);
 /// Cette fonction est appel�e � chaque tour de la boucle de rendu.
 /// @param self la sc�ne.
 /// @return true s'il faut quitter la boucle de rendu, false sinon.
-bool DeathScene_Update(DeathScene *self);
+int DeathScene_Update(DeathScene *self);
 
 /// @brief Dessine la sc�ne dans le moteur de rendu.
 /// @param self la sc�ne.

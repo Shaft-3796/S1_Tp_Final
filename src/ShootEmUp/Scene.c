@@ -369,7 +369,7 @@ void Scene_UpdatePerks(Scene *self)
 
 }
 
-bool Scene_Update(Scene *self)
+int Scene_Update(Scene *self)
 {
     Player *player = self->player;
 
@@ -612,27 +612,17 @@ bool Scene_Update(Scene *self)
     Scene_UpdateLevel(self);
 
     // -------------------------------------------------------------------------
-    // Met � jour l'Easter Egg
-    if(self->input->easter_egg)
-    {
-        SDL_Texture* tmp = self->assets->bodin;
-        self->assets->bodin = self->assets->base_player_bullets;
-        self->assets->base_player_bullets = tmp;
-        self->input->easter_egg = false;
-        if(self->input->resize_bullets){
-            self->input->resize_bullets = false;
-        }
-        else{
-            self->input->resize_bullets = true;
-        }
 
-        for(int i=0; i<5; i++)
-        {
-            self->input->letters[i] = false;
-        }
+    /* --- Return --- */
+    if(self->input->quitPressed){
+        return 1;
     }
-
-    return self->input->quitPressed || self->opacity >= 255;
+    else if(self->opacity >= 255){
+        return 2;
+    }
+    else{
+        return 0;
+    }
 }
 
 void Scene_Render(Scene *self)

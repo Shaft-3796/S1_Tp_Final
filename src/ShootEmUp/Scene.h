@@ -136,7 +136,7 @@ void Scene_Delete(Scene *self);
 /// Cette fonction est appel�e � chaque tour de la boucle de rendu.
 /// @param self la sc�ne.
 /// @return true s'il faut quitter la boucle de rendu, false sinon.
-bool Scene_Update(Scene *self);
+int Scene_Update(Scene *self);
 
 /// @brief Dessine la sc�ne dans le moteur de rendu.
 /// @param self la sc�ne.

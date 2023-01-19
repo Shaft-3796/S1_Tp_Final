@@ -230,5 +230,19 @@ Vec2 pos2 = Vec2_Set(0.2, 9.8);
 Camera_WorldToView(camera, pos2, &dst2.x, &dst2.y);
 SDL_RenderCopyF(
 renderer, assets->player_life_bar_content, &src, &dst2);
+
+// On rend la wave actuelle
+SDL_Rect src2 = {0};
+src2.h = 62;
+src2.w = 62;
+src2.x = 62 * (self->scene->waveIdx);
+src2.y = 0;
+SDL_FRect dst3 = {0};
+dst3.h = WAVE_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+dst3.w = WAVE_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+Vec2 pos3 = Vec2_Set(2.6, 9.55);
+Camera_WorldToView(camera, pos3, &dst3.x, &dst3.y);
+SDL_RenderCopyF(
+renderer, assets->waves, &src2, &dst3);
 }
 

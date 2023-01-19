@@ -11,7 +11,6 @@ Input *Input_New()
     {
         self->letters[i] = 0;
     }
-    self->resize_bullets = 0;
     self->waitForMouseUp = 0;
 
     return self;
@@ -27,6 +26,7 @@ void Input_Update(Input *self) {
     self->shootPressed = false;
     self->quitPressed = false;
     self->switchWave = false;
+
     SDL_Event evt;
     while (SDL_PollEvent(&evt)) {
         switch (evt.type) {
@@ -162,7 +162,11 @@ void Input_Update(Input *self) {
                 break;
             }
             if (i == 4) {
-                self->easter_egg = true;
+                self->easter_egg = self->easter_egg ? false : true;
+                for(int i = 0; i < 5; i++)
+    {
+        self->letters[i] = 0;
+    }
             }
         }
     }

@@ -49,7 +49,7 @@ void MenuScene_Delete(MenuScene *self);
 /// Cette fonction est appel�e � chaque tour de la boucle de rendu.
 /// @param self la sc�ne.
 /// @return true s'il faut quitter la boucle de rendu, false sinon.
-bool MenuScene_Update(MenuScene *self);
+int MenuScene_Update(MenuScene *self);
 
 /// @brief Dessine la sc�ne dans le moteur de rendu.
 /// @param self la sc�ne.
