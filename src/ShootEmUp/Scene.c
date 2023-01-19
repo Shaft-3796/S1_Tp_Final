@@ -30,7 +30,7 @@ Scene *Scene_New(SDL_Renderer *renderer)
     self->camera = Camera_New(LOGICAL_WIDTH, LOGICAL_HEIGHT);
     self->input = Input_New();
     self->player = Player_New(self);
-    self->waveIdx = 11;
+    self->waveIdx = 0;
     self->maxLife = 20;
 
     /* Perks */
@@ -210,9 +210,9 @@ void Scene_UpdateLevel(Scene *self)
         /* Add one Base enemy and one rafal enemy*/
         Enemy* enemy = EnemyTriangle_New(self, Vec2_Set(POSITION_X_ENEMY_2, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_2, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1);
         Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1);
         Scene_AppendEnemy(self, enemy);
         enemy = EnemyTriangle_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_2, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
@@ -227,9 +227,9 @@ void Scene_UpdateLevel(Scene *self)
         /* Add one Base enemy and one rafal enemy*/
         Enemy* enemy = EnemyRafal_New(self, Vec2_Set(POSITION_X_ENEMY_2, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_2, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1);
         Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1);
         Scene_AppendEnemy(self, enemy);
         enemy = EnemyBomb_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
         Scene_AppendEnemy(self, enemy);
@@ -244,15 +244,15 @@ void Scene_UpdateLevel(Scene *self)
         /* Add one Base enemy and one rafal enemy*/
         Enemy* enemy = EnemyAuto_New(self, Vec2_Set(POSITION_X_ENEMY_2, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_2, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1);
         Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1);
         Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_1);
         Scene_AppendEnemy(self, enemy);
         enemy = EnemyAuto_New(self, Vec2_Set(POSITION_X_ENEMY_2, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
-        enemy = EnemyBomb_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        enemy = EnemyBomb_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
 
         /* Add an asteroid */
@@ -374,6 +374,56 @@ bool Scene_Update(Scene *self)
 
     // Met � jour les entr�es utilisateur
     Input_Update(self->input);
+
+    // Mouse control
+    if(MOUSE_CONTROL){
+        int mouse_x, mouse_y;
+        SDL_GetMouseState(&mouse_x, &mouse_y);
+        Vec2 mouse_pos = Vec2_Set(mouse_x, mouse_y);
+        Vec2 player_pos = Vec2_Set(player->position.x, player->position.y);
+        player_pos.x *= Camera_GetWorldToViewScale(self->camera);
+        player_pos.y *= Camera_GetWorldToViewScale(self->camera);
+        player_pos.y = LOGICAL_HEIGHT - player_pos.y;
+        fflush(stdout);
+
+        if(mouse_pos.x > player_pos.x+5){
+            self->input->hAxis = 1.f;
+        }
+        else if(mouse_pos.x < player_pos.x-5){
+            self->input->hAxis = -1.f;
+        }
+        else{
+            self->input->hAxis = 0.f;
+        }
+
+        if(mouse_pos.y < player_pos.y-5){
+            self->input->vAxis = 1.f;
+        }
+        else if(mouse_pos.y > player_pos.y+5){
+            self->input->vAxis = -1.f;
+        }
+        else{
+            self->input->vAxis = 0.f;
+        }
+
+
+    }
+
+        // Avance d'une vague si le shortcut a été activé
+    if(self->input->switchWave)
+    {
+        // Remove all enemies
+        while(self->enemyCount > 0)
+        {
+            Scene_RemoveEnemy(self, 0);
+        }
+        // Remove all bullets
+        while(self->bulletCount > 0)
+        {
+            Scene_RemoveBullet(self, 0);
+        }
+    }
+
 
     // Met � jour la positions et les dimensions des calques du background
     int offset = Timer_GetDelta(g_time)*(float)BACKGROUND_1_SPEED_MULTIPLIER*self->backgroundSpeedMultiplier;

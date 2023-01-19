@@ -98,6 +98,7 @@
 /* --- Gameplay --- */
 #define ASTEROID_SPEED_MULTIPLIER 4.f
 #define ASTEROID_SIZE_MULTIPLIER 25.f
+#define MOUSE_CONTROL true
 
 /* --- Bullets --- */
 #define BULLET_SIZE_MULTIPLIER 75.f

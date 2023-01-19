@@ -11,6 +11,8 @@ typedef struct Input_s
     /// @brief Bool�en indiquant si la touche de tir vient d'�tre press�e.
     bool shootPressed;
 
+    bool waitForMouseUp;
+
     /// @brief Nombre indiquant le d�placement horizontal du joueur.
     /// Les valeurs pour un clavier ou un joystick sont dans l'intervalle
     /// [-1.0f, 1.0f].
@@ -26,6 +28,9 @@ typedef struct Input_s
     /// Une valeur n�gative d�signe un d�placement vers le bas.
     /// Une valeur positive d�signe un d�placement vers le haut.
     float vAxis;
+
+    /// @brief Wave shortcut
+    bool switchWave;
 
     /* --- Easter egg --- */
     bool letters[5];
