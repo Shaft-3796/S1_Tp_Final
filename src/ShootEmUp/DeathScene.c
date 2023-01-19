@@ -37,8 +37,10 @@ void DeathScene_UpdateLevel(DeathScene *self)
 
 }
 
-bool DeathScene_Update(DeathScene *self)
+int DeathScene_Update(DeathScene *self)
 {
+    MenuInput_Update(self->input);
+
     int offset = Timer_GetDelta(g_time)*(float)BACKGROUND_0_SPEED_MULTIPLIER;
     self->layer0Pos.x += offset;
     if(self->layer0Pos.x+self->layer0Pos.w >= BACKGROUND_WIDTH)
@@ -53,14 +55,15 @@ bool DeathScene_Update(DeathScene *self)
         self->multiplicator += 0.1f;
     }
 
-    if(self->input->quitPressed)
-    {
-        return true;
+    /* --- Return --- */
+    if(self->input->quitPressed){
+        return 1;
     }
-    else
-    {
-        MenuInput_Update(self->input);
-        return self->input->spacePressed || self->input->quitPressed;
+    else if(self->input->spacePressed){
+        return 2;
+    }
+    else{
+        return 0;
     }
 }
 

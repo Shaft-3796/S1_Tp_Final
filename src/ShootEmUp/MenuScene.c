@@ -36,7 +36,7 @@ void MenuScene_UpdateLevel(MenuScene *self)
 {
 }
 
-bool MenuScene_Update(MenuScene *self)
+int MenuScene_Update(MenuScene *self)
 {
     // Met � jour les entr�es utilisateur
     MenuInput_Update(self->input);
@@ -55,7 +55,16 @@ bool MenuScene_Update(MenuScene *self)
         self->layer0Pos.x -= BACKGROUND_PERIOD*2;
     }
 
-    return self->input->quitPressed || self->input->spacePressed;
+    /* --- Return --- */
+    if(self->input->quitPressed){
+        return 1;
+    }
+    else if(self->input->spacePressed){
+        return 2;
+    }
+    else{
+        return 0;
+    }
 }
 
 void MenuScene_Render(MenuScene *self)

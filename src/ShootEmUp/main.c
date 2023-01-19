@@ -56,15 +56,23 @@ int main(int argc, char *argv[])
 
     MenuScene *menu_scene = MenuScene_New(renderer);
 
-    while (true)
+    bool running = true;
+
+    while (true && running)
     {
         // Met � jour le temps
         Timer_Update(g_time);
 
         // Met � jour la sc�ne
-        bool quitLoop = MenuScene_Update(menu_scene);
-        if (quitLoop)
+        int quitLoop = MenuScene_Update(menu_scene);
+        if (quitLoop == 1) {
+            running = false;
             break;
+        }
+        else if (quitLoop == 2) {
+            break;
+        }
+
 
         // Efface le rendu pr�c�dent
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -79,18 +87,23 @@ int main(int argc, char *argv[])
 
     //--------------------------------------------------------------------------
     // Boucle de rendu
-
+    restart:;
     Scene *scene = Scene_New(renderer);
 
-    while (true)
+    while (true && running)
     {
         // Met � jour le temps
         Timer_Update(g_time);
 
         // Met � jour la sc�ne
-        bool quitLoop = Scene_Update(scene);
-        if (quitLoop)
+        int quitLoop = Scene_Update(scene);
+        if (quitLoop == 1) {
+            running = false;
             break;
+        }
+        else if (quitLoop == 2) {
+            break;
+        }
 
         // Efface le rendu pr�c�dent
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -108,15 +121,20 @@ int main(int argc, char *argv[])
 
     DeathScene *death_scene = DeathScene_New(renderer);
 
-    while (true)
+    while (true && running)
     {
         // Met � jour le temps
         Timer_Update(g_time);
 
         // Met � jour la sc�ne
-        bool quitLoop = DeathScene_Update(death_scene);
-        if (quitLoop)
+        int quitLoop = DeathScene_Update(death_scene);
+        if (quitLoop == 1) {
+            running = false;
             break;
+        }
+        else if (quitLoop == 2) {
+            goto restart;
+        }
 
         // Efface le rendu pr�c�dent
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -134,6 +152,12 @@ int main(int argc, char *argv[])
 
     Scene_Delete(scene);
     scene = NULL;
+
+    MenuScene_Delete(menu_scene);
+    menu_scene = NULL;
+
+    DeathScene_Delete(death_scene);
+    death_scene = NULL;
 
     Timer_Delete(g_time);
     g_time = NULL;

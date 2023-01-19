@@ -367,7 +367,7 @@ void Scene_UpdatePerks(Scene *self)
 
 }
 
-bool Scene_Update(Scene *self)
+int Scene_Update(Scene *self)
 {
     Player *player = self->player;
 
@@ -623,7 +623,16 @@ bool Scene_Update(Scene *self)
         }
     }
 
-    return self->input->quitPressed || self->opacity >= 255;
+    /* --- Return --- */
+    if(self->input->quitPressed){
+        return 1;
+    }
+    else if(self->opacity >= 255){
+        return 2;
+    }
+    else{
+        return 0;
+    }
 }
 
 void Scene_Render(Scene *self)
