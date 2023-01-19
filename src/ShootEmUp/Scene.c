@@ -9,6 +9,9 @@
 #include "Enemy_Rafale.h"
 #include "Enemy_triangle.h"
 
+// Protos
+void randomSpawnPerk(Scene *self, PerkType type);
+
 Scene *Scene_New(SDL_Renderer *renderer)
 {
     Scene *self = (Scene *)calloc(1, sizeof(Scene));
@@ -88,16 +91,30 @@ void Scene_UpdateLevel(Scene *self)
     if (self->waveIdx == 0)
     {
         /* Add one  Base enemy */
+        /*
         Enemy *enemy = EnemyBase_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
+        Scene_AppendEnemy(self, enemy);
+         */
+
+        /*
+        enemy = EnemyTeleport_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
+        Scene_AppendEnemy(self, enemy);
+        */
+
+        Enemy* enemy = EnemyRafal_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
         Scene_AppendEnemy(self, enemy);
 
         /* Add one Sin enemy */
+        /*
         enemy = EnemySin_New(self, Vec2_Set(15.0f, 4.5f), 10, 3);
         Scene_AppendEnemy(self, enemy);
+         */
 
         /* Add one Boss enemy */
+        /*
         enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
         Scene_AppendEnemy(self, enemy);
+         */
 
         /* Add a perk */
         randomSpawnPerk(self, PERK_TYPE_ASTRO);
@@ -110,7 +127,7 @@ void Scene_UpdateLevel(Scene *self)
 
         self->waveIdx++;
     }
-    if(self->waveIdx == 1){
+    else if(self->waveIdx == 1){
         Enemy *enemy = EnemySin_New(self, Vec2_Set(15.0f, 6.75f), 10, 3);
         Scene_AppendEnemy(self, enemy);
         Enemy *enemy1 = EnemySin_New(self, Vec2_Set(12.0f, 2.25f), 10, 3);
