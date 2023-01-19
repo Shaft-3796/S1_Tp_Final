@@ -101,8 +101,10 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
         */
 
+        /*
         Enemy* enemy = EnemyRafal_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
         Scene_AppendEnemy(self, enemy);
+        */
 
         /* Add one Sin enemy */
         /*
@@ -111,10 +113,10 @@ void Scene_UpdateLevel(Scene *self)
          */
 
         /* Add one Boss enemy */
-        /*
-        enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
+        
+        Enemy *enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
         Scene_AppendEnemy(self, enemy);
-         */
+
 
         /* Add a perk */
         randomSpawnPerk(self, PERK_TYPE_ASTRO);

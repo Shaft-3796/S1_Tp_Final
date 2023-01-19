@@ -11,6 +11,7 @@ void EnemyBoss1_Delete(Enemy *self);
 void EnemyBoss1_Update(Enemy *self);
 void EnemyBoss1_Render(Enemy *self);
 void EnemyBoss1_Damage(Enemy *self, int damage);
+void PhaseNormal(Enemy *self);
 
 Enemy *EnemyBoss1_New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
@@ -57,10 +58,12 @@ void EnemyBoss1_Update(Enemy *self)
 {
     if (self->accumulator_bullet_shot >= self->shoot_period){
         if(self->life <= 30){
-            Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-            Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity, 0.0f);
-            Scene_AppendBullet(self->scene, arc1);
-            self->accumulator_bullet_shot = 0;
+            PhaseNormal(self);
+            for(int ang=90.0f; ang>-270.0f; ang-=10.0f){
+                Vec2 v = Vec2_Set(cosf((90.f-ang)* M_PI / 180.0)*6, sinf((90.f-ang)* M_PI / 180.0)*6);
+                Bullet* bullet = BulletBaseEnemy_New(self->scene, self->position, v, ang);
+                Scene_AppendBullet(self->scene, bullet);
+            }
         }
         else if(self->life <= 10){
             Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
@@ -75,24 +78,7 @@ void EnemyBoss1_Update(Enemy *self)
             self->accumulator_bullet_shot = 0;
         }
         else{
-            Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-            Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity, 0.0f);
-            Scene_AppendBullet(self->scene, arc1);
-            velocity.y = -1.25f;
-            velocity.x = -3.0f;
-            Bullet *arc2 = BulletArcEnemy_New(self->scene, self->position, velocity, -77.5f);
-            Scene_AppendBullet(self->scene, arc2);
-            velocity.y = 1.25f;
-            Bullet *arc3 = BulletArcEnemy_New(self->scene, self->position, velocity, 77.5f);
-            Scene_AppendBullet(self->scene, arc3);
-            velocity.y = 0.65f;
-            velocity.x = -3.75f;
-            Bullet *arc4 = BulletArcEnemy_New(self->scene, self->position, velocity, 45.0f);
-            Scene_AppendBullet(self->scene, arc4);
-            velocity.y = -0.65f;
-            Bullet *arc5 = BulletArcEnemy_New(self->scene, self->position, velocity, -45.0f);
-            Scene_AppendBullet(self->scene, arc5);
-            self->accumulator_bullet_shot = 0;
+            PhaseNormal(self);
         }
     }
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);
@@ -146,4 +132,25 @@ void EnemyBoss1_Damage(Enemy *self, int damage)
     {
         self->state = ENEMY_DEAD;
     }
+}
+
+void PhaseNormal(Enemy *self){
+    Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+    Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity, 0.0f);
+    Scene_AppendBullet(self->scene, arc1);
+    velocity.y = -1.25f;
+    velocity.x = -3.0f;
+    Bullet *arc2 = BulletArcEnemy_New(self->scene, self->position, velocity, -77.5f);
+    Scene_AppendBullet(self->scene, arc2);
+    velocity.y = 1.25f;
+    Bullet *arc3 = BulletArcEnemy_New(self->scene, self->position, velocity, 77.5f);
+    Scene_AppendBullet(self->scene, arc3);
+    velocity.y = 0.65f;
+    velocity.x = -3.75f;
+    Bullet *arc4 = BulletArcEnemy_New(self->scene, self->position, velocity, 45.0f);
+    Scene_AppendBullet(self->scene, arc4);
+    velocity.y = -0.65f;
+    Bullet *arc5 = BulletArcEnemy_New(self->scene, self->position, velocity, -45.0f);
+    Scene_AppendBullet(self->scene, arc5);
+    self->accumulator_bullet_shot = 0;
 }
