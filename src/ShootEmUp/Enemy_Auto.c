@@ -25,6 +25,8 @@ Enemy *EnemyAuto_New(Scene *scene, Vec2 position, int life, float shoot_period)
     self->worldH = 48;
     self->worldW = 48;
     self->radius = 0.5;
+    self->life_bar_accumulator = -1;
+    self->max_life = life;
     /* --- --- --- --- */
 
     /* --- Arguments ini --- */
@@ -84,6 +86,33 @@ void EnemyAuto_Render(Enemy *self)
     dst.y -= 0.50f * dst.h;
     // On affiche en position dst (unités en pixels)
     SDL_RenderCopyExF(renderer, self->texture, NULL, &dst, 270.f, NULL, 0);
+
+    // Rendu de la barre de vie
+    // Frame
+    SDL_FRect dst_frame = {0};
+    dst_frame.h = ENEMY_LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+    dst_frame.w = ENEMY_LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+    Vec2 pos_frame = self->position;
+    pos_frame.x += AUTO_ENEMY_LIFE_BAR_OFFSET_X;
+    pos_frame.y += AUTO_ENEMY_LIFE_BAR_OFFSET_Y;
+    Camera_WorldToView(camera, pos_frame, &dst_frame.x, &dst_frame.y);
+    SDL_RenderCopyF(
+    renderer, assets->enemy_life_bar_frame, NULL, &dst_frame);
+    // Content
+    SDL_Rect src_content = {0};
+    src_content.h = 64;
+    src_content.w = 10 + (float)54/((float)self->max_life/self->life);
+    src_content.x = 0;
+    src_content.y = 0;
+    SDL_FRect dst_content = {0};
+    dst_content.h = ENEMY_LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+    dst_content.w = (ENEMY_LIFE_BAR_SIZE_MULTIPLIER * PIX_TO_WORLD * scale) * ((float)src_content.w/64);
+    Vec2 pos_content = self->position;
+    pos_content.x += AUTO_ENEMY_LIFE_BAR_OFFSET_X;
+    pos_content.y += AUTO_ENEMY_LIFE_BAR_OFFSET_Y;
+    Camera_WorldToView(camera, pos_content, &dst_content.x, &dst_content.y);
+    SDL_RenderCopyF(
+    renderer, assets->enemy_life_bar_content, &src_content, &dst_content);
 }
 
 void EnemyAuto_Damage(Enemy *self, int damage)

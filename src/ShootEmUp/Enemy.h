@@ -85,6 +85,12 @@ typedef struct Enemy_s
     /// @brief Vie de l'ennemi.
     int life;
 
+    /// @brief Vie max de l'ennemi.
+    int max_life;
+
+    // @brief Accumulateur pour l'affichage de la barre de vie
+    float life_bar_accumulator;
+
     /* --- Custom --- */
     /// @brief direction de déplacement.
     int direction;
