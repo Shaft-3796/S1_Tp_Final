@@ -35,7 +35,6 @@ typedef struct Input_s
     /* --- Easter egg --- */
     bool letters[5];
     bool easter_egg;
-    bool resize_bullets;
 } Input;
 
 /// @brief Cr�e un nouveau gestionnaire des entr�es utilisateur.

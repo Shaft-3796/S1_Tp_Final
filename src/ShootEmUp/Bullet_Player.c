@@ -60,7 +60,12 @@ SDL_FRect dst = { 0 };
 
 // On calcule la destination en fonction de la position de l'objet
 float multiplier = 1.f;
-if(self->scene->input->resize_bullets){multiplier = 0.25f; }
+if(self->scene->input->easter_egg){
+    multiplier = 0.25f;
+    self->texture = assets->bodin;
+} else {
+    self->texture = assets->base_player_bullets;
+}
 dst.h = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
 dst.w = PLAYER_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier;
 

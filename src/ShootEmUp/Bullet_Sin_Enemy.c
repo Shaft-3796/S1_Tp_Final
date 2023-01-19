@@ -68,10 +68,8 @@ float scale = Camera_GetWorldToViewScale(camera);
 SDL_FRect dst = { 0 };
 
 // On calcule la destination en fonction de la position de l'objet
-float multiplier = 1.f;
-if(self->scene->input->resize_bullets){multiplier = 0.25f; }
-dst.h = (BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier)/2;
-dst.w = (BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale * multiplier)/2;
+dst.h = (BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale)/2;
+dst.w = (BULLET_SIZE_MULTIPLIER * PIX_TO_WORLD * scale)/2;
 
 Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
 // Le point de référence est le centre de l'objet
