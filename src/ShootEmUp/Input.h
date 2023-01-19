@@ -29,6 +29,9 @@ typedef struct Input_s
     /// Une valeur positive d�signe un d�placement vers le haut.
     float vAxis;
 
+    /// @brief Wave shortcut
+    bool switchWave;
+
     /* --- Easter egg --- */
     bool letters[5];
     bool easter_egg;

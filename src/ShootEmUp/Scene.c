@@ -408,6 +408,22 @@ bool Scene_Update(Scene *self)
 
     }
 
+        // Avance d'une vague si le shortcut a été activé
+    if(self->input->switchWave)
+    {
+        // Remove all enemies
+        while(self->enemyCount > 0)
+        {
+            Scene_RemoveEnemy(self, 0);
+        }
+        // Remove all bullets
+        while(self->bulletCount > 0)
+        {
+            Scene_RemoveBullet(self, 0);
+        }
+    }
+
+
     // Met � jour la positions et les dimensions des calques du background
     int offset = Timer_GetDelta(g_time)*(float)BACKGROUND_1_SPEED_MULTIPLIER*self->backgroundSpeedMultiplier;
     self->layer1Pos.x += offset;

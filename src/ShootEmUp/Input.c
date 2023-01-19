@@ -25,6 +25,8 @@ void Input_Delete(Input *self)
 
 void Input_Update(Input *self) {
     self->shootPressed = false;
+    self->quitPressed = false;
+    self->switchWave = false;
     SDL_Event evt;
     while (SDL_PollEvent(&evt)) {
         switch (evt.type) {
@@ -64,6 +66,11 @@ void Input_Update(Input *self) {
                     case SDL_SCANCODE_SPACE:
                         // shoot
                         self->shootPressed = true;
+                        break;
+
+                    case SDL_SCANCODE_KP_PLUS:
+                        // switch wave
+                        self->switchWave = true;
                         break;
 
                     default:
