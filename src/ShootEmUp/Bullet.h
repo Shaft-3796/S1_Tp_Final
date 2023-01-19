@@ -24,6 +24,8 @@ typedef enum BulletType_e
 
     BULLET_BOMB_ENEMY,
 
+    BULLET_AUTO,
+
     /// @brief Asteroid
     ASTEROID,
 } BulletType;
@@ -76,6 +78,9 @@ typedef struct Bullet_s
 
     /// @brief temps avant explosion de la bombe.
     float bomb_explosion_time;
+
+    bool follow_disable;
+
 
     /* --- Function Pointers --- */
     /// @brief Pointeur sur fonction de destruction de l'ennemi.

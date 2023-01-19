@@ -3,6 +3,7 @@
 #include "Settings.h"
 #include "Math.h"
 #include "Enemy_debug.h"
+#include "Bullet.h"
 
 typedef struct Scene_s Scene;
 
@@ -39,6 +40,7 @@ typedef enum EnemyTypes_e
     ENEMY_BOSS_1,
     ENEMY_RAFAL,
     ENEMY_TRIANGLE,
+    ENEMY_REVERT,
     ENEMY_BOMB,
     ENEMY_AUTO
 } EnemyTypes;
@@ -108,6 +110,9 @@ typedef struct Enemy_s
 
     /// @brief Pointeur sur fonction d'infligeance de dommages � l'ennemi.
     void (*Damage)(struct Enemy_s *self, int damage);
+
+    /* --- Custom --- */
+    void (*Revert)(struct Enemy_s *self, Bullet* bullet);
 
 } Enemy;
 

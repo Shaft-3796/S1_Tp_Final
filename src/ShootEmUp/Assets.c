@@ -42,6 +42,9 @@ Assets *Assets_New(SDL_Renderer *renderer)
         {&self->game_over_layer, "../Assets/Menu/GameOverLayer.png"},
         {&self->lifeup, "../Assets/Perks/Perk_LifeUp.png"},
         {&self->powershoot, "../Assets/Perks/Perk_PowerShoot.png"},
+        {&self->revert_enemy, "../Assets/Enemy/EnemyRevert.png"},
+        {&self->base_player_bullets_corrupted, "../Assets/Player/BaseBulletsCorrupted.png"},
+        {&self->auto_bullet, "../Assets/Enemy/AutoBullet.png"},
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 

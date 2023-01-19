@@ -8,6 +8,8 @@
 #include "Enemy_Teleport.h"
 #include "Enemy_Rafale.h"
 #include "Enemy_triangle.h"
+#include "Enemy_Revert.h"
+#include "Bullet_Auto.h"
 #include "Enemy_Boss_2.h"
 #include "Enemy_Auto.h"
 #include "Enemy_Bomb.h"
@@ -104,10 +106,9 @@ void Scene_UpdateLevel(Scene *self)
         Scene_AppendEnemy(self, enemy);
         */
 
-        /*
         Enemy* enemy = EnemyRafal_New(self, Vec2_Set(15.0f, 4.5f), 10, 1);
         Scene_AppendEnemy(self, enemy);
-        */
+
 
         /* Add one Sin enemy */
         /*
@@ -120,7 +121,7 @@ void Scene_UpdateLevel(Scene *self)
 
         /* Add one Boss1 enemy */
 
-        Enemy *enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
+        enemy = EnemyBoss1_New(self, Vec2_Set(15.0f, 4.5f), 50, 3);
         Scene_AppendEnemy(self, enemy);
 
 
@@ -182,7 +183,7 @@ void randomSpawnPerk(Scene *self, PerkType type){
             break;
 
     }
-    Vec2 pos = Vec2_Set((rand()%(76)+5)/10, (rand()%(71)+5)/10);
+    Vec2 pos = Vec2_Set(((float)rand()/(float)RAND_MAX)*7+0.5, ((float)rand()/(float)RAND_MAX)*8+0.5);
     Perk *perk = Perk_New(self, type, pos);
     Scene_AppendPerk(self, perk);
 }
@@ -315,6 +316,12 @@ bool Scene_Update(Scene *self)
                 {
                     // Inflige des dommages � l'ennemi
                     enemy->Damage(enemy, 1);
+
+                    // On verifie si l'ennemi est un Enemy revert
+                    if(enemy->type == ENEMY_REVERT){
+                        enemy->Revert(enemy, bullet);
+                        break;
+                    }
 
                     // Supprime le tir
                     Scene_RemoveBullet(self, i);
