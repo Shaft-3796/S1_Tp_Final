@@ -56,17 +56,12 @@ void EnemyTriangle_Delete(Enemy *self)
 void EnemyTriangle_Update(Enemy *self)
 {
     if (self->accumulator_bullet_shot >= self->shoot_period){
-        Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
-        Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity, 0.0f);
-        Scene_AppendBullet(self->scene, arc1);
-        velocity.y = 0.65f;
-        velocity.x = -3.75f;
-        Bullet *arc4 = BulletArcEnemy_New(self->scene, self->position, velocity, 45.0f);
-        Scene_AppendBullet(self->scene, arc4);
-        velocity.y = -0.65f;
-        Bullet *arc5 = BulletArcEnemy_New(self->scene, self->position, velocity, -45.0f);
-        Scene_AppendBullet(self->scene, arc5);
-        self->accumulator_bullet_shot = 0;
+        for(int ang=12.5f; ang>-12.5f; ang-=12.5f){
+            Vec2 v = Vec2_Set(-(sinf((90.f-ang)* M_PI / 180.0)*6), cosf((90.f-ang)* M_PI / 180.0)*6);
+            Bullet* bullet = BulletArcEnemy_New(self->scene, self->position, v, ang);
+            Scene_AppendBullet(self->scene, bullet);
+            self->accumulator_bullet_shot =0;
+        }
     }
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);
 
