@@ -51,10 +51,10 @@ void BulletBombEnemy_Update(Bullet *self)
     }
     if(self->bomb_explosion_time >= 6.25f){
         self->radius = 2;
-    }
+    }/*
     if(self->bomb_explosion_time >= 6.5f){
-        BulletBombEnemy_Delete(self);
-    }
+        Scene_RemoveEnemy(self->scene,)
+    }*/
     self->bomb_explosion_time += Timer_GetDelta(g_time);
 }
 
