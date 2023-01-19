@@ -38,6 +38,7 @@ typedef enum EnemyTypes_e
     ENEMY_TELEPORT,
     ENEMY_SIN,
     ENEMY_BOSS_1,
+    ENEMY_BOSS_2,
     ENEMY_RAFAL,
     ENEMY_TRIANGLE,
     ENEMY_REVERT,

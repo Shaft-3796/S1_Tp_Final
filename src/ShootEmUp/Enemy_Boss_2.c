@@ -7,7 +7,7 @@
 #include "Bullet_Bomb_Enemy.h"
 #include "Bullet_Auto.h"
 #include "Bullet_Base_Enemy.h"
-#include "Enemy_Sin.h"
+#include "Enemy_Revert.h"
 
 // Protos
 void EnemyBoss2_Delete(Enemy *self);
@@ -22,9 +22,9 @@ Enemy *EnemyBoss2_New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
-    self->type = ENEMY_BOSS_1;
+    self->type = ENEMY_BOSS_2;
     Assets *assets = Scene_GetAssets(scene);
-    self->texture = assets->boss1;
+    self->texture = assets->boss2;
     self->state = ENEMY_FIRING;
     self->moveSens = VERTICAL;
     self->direction = 1;
@@ -62,32 +62,15 @@ void EnemyBoss2_Delete(Enemy *self)
 
 void EnemyBoss2_Update(Enemy *self)
 {
-    /*if (self->life <= 30){
-        if(self->accumulator_bullet_shot >= self->shoot_period/2 && self->rafal_period == 0){
-            PhaseAv(self);
-            self->rafal_period += 1;
-        }
-        else if(self->accumulator_bullet_shot >= self->shoot_period) {
-            PhaseNormal(self);
-            self->rafal_period = 0;
-        }
+    if (self->life > 30){
+        PhaseNormalB2(self);
     }
-    if(self->life > 30){
-        if(self->accumulator_bullet_shot >= self->shoot_period){
-            PhaseNormal(self);
-        }
+    if(self->life <= 30){
+        PhaseAvB2(self);
     }
     if (self->bot_counter == 0 && self->life <= 10){
-        SpawnEnemy(self);
+        SpawnEnemyB2(self);
         self->bot_counter += 1;
-    }*/
-    if (self->accumulator_bullet_shot >= self->shoot_period){
-        /*
-        Vec2 velocity = Vec2_Set(-2.0f, 0.0f);
-        Bullet *bullet = BulletBombEnemy_New(self->scene, self->position, velocity, 90.0f);
-        Scene_AppendBullet(self->scene, bullet);
-        self->accumulator_bullet_shot = 0;*/
-        PhaseNormalB2(self);
     }
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);
 }
@@ -104,8 +87,8 @@ void EnemyBoss2_Render(Enemy *self)
     float scale = Camera_GetWorldToViewScale(camera);
     SDL_FRect dst = { 0 };
     // Changez 48 par une autre valeur pour grossir ou réduire l'objet
-    dst.h = 88 * PIX_TO_WORLD * scale;
-    dst.w = 88 * PIX_TO_WORLD * scale;
+    dst.h = 125 * PIX_TO_WORLD * scale;
+    dst.w = 125 * PIX_TO_WORLD * scale;
     Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
     // Le point de référence est le centre de l'objet
     dst.x -= 0.5f * dst.w;
@@ -124,27 +107,60 @@ void EnemyBoss2_Damage(Enemy *self, int damage)
 }
 
 void PhaseNormalB2(Enemy *self){
-    Vec2 v = Vec2_Set(-2.0f, 0.0f);
-    Vec2 bulletPosition = self->position;
-    Bullet* bullet = BulletBombEnemy_New(self->scene, self->position, v, 90.0f);
-    Scene_AppendBullet(self->scene, bullet);/*
-    bulletPosition.y += 2.0f;
-    bullet = BulletBaseEnemy_New(self->scene, bulletPosition, v, 90.0f);
-    Scene_AppendBullet(self->scene, bullet);*/
-    self->accumulator_bullet_shot = 0;
+    if(self->accumulator_bullet_shot >= self->shoot_period && self->rafal_period == 0) {
+        for(int ang=90.0f; ang>-270.0f; ang-=10.0f){
+            Vec2 v = Vec2_Set(cosf((90.f-ang)* M_PI / 180.0)*6, sinf((90.f-ang)* M_PI / 180.0)*6);
+            Bullet* bullet = BulletBaseEnemy_New(self->scene, self->position, v, ang);
+            Scene_AppendBullet(self->scene, bullet);
+        }
+        self->rafal_period += 1;
+    }
+    else if(self->accumulator_bullet_shot >= self->shoot_period*2){
+        Vec2 v = Vec2_Set(-2.0f, 0.0f);
+        Vec2 bulletPosition = self->position;
+        bulletPosition.y += 1.0f;
+        Bullet *bullet = BulletBombEnemy_New(self->scene, bulletPosition, v, 90.0f);
+        Scene_AppendBullet(self->scene, bullet);
+        bulletPosition.y -= 2.0f;
+        bullet = BulletBombEnemy_New(self->scene, bulletPosition, v, 90.0f);
+        Scene_AppendBullet(self->scene, bullet);
+        self->accumulator_bullet_shot = 0;
+        self->rafal_period = 0;
+    }
 }
 
 void PhaseAvB2(Enemy *self){
-    for(int ang=90.0f; ang>-270.0f; ang-=10.0f){
-        Vec2 v = Vec2_Set(cosf((90.f-ang)* M_PI / 180.0)*6, sinf((90.f-ang)* M_PI / 180.0)*6);
-        Bullet* bullet = BulletBaseEnemy_New(self->scene, self->position, v, ang);
+    if(self->accumulator_bullet_shot >= self->shoot_period && self->rafal_period == 0) {
+        for(int ang=90.0f; ang>-270.0f; ang-=10.0f){
+            Vec2 v = Vec2_Set(cosf((90.f-ang)* M_PI / 180.0)*6, sinf((90.f-ang)* M_PI / 180.0)*6);
+            Bullet* bullet = BulletBaseEnemy_New(self->scene, self->position, v, ang);
+            Scene_AppendBullet(self->scene, bullet);
+        }
+        self->rafal_period += 1;
+    }
+    else if(self->accumulator_bullet_shot >= self->shoot_period && self->rafal_period == 1){
+        Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+        Bullet *bullet = BulletAuto_New(self->scene, self->position, velocity, 90.0f);
         Scene_AppendBullet(self->scene, bullet);
+        self->rafal_period += 1;
+    }
+    else if(self->accumulator_bullet_shot >= self->shoot_period*2){
+        Vec2 v = Vec2_Set(-2.0f, 0.0f);
+        Vec2 bulletPosition = self->position;
+        bulletPosition.y += 1.0f;
+        Bullet *bullet = BulletBombEnemy_New(self->scene, bulletPosition, v, 90.0f);
+        Scene_AppendBullet(self->scene, bullet);
+        bulletPosition.y -= 2.0f;
+        bullet = BulletBombEnemy_New(self->scene, bulletPosition, v, 90.0f);
+        Scene_AppendBullet(self->scene, bullet);
+        self->accumulator_bullet_shot = 0;
+        self->rafal_period = 0;
     }
 }
 
 void SpawnEnemyB2(Enemy *self){
-    Enemy *enemy = EnemySin_New(self->scene, Vec2_Set(13.0f, 7.75f), 10, 3);
-    Scene_AppendEnemy(self->scene, enemy);
-    enemy = EnemySin_New(self->scene, Vec2_Set(14.0f, 2.25f), 10, 3);
-    Scene_AppendEnemy(self->scene, enemy);
+    Enemy *enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+    Scene_AppendEnemy(self, enemy);
+    enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+    Scene_AppendEnemy(self, enemy);
 }

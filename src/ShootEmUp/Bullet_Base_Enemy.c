@@ -18,6 +18,7 @@ Bullet* BulletBaseEnemy_New(Scene *scene, Vec2 position, Vec2 velocity, float an
     self->radius = 0.3f;
     self->fromPlayer = false;
     self->type = BULLET_BASE_ENEMY;
+    self->damage = BULLET_DAMAGE_1;
 
     /* --- Arguments --- */
     self->scene = scene;

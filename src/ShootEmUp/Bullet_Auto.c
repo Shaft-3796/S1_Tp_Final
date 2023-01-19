@@ -18,6 +18,7 @@ Bullet* BulletAuto_New(Scene *scene, Vec2 position, Vec2 velocity, float angle){
     self->radius = 0.3f;
     self->fromPlayer = false;
     self->type = BULLET_AUTO;
+    self->damage = BULLET_DAMAGE_2;
 
     /* --- Arguments --- */
     self->scene = scene;
