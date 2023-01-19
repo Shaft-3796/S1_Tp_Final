@@ -14,6 +14,7 @@
 #include "Enemy_Auto.h"
 #include "Enemy_Bomb.h"
 #include "Bullet.h"
+#include "Music.h"
 
 // Protos
 void randomSpawnPerk(Scene *self, PerkType type);
@@ -476,6 +477,8 @@ bool Scene_Update(Scene *self)
                 // Supprime le tir
                 Scene_RemoveBullet(self, i);
                 removed = true;
+
+                playSound();
             }
         }
 
