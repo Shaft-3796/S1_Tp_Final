@@ -1,2 +1,7 @@
 # TODO
-rajouter un print quand les ennemis prennent un damage
+Wave skip shortcut
+Linkage scene
+
+Code cleaning
+
+? Enemy life, easter egg fix
