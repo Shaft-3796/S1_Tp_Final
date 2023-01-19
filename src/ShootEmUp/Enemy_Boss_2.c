@@ -8,15 +8,15 @@
 #include "Enemy_Sin.h"
 
 // Protos
-void EnemyBoss1_Delete(Enemy *self);
-void EnemyBoss1_Update(Enemy *self);
-void EnemyBoss1_Render(Enemy *self);
-void EnemyBoss1_Damage(Enemy *self, int damage);
+void EnemyBoss2_Delete(Enemy *self);
+void EnemyBoss2_Update(Enemy *self);
+void EnemyBoss2_Render(Enemy *self);
+void EnemyBoss2_Damage(Enemy *self, int damage);
 void PhaseNormal(Enemy *self);
 void PhaseAv(Enemy *self);
 void SpawnEnemy(Enemy *self);
 
-Enemy *EnemyBoss1_New(Scene *scene, Vec2 position, int life, float shoot_period)
+Enemy *EnemyBoss2New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
@@ -28,7 +28,7 @@ Enemy *EnemyBoss1_New(Scene *scene, Vec2 position, int life, float shoot_period)
     self->direction = 1;
     self->worldH = 48;
     self->worldW = 48;
-    self->radius = 0.9;
+    self->radius = 0.5;
     /* --- --- --- --- */
 
     /* --- Arguments ini --- */
@@ -44,21 +44,21 @@ Enemy *EnemyBoss1_New(Scene *scene, Vec2 position, int life, float shoot_period)
     self->bot_counter = 0;
 
     /* --- Functions bindings --- */
-    self->Delete = &EnemyBoss1_Delete;
-    self->Update = &EnemyBoss1_Update;
-    self->Render = &EnemyBoss1_Render;
-    self->Damage = &EnemyBoss1_Damage;
+    self->Delete = &EnemyBoss2_Delete;
+    self->Update = &EnemyBoss2_Update;
+    self->Render = &EnemyBoss2_Render;
+    self->Damage = &EnemyBoss2_Damage;
     /* --- --- --- --- --- --- --- */
     return self;
 }
 
-void EnemyBoss1_Delete(Enemy *self)
+void EnemyBoss2_Delete(Enemy *self)
 {
     if (!self) return;
     free(self);
 }
 
-void EnemyBoss1_Update(Enemy *self)
+void EnemyBoss2_Update(Enemy *self)
 {
     if (self->life <= 30){
         if(self->accumulator_bullet_shot >= self->shoot_period/2 && self->rafal_period == 0){
@@ -82,7 +82,7 @@ void EnemyBoss1_Update(Enemy *self)
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);
 }
 
-void EnemyBoss1_Render(Enemy *self)
+void EnemyBoss2_Render(Enemy *self)
 {
     // On récupère des infos essentielles (communes à tout objet)
     Scene *scene = self->scene;
@@ -94,8 +94,8 @@ void EnemyBoss1_Render(Enemy *self)
     float scale = Camera_GetWorldToViewScale(camera);
     SDL_FRect dst = { 0 };
     // Changez 48 par une autre valeur pour grossir ou réduire l'objet
-    dst.h = 125 * PIX_TO_WORLD * scale;
-    dst.w = 125 * PIX_TO_WORLD * scale;
+    dst.h = 88 * PIX_TO_WORLD * scale;
+    dst.w = 88 * PIX_TO_WORLD * scale;
     Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
     // Le point de référence est le centre de l'objet
     dst.x -= 0.5f * dst.w;
@@ -104,7 +104,7 @@ void EnemyBoss1_Render(Enemy *self)
     SDL_RenderCopyExF(renderer, self->texture, NULL, &dst, 270.f, NULL, 0);
 }
 
-void EnemyBoss1_Damage(Enemy *self, int damage)
+void EnemyBoss2_Damage(Enemy *self, int damage)
 {
     self->life -= damage;
     if (self->life <= 0)
