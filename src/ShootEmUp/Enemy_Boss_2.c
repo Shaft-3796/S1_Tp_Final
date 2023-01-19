@@ -1,10 +1,10 @@
-#include "Enemy_Boss_1.h"
+#include "Enemy_Boss_2.h"
 #include "Scene.h"
 #include "Enemy.h"
 #include "Timer.h"
 #include "Math.h"
 #include "Bullet.h"
-#include "Bullet_Arc_Enemy.h"
+#include "Bullet_Bomb_Enemy.h"
 #include "Enemy_Sin.h"
 
 // Protos
@@ -12,11 +12,8 @@ void EnemyBoss2_Delete(Enemy *self);
 void EnemyBoss2_Update(Enemy *self);
 void EnemyBoss2_Render(Enemy *self);
 void EnemyBoss2_Damage(Enemy *self, int damage);
-void PhaseNormal(Enemy *self);
-void PhaseAv(Enemy *self);
-void SpawnEnemy(Enemy *self);
 
-Enemy *EnemyBoss2New(Scene *scene, Vec2 position, int life, float shoot_period)
+Enemy *EnemyBoss2_New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
@@ -60,7 +57,7 @@ void EnemyBoss2_Delete(Enemy *self)
 
 void EnemyBoss2_Update(Enemy *self)
 {
-    if (self->life <= 30){
+    /*if (self->life <= 30){
         if(self->accumulator_bullet_shot >= self->shoot_period/2 && self->rafal_period == 0){
             PhaseAv(self);
             self->rafal_period += 1;
@@ -78,6 +75,12 @@ void EnemyBoss2_Update(Enemy *self)
     if (self->bot_counter == 0 && self->life <= 10){
         SpawnEnemy(self);
         self->bot_counter += 1;
+    }*/
+    if (self->accumulator_bullet_shot >= self->shoot_period){
+        Vec2 velocity = Vec2_Set(-2.0f, 0.0f);
+        Bullet *bullet = BulletBombEnemy_New(self->scene, self->position, velocity, 90.0f);
+        Scene_AppendBullet(self->scene, bullet);
+        self->accumulator_bullet_shot = 0;
     }
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);
 }
@@ -112,7 +115,7 @@ void EnemyBoss2_Damage(Enemy *self, int damage)
         self->state = ENEMY_DEAD;
     }
 }
-
+/*
 void PhaseNormal(Enemy *self){
     for(int ang=25.0f; ang>-25.0f; ang-=12.5f){
         Vec2 v = Vec2_Set(-(sinf((90.f-ang)* M_PI / 180.0)*6), cosf((90.f-ang)* M_PI / 180.0)*6);
@@ -135,4 +138,4 @@ void SpawnEnemy(Enemy *self){
     Scene_AppendEnemy(self->scene, enemy);
     enemy = EnemySin_New(self->scene, Vec2_Set(14.0f, 2.25f), 10, 3);
     Scene_AppendEnemy(self->scene, enemy);
-}
+}*/

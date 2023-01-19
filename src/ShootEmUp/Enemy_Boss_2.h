@@ -13,4 +13,3 @@ typedef struct Enemy_s Enemy;
 /// @param position la position de d�part de l'ennemi exprim�e dans le r�f�rentiel monde.
 /// @return L'ennemi cr��.
 Enemy *EnemyBoss2_New(Scene *scene, Vec2 position, int life, float shoot_period);
-

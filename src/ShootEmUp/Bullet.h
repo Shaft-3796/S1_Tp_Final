@@ -22,6 +22,8 @@ typedef enum BulletType_e
 
     BULLET_ARC_ENEMY,
 
+    BULLET_BOMB_ENEMY,
+
     /// @brief Asteroid
     ASTEROID,
 } BulletType;
@@ -72,6 +74,8 @@ typedef struct Bullet_s
     /// @brief acumulateur d'oscillations.
     float oscillation_acumulator;
 
+    /// @brief temps avant explosion de la bombe.
+    float bomb_explosion_time;
 
     /* --- Function Pointers --- */
     /// @brief Pointeur sur fonction de destruction de l'ennemi.

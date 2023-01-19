@@ -137,6 +137,7 @@
     <ClCompile Include="Bullet_Arc_Enemy.c" />
     <ClCompile Include="Bullet_Asteroid.c" />
     <ClCompile Include="Bullet_Base_Enemy.c" />
+    <ClCompile Include="Bullet_Bomb_Enemy.c" />
     <ClCompile Include="Bullet_Player.c" />
     <ClCompile Include="Bullet_Sin_Enemy.c" />
     <ClCompile Include="Camera.c" />
@@ -144,6 +145,7 @@
     <ClCompile Include="DeathScene.c" />
     <ClCompile Include="Enemy_Base.c" />
     <ClCompile Include="Enemy_Boss_1.c" />
+    <ClCompile Include="Enemy_Boss_2.c" />
     <ClCompile Include="Enemy_debug.c" />
     <ClCompile Include="Enemy_Rafale.c" />
     <ClCompile Include="Enemy_Sin.c" />
@@ -165,6 +167,7 @@
     <ClInclude Include="Bullet_Arc_Enemy.h" />
     <ClInclude Include="Bullet_Asteroid.h" />
     <ClInclude Include="Bullet_Base_Enemy.h" />
+    <ClInclude Include="Bullet_Bomb_Enemy.h" />
     <ClInclude Include="Bullet_Player.h" />
     <ClInclude Include="Bullet_Sin_Enemy.h" />
     <ClInclude Include="Camera.h" />
@@ -173,6 +176,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy_Base.h" />
     <ClInclude Include="Enemy_Boss_1.h" />
+    <ClInclude Include="Enemy_Boss_2.h" />
     <ClInclude Include="Enemy_debug.h" />
     <ClInclude Include="Enemy_Rafale.h" />
     <ClInclude Include="Enemy_Sin.h" />
