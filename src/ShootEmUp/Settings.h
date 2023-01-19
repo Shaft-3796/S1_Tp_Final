@@ -122,7 +122,11 @@
 /* --- Enemies position en y --- */
 #define POSITION_Y_ENEMY_1 4.5f
 #define POSITION_Y_ENEMY_2 2.25f
-#define POSITION_Y_ENEMY_3 7.75f
+#define POSITION_Y_ENEMY_3 6.75f
+#define POSITION_Y_ENEMY_4 3.25f
+#define POSITION_Y_ENEMY_5 5.75f
+#define POSITION_Y_ENEMY_6 7.75f
+#define POSITION_Y_ENEMY_7 1.25f
 
 /* --- Bullet damage --- */
 #define BULLET_DAMAGE_1 1
