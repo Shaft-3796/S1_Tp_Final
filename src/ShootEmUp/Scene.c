@@ -264,20 +264,6 @@ void Scene_UpdateLevel(Scene *self)
         /* Add one Base enemy and one rafal enemy*/
         Enemy* enemy = EnemyBoss2_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_BOSS, SHOOT_PERIOD_ENEMY_3);
         Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
-        Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
-        Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_1), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
-        Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_4), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
-        Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_5), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
-        Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_6), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
-        Scene_AppendEnemy(self, enemy);
-        enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_7), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
-        Scene_AppendEnemy(self, enemy);
 
         /* Add an asteroid */
         self->asteroid_to_spawn = 3;
@@ -668,6 +654,7 @@ void Scene_AppendEnemy(Scene *self, Enemy *enemy)
         &(self->enemyCount),
         ENEMY_CAPACITY
     );
+
 }
 
 void Scene_AppendBullet(Scene *self, Bullet *bullet)

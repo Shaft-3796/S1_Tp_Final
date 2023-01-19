@@ -7,7 +7,7 @@
 #include "Bullet_Bomb_Enemy.h"
 #include "Bullet_Auto.h"
 #include "Bullet_Base_Enemy.h"
-#include "Enemy_Sin.h"
+#include "Enemy_Revert.h"
 
 // Protos
 void EnemyBoss2_Delete(Enemy *self);
@@ -22,9 +22,9 @@ Enemy *EnemyBoss2_New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
-    self->type = ENEMY_BOSS_1;
+    self->type = ENEMY_BOSS_2;
     Assets *assets = Scene_GetAssets(scene);
-    self->texture = assets->boss1;
+    self->texture = assets->boss2;
     self->state = ENEMY_FIRING;
     self->moveSens = VERTICAL;
     self->direction = 1;
@@ -87,8 +87,8 @@ void EnemyBoss2_Render(Enemy *self)
     float scale = Camera_GetWorldToViewScale(camera);
     SDL_FRect dst = { 0 };
     // Changez 48 par une autre valeur pour grossir ou réduire l'objet
-    dst.h = 88 * PIX_TO_WORLD * scale;
-    dst.w = 88 * PIX_TO_WORLD * scale;
+    dst.h = 125 * PIX_TO_WORLD * scale;
+    dst.w = 125 * PIX_TO_WORLD * scale;
     Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
     // Le point de référence est le centre de l'objet
     dst.x -= 0.5f * dst.w;
@@ -159,8 +159,8 @@ void PhaseAvB2(Enemy *self){
 }
 
 void SpawnEnemyB2(Enemy *self){
-    Enemy *enemy = EnemySin_New(self->scene, Vec2_Set(13.0f, 7.75f), 10, 3);
-    Scene_AppendEnemy(self->scene, enemy);
-    enemy = EnemySin_New(self->scene, Vec2_Set(14.0f, 2.25f), 10, 3);
-    Scene_AppendEnemy(self->scene, enemy);
+    Enemy *enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_3), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+    Scene_AppendEnemy(self, enemy);
+    enemy = EnemyRevert_New(self, Vec2_Set(POSITION_X_ENEMY_3, POSITION_Y_ENEMY_2), MAX_LIFE_ENEMY_1, SHOOT_PERIOD_ENEMY_3);
+    Scene_AppendEnemy(self, enemy);
 }
