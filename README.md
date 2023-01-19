@@ -18,6 +18,7 @@ Votre objectif ? Terrasser les ennemis qui vous barrent la route au cours des di
 *Vous devez tirer des lasers pour anéantir les ennemis, mais attentions à la riposte !*
 
 *Pour vous déplacer avec les touches directionnelles, remplacez la ligne 4 du fichier Settings.h par "#define MOUSE_CONTROL false"*
+
 *Pour vous déplacer avec la souris, remplacez la ligne 4 du fichier Settings.h par "#define MOUSE_CONTROL true"*
 
 *Vous pouvez tirer avec la touche espace ou avec le click gauche*
