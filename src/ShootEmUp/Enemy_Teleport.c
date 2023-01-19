@@ -1,61 +1,63 @@
-#include "Enemy_Sin.h"
+#include "Enemy_Teleport.h"
 #include "Scene.h"
 #include "Enemy.h"
 #include "Timer.h"
 #include "Math.h"
 #include "Bullet.h"
-#include "Bullet_Sin_Enemy.h"
+#include "stdlib.h"
 
 // Protos
-void EnemySin_Delete(Enemy *self);
-void EnemySin_Update(Enemy *self);
-void EnemySin_Render(Enemy *self);
-void EnemySin_Damage(Enemy *self, int damage);
+void EnemyTeleport_Delete(Enemy *self);
+void EnemyTeleport_Update(Enemy *self);
+void EnemyTeleport_Render(Enemy *self);
+void EnemyTeleport_Damage(Enemy *self, int damage);
 
-Enemy *EnemySin_New(Scene *scene, Vec2 position, int life, float shoot_period)
+Enemy *EnemyTeleport_New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
-    self->type = ENEMY_SIN;
+    self->type = ENEMY_TELEPORT;
     Assets *assets = Scene_GetAssets(scene);
     self->texture = assets->base_enemy;
     self->state = ENEMY_FIRING;
+    self->moveSens = TELEPORT;
+    self->direction = 1;
     self->worldH = 48;
     self->worldW = 48;
     self->radius = 0.5;
     /* --- --- --- --- */
 
-    /* --- Custom Ini --- */
+    /* --- Arguments ini --- */
     self->scene = scene;
     self->position = position;
     self->life = life;
-    self->moveSens = VERTICAL;
-    self->direction = 1;
+
+    /* --- Custom Ini --- */
     self->accumulator_bullet_shot = 0;
     self->shoot_period = shoot_period;
     self->accumulator_Teleport = 0;
     self->rafal_period = 0;
 
     /* --- Functions bindings --- */
-    self->Delete = &EnemySin_Delete;
-    self->Update = &EnemySin_Update;
-    self->Render = &EnemySin_Render;
-    self->Damage = &EnemySin_Damage;
+    self->Delete = &EnemyTeleport_Delete;
+    self->Update = &EnemyTeleport_Update;
+    self->Render = &EnemyTeleport_Render;
+    self->Damage = &EnemyTeleport_Damage;
     /* --- --- --- --- --- --- --- */
     return self;
 }
 
-void EnemySin_Delete(Enemy *self)
+void EnemyTeleport_Delete(Enemy *self)
 {
     if (!self) return;
     free(self);
 }
 
-void EnemySin_Update(Enemy *self)
+void EnemyTeleport_Update(Enemy *self)
 {
     if (self->accumulator_bullet_shot >= self->shoot_period){
-        Vec2 velocity = Vec2_Set(-4.0f, 1.5f);
-        Bullet *bullet = BulletSinEnemy_New(self->scene, self->position, velocity, -45.0f);
+        Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+        Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f);
         Scene_AppendBullet(self->scene, bullet);
         self->accumulator_bullet_shot = 0;
     }
@@ -78,9 +80,22 @@ void EnemySin_Update(Enemy *self)
             }
         }
     }
+    if(self->moveSens == TELEPORT){
+        if (self->accumulator_Teleport >= (rand() % (5 + 1 - 2)) + 2){
+            Vec2 positionPlayer = self->scene->player->position;
+            positionPlayer.x = (float)((rand() % (15 + 1 - 12)) + 12);
+            self->position = positionPlayer;
+            self->accumulator_Teleport = 0;
+            Vec2 velocity = Vec2_Set(-8.0f, 0.0f);
+            Bullet *bullet = BulletBaseEnemy_New(self->scene, self->position, velocity, 90.0f);
+            Scene_AppendBullet(self->scene, bullet);
+            self->accumulator_bullet_shot = 0;
+        }
+        self->accumulator_Teleport += Timer_GetDelta(g_time);
+    }
 }
 
-void EnemySin_Render(Enemy *self)
+void EnemyTeleport_Render(Enemy *self)
 {
     // On récupère des infos essentielles (communes à tout objet)
     Scene *scene = self->scene;
@@ -102,7 +117,7 @@ void EnemySin_Render(Enemy *self)
     SDL_RenderCopyExF(renderer, self->texture, NULL, &dst, 270.f, NULL, 0);
 }
 
-void EnemySin_Damage(Enemy *self, int damage)
+void EnemyTeleport_Damage(Enemy *self, int damage)
 {
     self->life -= damage;
     if (self->life <= 0)

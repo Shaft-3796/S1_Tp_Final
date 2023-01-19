@@ -5,10 +5,9 @@
 #include "Enemy_Sin.h"
 #include "Enemy_Boss_1.h"
 #include "Bullet_Asteroid.h"
-#include "stdlib.h"
-
-/* Protos */
-void randomSpawnPerk(Scene* scene, PerkType type);
+#include "Enemy_Teleport.h"
+#include "Enemy_Rafale.h"
+#include "Enemy_triangle.h"
 
 Scene *Scene_New(SDL_Renderer *renderer)
 {

@@ -1,62 +1,71 @@
-#include "Enemy_Sin.h"
+#include "Enemy_triangle.h"
 #include "Scene.h"
 #include "Enemy.h"
 #include "Timer.h"
 #include "Math.h"
 #include "Bullet.h"
-#include "Bullet_Sin_Enemy.h"
+#include "Bullet_Arc_Enemy.h"
 
 // Protos
-void EnemySin_Delete(Enemy *self);
-void EnemySin_Update(Enemy *self);
-void EnemySin_Render(Enemy *self);
-void EnemySin_Damage(Enemy *self, int damage);
+void EnemyTriangle_Delete(Enemy *self);
+void EnemyTriangle_Update(Enemy *self);
+void EnemyTriangle_Render(Enemy *self);
+void EnemyTriangle_Damage(Enemy *self, int damage);
 
-Enemy *EnemySin_New(Scene *scene, Vec2 position, int life, float shoot_period)
+Enemy *EnemyTriangle_New(Scene *scene, Vec2 position, int life, float shoot_period)
 {
     /* --- Base Ini --- */
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
-    self->type = ENEMY_SIN;
+    self->type = ENEMY_TRIANGLE;
     Assets *assets = Scene_GetAssets(scene);
     self->texture = assets->base_enemy;
     self->state = ENEMY_FIRING;
+    self->moveSens = VERTICAL;
+    self->direction = 1;
     self->worldH = 48;
     self->worldW = 48;
     self->radius = 0.5;
     /* --- --- --- --- */
 
-    /* --- Custom Ini --- */
+    /* --- Arguments ini --- */
     self->scene = scene;
     self->position = position;
     self->life = life;
-    self->moveSens = VERTICAL;
-    self->direction = 1;
+
+    /* --- Custom Ini --- */
     self->accumulator_bullet_shot = 0;
     self->shoot_period = shoot_period;
     self->accumulator_Teleport = 0;
     self->rafal_period = 0;
 
     /* --- Functions bindings --- */
-    self->Delete = &EnemySin_Delete;
-    self->Update = &EnemySin_Update;
-    self->Render = &EnemySin_Render;
-    self->Damage = &EnemySin_Damage;
+    self->Delete = &EnemyTriangle_Delete;
+    self->Update = &EnemyTriangle_Update;
+    self->Render = &EnemyTriangle_Render;
+    self->Damage = &EnemyTriangle_Damage;
     /* --- --- --- --- --- --- --- */
     return self;
 }
 
-void EnemySin_Delete(Enemy *self)
+void EnemyTriangle_Delete(Enemy *self)
 {
     if (!self) return;
     free(self);
 }
 
-void EnemySin_Update(Enemy *self)
+void EnemyTriangle_Update(Enemy *self)
 {
     if (self->accumulator_bullet_shot >= self->shoot_period){
-        Vec2 velocity = Vec2_Set(-4.0f, 1.5f);
-        Bullet *bullet = BulletSinEnemy_New(self->scene, self->position, velocity, -45.0f);
-        Scene_AppendBullet(self->scene, bullet);
+        Vec2 velocity = Vec2_Set(-4.0f, 0.0f);
+        Bullet *arc1 = BulletArcEnemy_New(self->scene, self->position, velocity, 0.0f);
+        Scene_AppendBullet(self->scene, arc1);
+        velocity.y = 0.65f;
+        velocity.x = -3.75f;
+        Bullet *arc4 = BulletArcEnemy_New(self->scene, self->position, velocity, 45.0f);
+        Scene_AppendBullet(self->scene, arc4);
+        velocity.y = -0.65f;
+        Bullet *arc5 = BulletArcEnemy_New(self->scene, self->position, velocity, -45.0f);
+        Scene_AppendBullet(self->scene, arc5);
         self->accumulator_bullet_shot = 0;
     }
     self->accumulator_bullet_shot += Timer_GetDelta(g_time);
@@ -78,9 +87,10 @@ void EnemySin_Update(Enemy *self)
             }
         }
     }
+
 }
 
-void EnemySin_Render(Enemy *self)
+void EnemyTriangle_Render(Enemy *self)
 {
     // On récupère des infos essentielles (communes à tout objet)
     Scene *scene = self->scene;
@@ -92,8 +102,8 @@ void EnemySin_Render(Enemy *self)
     float scale = Camera_GetWorldToViewScale(camera);
     SDL_FRect dst = { 0 };
     // Changez 48 par une autre valeur pour grossir ou réduire l'objet
-    dst.h = 88 * PIX_TO_WORLD * scale;
-    dst.w = 88 * PIX_TO_WORLD * scale;
+    dst.h = ENEMY_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
+    dst.w = ENEMY_SIZE_MULTIPLIER * PIX_TO_WORLD * scale;
     Camera_WorldToView(camera, self->position, &dst.x, &dst.y);
     // Le point de référence est le centre de l'objet
     dst.x -= 0.5f * dst.w;
@@ -102,7 +112,7 @@ void EnemySin_Render(Enemy *self)
     SDL_RenderCopyExF(renderer, self->texture, NULL, &dst, 270.f, NULL, 0);
 }
 
-void EnemySin_Damage(Enemy *self, int damage)
+void EnemyTriangle_Damage(Enemy *self, int damage)
 {
     self->life -= damage;
     if (self->life <= 0)
