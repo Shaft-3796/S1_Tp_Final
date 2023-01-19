@@ -91,6 +91,8 @@ typedef struct Enemy_s
     float accumulator_Teleport;
     /// @brief temps avant rafale.
     int rafal_period;
+    /// @brief temps avant rafale.
+    int bot_counter;
 
     /* --- FUNCTIONS --- */
     /// @brief Pointeur sur fonction de destruction de l'ennemi.

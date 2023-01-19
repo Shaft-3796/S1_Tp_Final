@@ -23,6 +23,7 @@ Assets *Assets_New(SDL_Renderer *renderer)
         { &self->fighter,       "../Assets/Enemy/fighter.png"         },
         { &self->fighterBullet, "../Assets/Enemy/fighter_bullet.png"  },
         { &self->base_enemy, "../Assets/Enemy/BaseEnemy.png"  },
+        { &self->boss1, "../Assets/Enemy/Boss1.png"  },
         { &self->base_enemy_bullet, "../Assets/Enemy/BaseEnemyBullet.png"  },
         { &self->sin_enemy_rocket, "../Assets/Enemy/SinRocket.png"  },
         { &self->base_player, "../Assets/Player/BasePlayer.png"  },
