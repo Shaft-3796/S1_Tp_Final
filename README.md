@@ -91,4 +91,12 @@ Votre objectif ? Terrasser les ennemis qui vous barrent la route au cours des di
 
 *Le jeu se décompose en 3 scenes. La scene d'entrée, un appuie sur espace lance la scene de jeu, une mort lance la scene de mort, un appuie sur espace relance le jeu.*
 
+<img src="https://github.com/Shaft-3796/S1_Tp_Final/blob/develop/src/Assets/Md/MenuScene.png" width="300" height="auto"><img src="https://github.com/Shaft-3796/S1_Tp_Final/blob/develop/src/Assets/Md/GameScene.png" width="300" height="auto"><img src="https://github.com/Shaft-3796/S1_Tp_Final/blob/develop/src/Assets/Md/DeathScene.png" width="300" height="auto">
+
+#### Animations 
+*Nous avons créé quelques animations, on peut notamment noter le fond, le joueur ou encore le projectile bombe*
+
+#### Textures
+*Absolument TOUTE les textures excepté le background ont été crées tout au long du projet et uniquement pour ce projet, ce sont des textures totalement faites maison. Nous aurions pu améliorer notre jeu encore plus en ne faisant pas nos propres textures mais nous avons préférés avoir un jeu qui nous ressemble.*
+
 
