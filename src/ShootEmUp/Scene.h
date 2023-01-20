@@ -19,7 +19,7 @@
 
 
 // Nombre maximal d'ennemis actifs dans un niveau.
-#define ENEMY_CAPACITY 32
+#define ENEMY_CAPACITY 100
 
 // Nombre maximal de projectiles actifs dans un niveau.
 #define BULLET_CAPACITY 1500

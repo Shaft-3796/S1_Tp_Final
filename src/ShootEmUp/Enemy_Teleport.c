@@ -18,7 +18,7 @@ Enemy *EnemyTeleport_New(Scene *scene, Vec2 position, int life, float shoot_peri
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
     self->type = ENEMY_TELEPORT;
     Assets *assets = Scene_GetAssets(scene);
-    self->texture = assets->base_enemy;
+    self->texture = assets->teleport_enemy;
     self->state = ENEMY_FIRING;
     self->moveSens = TELEPORT;
     self->direction = 1;

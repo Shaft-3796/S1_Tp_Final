@@ -18,7 +18,7 @@ Enemy *EnemyAuto_New(Scene *scene, Vec2 position, int life, float shoot_period)
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
     self->type = ENEMY_AUTO;
     Assets *assets = Scene_GetAssets(scene);
-    self->texture = assets->base_enemy;
+    self->texture = assets->auto_enemy;
     self->state = ENEMY_FIRING;
     self->moveSens = VERTICAL;
     self->direction = 1;

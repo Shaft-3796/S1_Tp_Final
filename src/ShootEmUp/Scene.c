@@ -251,6 +251,35 @@ void Scene_UpdateLevel(Scene *self)
 
         self->waveIdx++;
     }
+    else if(self->waveIdx == 13)
+    {
+        /* Add one Base enemy and one rafal enemy*/
+        Enemy* enemy = EnemyBoss2_New(self, Vec2_Set(POSITION_X_ENEMY_1, POSITION_Y_ENEMY_1), MAX_LIFE_BOSS, SHOOT_PERIOD_ENEMY_3);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyAuto_New(self, Vec2_Set(POSITION_X_ENEMY_3, 1.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyAuto_New(self, Vec2_Set(POSITION_X_ENEMY_3, 4.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyAuto_New(self, Vec2_Set(POSITION_X_ENEMY_3, 5.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyAuto_New(self, Vec2_Set(POSITION_X_ENEMY_3, 8.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyRafal_New(self, Vec2_Set(POSITION_X_ENEMY_2, 2.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyRafal_New(self, Vec2_Set(POSITION_X_ENEMY_2, 3.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyRafal_New(self, Vec2_Set(POSITION_X_ENEMY_2, 6.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyRafal_New(self, Vec2_Set(POSITION_X_ENEMY_2, 7.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyTeleport_New(self, Vec2_Set(POSITION_X_ENEMY_1, 1.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+        enemy = EnemyTeleport_New(self, Vec2_Set(POSITION_X_ENEMY_1, 7.f), MAX_LIFE_ENEMY_3, SHOOT_PERIOD_ENEMY_4);
+        Scene_AppendEnemy(self, enemy);
+
+
+        self->waveIdx++;
+    }
 }
 
 /* --- Perks --- */
@@ -390,7 +419,7 @@ int Scene_Update(Scene *self)
     }
 
         // Avance d'une vague si le shortcut a été activé
-    if(self->input->switchWave)
+    if(self->input->switchWave && self->waveIdx!=14)
     {
         // Remove all enemies
         while(self->enemyCount > 0)

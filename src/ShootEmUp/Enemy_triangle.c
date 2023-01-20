@@ -18,7 +18,7 @@ Enemy *EnemyTriangle_New(Scene *scene, Vec2 position, int life, float shoot_peri
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
     self->type = ENEMY_TRIANGLE;
     Assets *assets = Scene_GetAssets(scene);
-    self->texture = assets->base_enemy;
+    self->texture = assets->triangle_enemy;
     self->state = ENEMY_FIRING;
     self->moveSens = VERTICAL;
     self->direction = 1;

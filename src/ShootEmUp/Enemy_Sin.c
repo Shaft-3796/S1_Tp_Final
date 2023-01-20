@@ -18,7 +18,7 @@ Enemy *EnemySin_New(Scene *scene, Vec2 position, int life, float shoot_period)
     Enemy *self = (Enemy*)calloc(1, sizeof(Enemy));
     self->type = ENEMY_SIN;
     Assets *assets = Scene_GetAssets(scene);
-    self->texture = assets->base_enemy;
+    self->texture = assets->sin_enemy;
     self->state = ENEMY_FIRING;
     self->worldH = 48;
     self->worldW = 48;

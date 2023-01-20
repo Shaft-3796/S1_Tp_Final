@@ -49,7 +49,14 @@ Assets *Assets_New(SDL_Renderer *renderer)
         {&self->base_player_bullets_corrupted, "../Assets/Player/BaseBulletsCorrupted.png"},
         {&self->auto_bullet, "../Assets/Enemy/AutoBullet.png"},
         {&self->bomb, "../Assets/Enemy/BombAnim.png"},
-        {&self->waves, "../Assets/UI/Waves.png"}
+        {&self->waves, "../Assets/UI/Waves.png"},
+        {&self->auto_enemy, "../Assets/Enemy/EnemyAuto.png"},
+        {&self->bomb_enemy, "../Assets/Enemy/EnemyBomb.png"},
+        {&self->rafale_enemy, "../Assets/Enemy/EnemyRafale.png"},
+        {&self->sin_enemy, "../Assets/Enemy/EnemySin.png"},
+        {&self->teleport_enemy, "../Assets/Enemy/EnemyTeleport.png"},
+        {&self->triangle_enemy, "../Assets/Enemy/EnemyTriangle.png"},
+
     };
     int texSpecCount = sizeof(texSpecs) / sizeof(TextureSpec);
 

@@ -26,12 +26,19 @@ typedef struct Assets_s
     /// @brief Texture du vaisseau ennemi.
     SDL_Texture *fighter;
     SDL_Texture *fighterBullet;
-
     SDL_Texture *base_enemy;
+    SDL_Texture *revert_enemy;
+    SDL_Texture *auto_enemy;
+    SDL_Texture *bomb_enemy;
+    SDL_Texture *sin_enemy;
+    SDL_Texture *teleport_enemy;
+    SDL_Texture *rafale_enemy;
+    SDL_Texture *triangle_enemy;
+
+    /* --- Bullets --- */
     SDL_Texture *base_enemy_bullet;
     SDL_Texture *sin_enemy_rocket;
     SDL_Texture *arc_enemy_bullet;
-    SDL_Texture *revert_enemy;
     SDL_Texture *auto_bullet;
     SDL_Texture *boss1;
     SDL_Texture *boss2;

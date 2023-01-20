@@ -52,11 +52,11 @@ void BulletAuto_Update(Bullet *self)
     Vec2 bullet_pos = self->position;
     Vec2 diff = Vec2_Sub(player_pos, bullet_pos);
     float dist = Vec2_Length(diff);
-    if (dist > 3.0f && !self->follow_disable)
+    if (dist > 2.f && !self->follow_disable)
     {
         // On se dirige vers le player
         Vec2 dir = Vec2_Normalize(diff);
-        self->velocity = Vec2_Scale(dir, 5.f);
+        self->velocity = Vec2_Scale(dir, 6.f);
         // On update l'angle
         //self->angle = acosf(self->velocity.y/Vec2_Length(self->velocity));
         // Angle to deg
