@@ -103,4 +103,8 @@ Pour tester les diférentes phases et énnemis vous pouvez appuyer sur la touche
 #### Textures
 *Absolument TOUTE les textures excepté le background ont été crées tout au long du projet et uniquement pour ce projet, ce sont des textures totalement faites maison. Nous aurions pu améliorer notre jeu encore plus en ne faisant pas nos propres textures mais nous avons préférés avoir un jeu qui nous ressemble.*
 
+#### Organisation du Code
+
+*Notre jeu étant dotté de nombreux ennemis et projectiles diférents nous avons décidé de supprimer les fichiers Enemy.c et Bullet.c au profit d'uniques fichiers par ennemies/bullets. Chaque type d'ennemies/bullets sont stockés en utilisant la même strucutre mais leur fonction d'initiialisation au format: "Enemy{type}_New()/Bullet{type}_New()" font pointer des champs spécifiques de la structure enemy/bullet vers les fonctions customisés en fonction du type d'ennemi/de bullet en utilisant des pointeurs sur fonction. Ainsi chaque type d'enemie/bullet à ses fonctions spécifiques et son fichier unique pour une meilleur organisation du code.*
+
 
