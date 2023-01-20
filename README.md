@@ -27,6 +27,7 @@ Votre objectif ? Terrasser les ennemis qui vous barrent la route au cours des di
 *Vous pouvez collecter des perks au cours de la partie dont voici les effets:*
 
 *Astro: un petit astronaute qui vous fera accélérer à la vitesse de la lumière !*
+![](https://github.com/Shaft-3796/S1_Tp_Final/blob/shaft/src/Assets/Perks/Perk_Astro.png)
 
 *Shield: un bouclier énergétique pour vous protéger de tous les tirs, mais gare aux explosions !*
 
