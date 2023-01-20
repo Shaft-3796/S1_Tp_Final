@@ -11,6 +11,10 @@ Votre objectif ? Terrasser les ennemis qui vous barrent la route au cours des di
 
 #### Gameplay
 
+##### Tips:
+
+Pour tester les diférentes phases et énnemis vous pouvez appuyer sur la touche "+" du pavé numérique.
+
 ##### Pilotage, tirs:
 
 *Votre personnage peut se déplacer dans une zone définie*
